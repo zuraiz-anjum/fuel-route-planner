@@ -21,7 +21,7 @@ from .optimizer import Candidate, plan_fuel_stops
 from .osrm import fetch_route
 from .photon import Place, geocode_place
 
-ROUTE_CACHE_SECONDS = 3600
+ROUTE_CACHE_SECONDS = 24 * 3600
 
 COORDINATES = re.compile(r"^\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*$")
 
@@ -137,12 +137,9 @@ def load_leg(start, finish):
 
 
 def departure_station(start, stations):
-    """Where to fill up before leaving, and how far it is from the start.
-
-    The cheapest station close to the start, which is what a driver would
-    choose; failing that the nearest one within reason, as a price to plan
-    with; failing that nothing.
-    """
+    """Where to fill up before leaving, and how far it is from the start."""
+    # The cheapest station close by, which is what a driver would choose;
+    # failing that the nearest one within reason, as a price to plan with.
     distance = haversine_miles(start.lat, start.lon, stations.lats, stations.lons)
     close = np.flatnonzero(distance <= settings.DEPARTURE_RADIUS_MILES)
     if len(close):

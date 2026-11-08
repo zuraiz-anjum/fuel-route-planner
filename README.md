@@ -34,7 +34,7 @@ A few more to try:
 
 `load_stations` reads `data/fuel-prices.csv` together with
 `data/city_coordinates.csv`, the position of every city in the price file,
-and takes a second or two. The coordinates file is committed; "Station
+and takes a few seconds. The coordinates file is committed; "Station
 coordinates" below says how it was made and when to remake it.
 `python manage.py createsuperuser` and `/admin/` let you browse the stations.
 
@@ -160,17 +160,17 @@ greedy algorithm on random routes.
 ## How a request is served
 
 1. The two places are geocoded with Photon, unless given as coordinates.
-   Results are cached for a day.
+   Results are cached for a month; places do not move.
 2. One request to OSRM returns the route geometry and distance. The route is
    prepared once (mileage along it, a simplified copy for the response) and
-   cached for an hour.
+   cached for a day.
 3. Every located station is matched against a one-mile sampling of the route
    with numpy; those within 10 miles become candidates, each at its mile
    marker and with its distance from the road.
 4. The optimiser picks the stops.
 
-A cold request makes at most three external calls and takes between half a
-second and two seconds, nearly all of it waiting for OSRM. Repeating it takes
+A cold request makes at most three external calls and takes under two
+seconds, nearly all of it waiting for OSRM. Repeating it takes
 30 ms for a short trip and under 300 ms coast to coast, which is the
 corridor match over 6,600 stations plus the optimiser. The cache is a
 directory of files under `.cache/`, so it survives the development server

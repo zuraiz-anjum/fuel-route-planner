@@ -16,7 +16,8 @@ import requests
 from django.conf import settings
 from django.core.cache import cache
 
-PLACE_CACHE_SECONDS = 24 * 3600
+# Places do not move, and the public server is not always there when you need it.
+PLACE_CACHE_SECONDS = 30 * 24 * 3600
 
 # Hawaii to Maine. The box also covers bits of Canada and Mexico, so hits are
 # checked by country code as well.
