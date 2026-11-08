@@ -1,3 +1,5 @@
+import threading
+import time
 from unittest import mock
 
 import numpy as np
@@ -10,6 +12,7 @@ from planner.geo import haversine_miles
 from planner.models import Station
 from planner.osrm import NoRouteError, RouteResult, RoutingError
 from planner.photon import GeocodeError, Place
+from planner.trip import load_leg
 
 # A straight route due east along the 35th parallel, a little over 1,100 miles.
 START = Place(lat=35.0, lon=-100.0, label="Start, Texas")
@@ -240,6 +243,25 @@ class RouteApiTests(TestCase):
         self.plan()
         self.plan(stop_cost=0)
         self.assertEqual(self.fetch_route.call_count, 1)
+
+
+@override_settings(CACHES=LOCAL_CACHE)
+class RouteFetchTests(TestCase):
+    def test_identical_requests_arriving_together_fetch_the_route_once(self):
+        cache.clear()
+
+        def slow_route(*args):
+            time.sleep(0.2)
+            return straight_route()
+
+        with mock.patch("planner.trip.fetch_route", side_effect=slow_route) as fetch:
+            threads = [threading.Thread(target=load_leg, args=(START, FINISH)) for _ in range(3)]
+            for thread in threads:
+                thread.start()
+            for thread in threads:
+                thread.join()
+        self.assertEqual(fetch.call_count, 1)
+        self.assertIsNotNone(cache.get("route:35.00000,-100.00000:35.00000,-80.00000"))
 
 
 class HealthTests(TestCase):

@@ -9,6 +9,7 @@ none once the route is cached.
 """
 
 import re
+import threading
 from dataclasses import dataclass
 
 import numpy as np
@@ -134,19 +135,37 @@ def resolve_place(query):
     return place
 
 
+_fetching = {}
+_fetching_guard = threading.Lock()
+
+
 def load_leg(start, finish):
     """The route between two places, cached so that repeats cost nothing."""
     key = "route:%.5f,%.5f:%.5f,%.5f" % (start.lat, start.lon, finish.lat, finish.lon)
     leg = cache.get(key)
     if leg is None:
-        result = fetch_route((start.lat, start.lon), (finish.lat, finish.lon))
-        leg = Leg(
-            route=Route(result.points, result.distance_miles),
-            duration_seconds=result.duration_seconds,
-            geometry=simplify(result.points, RESPONSE_GEOMETRY_TOLERANCE_MILES),
-        )
-        cache.set(key, leg, ROUTE_CACHE_SECONDS)
+        # Identical requests arriving together wait for one fetch instead of
+        # each asking OSRM. The lock is per process, which is as far as it
+        # needs to go here.
+        with _fetching_guard:
+            lock = _fetching.setdefault(key, threading.Lock())
+        with lock:
+            leg = cache.get(key)
+            if leg is None:
+                leg = fetch_leg(start, finish)
+                cache.set(key, leg, ROUTE_CACHE_SECONDS)
+        with _fetching_guard:
+            _fetching.pop(key, None)
     return leg
+
+
+def fetch_leg(start, finish):
+    result = fetch_route((start.lat, start.lon), (finish.lat, finish.lon))
+    return Leg(
+        route=Route(result.points, result.distance_miles),
+        duration_seconds=result.duration_seconds,
+        geometry=simplify(result.points, RESPONSE_GEOMETRY_TOLERANCE_MILES),
+    )
 
 
 def departure_station(start, stations):
