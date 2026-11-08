@@ -118,7 +118,7 @@ VEHICLE_MPG = 10
 ROUTE_CORRIDOR_MILES = 10
 
 # The departure fill-up is priced at the cheapest station this close to the start.
-DEPARTURE_RADIUS_MILES = 25
+DEPARTURE_RADIUS_MILES = 10
 
 # What the planner charges itself for pulling off the highway, so that it does
 # not add a stop to save fifty cents. Not part of the reported fuel cost;
