@@ -4,6 +4,7 @@ import numpy as np
 from django.core.cache import cache
 from django.test import TestCase, override_settings
 from django.urls import reverse
+from rest_framework.throttling import AnonRateThrottle
 
 from planner.geo import haversine_miles
 from planner.models import Station
@@ -199,7 +200,26 @@ class RouteApiTests(TestCase):
         self.assertEqual(self.plan().status_code, 200)
 
     def test_only_get_is_allowed(self):
-        self.assertEqual(self.client.post(reverse("route-api"), {}).status_code, 405)
+        response = self.client.post(reverse("route-api"), {})
+        self.assertEqual(response.status_code, 405)
+        self.assertEqual(response.json(), {"error": 'Method "POST" not allowed.'})
+
+    def test_a_client_is_throttled_past_the_rate_limit(self):
+        self.seed_stations()
+        # The rates are read once at import, so overriding the setting is not enough.
+        with mock.patch.object(AnonRateThrottle, "THROTTLE_RATES", {"anon": "2/min"}):
+            self.assertEqual(self.plan().status_code, 200)
+            self.assertEqual(self.plan().status_code, 200)
+            response = self.plan()
+        self.assertEqual(response.status_code, 429)
+        self.assertIn("throttled", response.json()["error"])
+        self.assertEqual(self.client.get(reverse("health")).status_code, 200)
+
+    def test_blank_optional_parameters_are_the_same_as_absent_ones(self):
+        self.seed_stations()
+        response = self.plan(start_fuel="", stop_cost="")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()["vehicle"]["stop_cost"], 10.0)
 
     def test_route_is_fetched_once_and_then_cached(self):
         self.seed_stations()

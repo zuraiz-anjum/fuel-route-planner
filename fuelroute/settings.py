@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "rest_framework",
     "planner",
 ]
 
@@ -92,6 +93,16 @@ CACHES = {
         "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
         "LOCATION": BASE_DIR / ".cache",
     }
+}
+
+# The API is Django REST Framework. Anonymous clients get sixty requests a
+# minute, which is plenty for a person and stops one script from spending
+# the public OSRM server's goodwill; errors keep this project's {"error": ...}
+# shape rather than the framework's {"detail": ...}.
+REST_FRAMEWORK = {
+    "DEFAULT_THROTTLE_CLASSES": ["rest_framework.throttling.AnonRateThrottle"],
+    "DEFAULT_THROTTLE_RATES": {"anon": "60/min"},
+    "EXCEPTION_HANDLER": "planner.views.api_exception",
 }
 
 # Fuel planner.

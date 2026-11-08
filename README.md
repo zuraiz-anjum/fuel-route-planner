@@ -27,7 +27,8 @@ Then ask for a trip:
     curl "http://127.0.0.1:8000/api/route/?start=Dallas,%20TX&finish=Los%20Angeles,%20CA"
 
 or open <http://127.0.0.1:8000/map/> to see the same answer drawn on a map.
-A few more to try:
+The API URL itself, opened in a browser, shows the browsable API. A few more
+to try:
 
     /api/route/?start=New%20York,%20NY&finish=Los%20Angeles,%20CA
     /api/route/?start=Chicago,%20IL&finish=Atlanta,%20GA&start_fuel=50
@@ -120,6 +121,7 @@ Errors come back as `{"error": "..."}`:
 |--------|------|
 | 400 | Missing or invalid parameters; `details` says which. |
 | 422 | A place could not be found in the US, start and finish are the same place, no road connects the two, no station is within 100 miles of the start to fill up at, or some stretch is longer than the range with no station in it. |
+| 429 | More than 60 requests in a minute from one address. |
 | 502 | OSRM or Photon failed or timed out. |
 | 503 | No stations loaded yet; run `load_stations`. |
 
@@ -235,9 +237,11 @@ thing that could make an ordinary request fail.
 There is no GeoDjango or PostGIS. The spatial work is one corridor match per
 request over a few thousand points, which numpy does in milliseconds in
 memory; a spatial database would add a GDAL install for no gain here.
-Likewise plain Django views rather than Django REST Framework: one GET
-endpoint with four parameters is validated by a `Form` in a dozen lines and
-the response is a dict. DRF becomes the right call the moment this grows.
+The HTTP layer is Django REST Framework: a serializer validates the query
+string, the browsable API shows a request and its answer in a browser, and
+anonymous clients are held to 60 requests a minute so that one script cannot
+spend the public OSRM server's goodwill. The response stays a plain dict,
+built in one place, with nothing in it a serializer would check.
 
 The in-memory station table is rebuilt whenever a row in the database
 changes, so `load_stations` can be rerun under a running server. The cache
@@ -265,7 +269,7 @@ default stop cost live at the bottom of `fuelroute/settings.py`.
 
     python manage.py test
 
-A hundred and twenty-six tests cover the price file reader and loader, the
+A hundred and twenty-eight tests cover the price file reader and loader, the
 GeoNames matching, the city table and its extraction, route geometry, the
 optimiser (including the comparison with the greedy algorithm on random
 routes), both external clients with canned responses, the geocoding command,
@@ -284,7 +288,7 @@ need no network, and run on GitHub Actions for every push.
       geo.py                  mileage along the route, corridor matching, simplification
       optimizer.py            choosing the stops
       trip.py                 puts a request together
-      forms.py, views.py      the HTTP layer
+      serializers.py, views.py  the HTTP layer
       management/commands/    extract_cities, geocode_cities, load_stations
       templates/planner/      the map page
       tests/

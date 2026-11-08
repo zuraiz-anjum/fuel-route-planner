@@ -6,6 +6,6 @@ from . import views
 urlpatterns = [
     path("", RedirectView.as_view(pattern_name="map"), name="home"),
     path("map/", views.map_page, name="map"),
-    path("api/route/", views.route_api, name="route-api"),
-    path("healthz/", views.health, name="health"),
+    path("api/route/", views.RouteView.as_view(), name="route-api"),
+    path("healthz/", views.HealthView.as_view(), name="health"),
 ]
