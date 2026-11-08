@@ -200,6 +200,13 @@ class RouteApiTests(TestCase):
         self.assertEqual(self.fetch_route.call_count, 2)
         self.assertTrue(any("cache unavailable" in line for line in logs.output))
 
+    def test_a_town_the_outline_misses_still_resolves_by_name(self):
+        # Point Roberts is a US exclave south of Vancouver that the coarse outline leaves out.
+        self.seed_stations()
+        response = self.plan(start="Point Roberts, WA", finish="Finish, GA", start_fuel=50)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()["start"]["label"], "Point Roberts, Washington, United States")
+
     def test_coordinates_outside_the_us_are_rejected(self):
         self.seed_stations()
         response = self.plan(start="51.5,-0.1")

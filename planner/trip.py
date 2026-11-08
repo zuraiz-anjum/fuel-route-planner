@@ -121,7 +121,7 @@ def us_outline():
 
 
 def in_united_states(lat, lon):
-    """Geocoded places are already restricted to the US; this is for coordinates typed in."""
+    """For coordinates typed in; named places are already restricted to the US by their sources."""
     return us_outline().contains(Point(lon, lat))
 
 
@@ -130,10 +130,11 @@ def resolve_place(query):
     match = COORDINATES.match(query)
     if match:
         lat, lon = float(match[1]), float(match[2])
-        place = Place(lat=lat, lon=lon, label=f"{lat:.5f}, {lon:.5f}")
-    else:
-        place = find_city(query) or geocode_place(query)
-    if place is None or not in_united_states(place.lat, place.lon):
+        if not in_united_states(lat, lon):
+            raise UnknownPlace(query)
+        return Place(lat=lat, lon=lon, label=f"{lat:.5f}, {lon:.5f}")
+    place = find_city(query) or geocode_place(query)
+    if place is None:
         raise UnknownPlace(query)
     return place
 
