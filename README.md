@@ -188,12 +188,13 @@ the detour accounting allow for the error.
 `python manage.py geocode_cities` produced `data/city_coordinates.csv` from
 the 3,808 distinct city/state pairs in the file. It looks each one up offline
 in the GeoNames US gazetteer, an 80 MB download fetched on first use and not
-committed, and asks Photon only about the names GeoNames does not know.
-GeoNames knew 3,803 of them. The five it did not, seven stations in places
-like Willow Beach, AZ and Pueblo of Acoma, NM, go to Photon, and any that
-stay unresolved are loaded without coordinates and ignored by the planner.
-The command is resumable and skips what is already cached, so it only needs
-to run again if the price file gains new cities.
+committed, and would ask Photon only about names GeoNames does not know. It
+knew all 3,808 once the file's spellings were folded in: "S Coffeyville" for
+South Coffeyville, "Pueblo Of Acoma" for Acoma Pueblo, and New England towns
+that GeoNames files as administrative areas ("Town of Corinth"). The command
+is resumable and skips what is already cached, so it only needs to run again
+if the price file gains new cities; anything neither source knows is loaded
+without coordinates and ignored by the planner.
 
 The 7,531 US rows in the price file collapse to 6,626 stations; where a
 station appears more than once its prices are averaged. Canadian stations are
@@ -243,11 +244,12 @@ default stop cost live at the bottom of `fuelroute/settings.py`.
 
     python manage.py test
 
-Ninety-eight tests cover the price file reader and loader, the GeoNames
-matching, route geometry, the optimiser (including the comparison with the
-greedy algorithm on random routes), both external clients with canned
-responses, the geocoding command, and the API with the external services
-mocked. They run in about four seconds and need no network.
+A hundred and five tests cover the price file reader and loader, the
+GeoNames matching, route geometry, the optimiser (including the comparison
+with the greedy algorithm on random routes), both external clients with
+canned responses, the geocoding command, and the API with the external
+services mocked. They run in a few seconds, need no network, and run on
+GitHub Actions for every push.
 
 ## Layout
 
