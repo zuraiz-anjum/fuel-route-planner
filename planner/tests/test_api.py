@@ -1,39 +1,28 @@
 from unittest import mock
 
-from django.test import TestCase
+import numpy as np
+from django.core.cache import cache
+from django.test import TestCase, override_settings
 from django.urls import reverse
 
 from planner.geo import haversine_miles
 from planner.models import Station
 from planner.osrm import NoRouteError, RouteResult, RoutingError
 from planner.photon import GeocodeError, Place
-from planner.trip import station_arrays
 
 # A straight route due east along the 35th parallel, a little over 1,100 miles.
 START = Place(lat=35.0, lon=-100.0, label="Start, Texas")
 FINISH = Place(lat=35.0, lon=-80.0, label="Finish, Georgia")
 PLACES = {"Start, TX": START, "Finish, GA": FINISH}
 
-
-def encode_polyline(points):
-    out = []
-    prev_lat = prev_lon = 0
-    for lat, lon in points:
-        lat, lon = round(lat * 1e5), round(lon * 1e5)
-        for delta in (lat - prev_lat, lon - prev_lon):
-            delta = ~(delta << 1) if delta < 0 else delta << 1
-            while delta >= 0x20:
-                out.append(chr((0x20 | (delta & 0x1F)) + 63))
-                delta >>= 5
-            out.append(chr(delta + 63))
-        prev_lat, prev_lon = lat, lon
-    return "".join(out)
+LOCAL_CACHE = {"default": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache"}}
 
 
-def straight_route():
-    points = [(35.0, lon / 10) for lon in range(-1000, -799)]
-    miles = sum(haversine_miles(a[0], a[1], b[0], b[1]) for a, b in zip(points, points[1:]))
-    return RouteResult(distance_miles=miles, duration_seconds=miles / 60 * 3600, polyline=encode_polyline(points))
+def straight_route(points=None, distance_miles=None):
+    points = np.array(points or [(35.0, lon / 10) for lon in range(-1000, -799)])
+    if distance_miles is None:
+        distance_miles = haversine_miles(points[:-1, 0], points[:-1, 1], points[1:, 0], points[1:, 1]).sum()
+    return RouteResult(distance_miles=distance_miles, duration_seconds=distance_miles * 60, points=points)
 
 
 def fake_geocode(query):
@@ -55,10 +44,10 @@ def station(opis_id, lat, lon, price, name=None):
     )
 
 
+@override_settings(CACHES=LOCAL_CACHE)
 class RouteApiTests(TestCase):
     def setUp(self):
-        station_arrays.cache_clear()
-        self.addCleanup(station_arrays.cache_clear)
+        cache.clear()
         self.geocode = mock.patch("planner.trip.geocode_place", side_effect=fake_geocode).start()
         self.fetch_route = mock.patch("planner.trip.fetch_route", return_value=straight_route()).start()
         self.addCleanup(mock.patch.stopall)
@@ -92,14 +81,14 @@ class RouteApiTests(TestCase):
         self.assertAlmostEqual(trip["summary"]["total_fuel_cost"], 320.8, delta=1.5)
         self.assertEqual(trip["route"]["geometry"]["type"], "LineString")
         self.assertEqual(trip["route"]["geometry"]["coordinates"][0], [-100.0, 35.0])
-        self.assertIn("map_url", trip)
         self.assertIn("start=Start%2C+TX", trip["map_url"])
 
-    def test_each_stop_reports_the_tank_and_the_cost(self):
+    def test_each_stop_reports_the_leg_the_tank_and_the_cost(self):
         self.seed_stations()
         stop = self.plan(stop_cost=0).json()["stops"][2]
         self.assertEqual(stop["station"]["name"], "Cheapest on the route")
         self.assertAlmostEqual(stop["mile"], 453, delta=1)
+        self.assertAlmostEqual(stop["leg_miles"], 396, delta=1)
         self.assertAlmostEqual(stop["tank_on_arrival_gallons"], 0, delta=0.15)
         self.assertAlmostEqual(stop["gallons"], 50, delta=0.15)
         self.assertAlmostEqual(stop["tank_on_departure_gallons"], 50, delta=0.15)
@@ -113,12 +102,27 @@ class RouteApiTests(TestCase):
         self.assertEqual(trip["vehicle"]["start_fuel_gallons"], 50)
         self.assertAlmostEqual(trip["summary"]["fuel_purchased_gallons"], 63.3, delta=0.3)
 
+    def test_departure_is_the_cheapest_station_near_the_start(self):
+        self.seed_stations()
+        station(6, 35.05, -100.1, "3.100", name="Across town but cheaper")
+        trip = self.plan(stop_cost=0).json()
+        self.assertEqual(trip["stops"][0]["station"]["name"], "Across town but cheaper")
+        self.assertAlmostEqual(trip["stops"][0]["off_route_miles"], 6.6, delta=0.2)
+
+    def test_without_a_station_near_the_start_the_tank_must_be_given(self):
+        station(3, 35.0, -92.0, "2.500")
+        response = self.plan()
+        self.assertEqual(response.status_code, 422)
+        self.assertIn("start_fuel", response.json()["error"])
+        self.fetch_route.return_value = straight_route([(35.0, -100.0), (35.0, -92.9)], distance_miles=400)
+        self.assertEqual(self.plan(start_fuel=50, finish="35,-92.9").status_code, 200)
+
     def test_stop_cost_discourages_marginal_stops(self):
         station(1, 35.0, -100.05, "3.000")
-        station(2, 35.0, -99.0, "2.990")
-        self.fetch_route.return_value = RouteResult(
-            distance_miles=200, duration_seconds=12000, polyline=encode_polyline([(35.0, -100.0), (35.0, -96.47)])
-        )
+        station(2, 35.0, -99.0, "2.900")
+        self.fetch_route.return_value = straight_route([(35.0, -100.0), (35.0, -96.47)], distance_miles=200)
+        # Fourteen gallons at ten cents less saves $1.43: worth a stop at no
+        # charge, not worth one at $10.
         self.assertEqual(len(self.plan(stop_cost=0).json()["stops"]), 2)
         self.assertEqual(len(self.plan().json()["stops"]), 1)
 
@@ -141,9 +145,11 @@ class RouteApiTests(TestCase):
         self.assertEqual(response.status_code, 400)
         self.assertIn("finish", response.json()["details"])
 
-    def test_start_fuel_beyond_the_tank_is_a_bad_request(self):
+    def test_out_of_range_numbers_are_a_bad_request(self):
         self.seed_stations()
         self.assertEqual(self.plan(start_fuel=60).status_code, 400)
+        self.assertEqual(self.plan(stop_cost=-1).status_code, 400)
+        self.assertEqual(self.plan(stop_cost=1e9).status_code, 400)
 
     def test_unknown_place(self):
         self.seed_stations()
@@ -164,19 +170,25 @@ class RouteApiTests(TestCase):
 
     def test_upstream_failures_are_a_bad_gateway(self):
         self.seed_stations()
-        self.fetch_route.side_effect = RoutingError("routing request failed")
+        self.fetch_route.side_effect = RoutingError("routing service unavailable")
         self.assertEqual(self.plan().status_code, 502)
         self.fetch_route.side_effect = None
-        self.geocode.side_effect = GeocodeError("geocoder request failed")
+        self.geocode.side_effect = GeocodeError("geocoding service unavailable")
         self.assertEqual(self.plan().status_code, 502)
 
     def test_without_station_data_the_service_is_unavailable(self):
         self.assertEqual(self.plan().status_code, 503)
 
+    def test_stations_loaded_later_are_picked_up(self):
+        self.assertEqual(self.plan().status_code, 503)
+        self.seed_stations()
+        self.assertEqual(self.plan().status_code, 200)
+
     def test_only_get_is_allowed(self):
         self.assertEqual(self.client.post(reverse("route-api"), {}).status_code, 405)
 
-    def test_route_is_fetched_once_per_request(self):
+    def test_route_is_fetched_once_and_then_cached(self):
         self.seed_stations()
         self.plan()
+        self.plan(stop_cost=0)
         self.assertEqual(self.fetch_route.call_count, 1)

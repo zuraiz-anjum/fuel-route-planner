@@ -1,14 +1,10 @@
 """
 Client for the Photon geocoder (photon.komoot.io).
 
-Photon serves OpenStreetMap data, answers in a fraction of a second and has no
-hard rate limit, only a request to be fair. It took over from Nominatim here
-after the public Nominatim server throttled the one-off job that geocodes
-every city in the price file; it also resolves spellings such as "Mc Calla"
-that Nominatim does not.
-
-Two lookups go through here: free-text places typed by the user and the
-city/state pairs of the price file. Both are restricted to the United States.
+Photon serves OpenStreetMap data, needs no key, answers in a fraction of a
+second and asks only for fair use. Two lookups go through here: free-text
+places typed by the user and the city/state pairs of the price file. Both are
+restricted to the United States.
 """
 
 import hashlib
@@ -63,8 +59,8 @@ def _get(params):
     return _session.get(
         settings.PHOTON_BASE_URL + "/api/",
         params=params,
-        headers={"User-Agent": settings.GEOCODER_USER_AGENT},
-        timeout=settings.EXTERNAL_TIMEOUT_SECONDS,
+        headers={"User-Agent": settings.USER_AGENT},
+        timeout=settings.EXTERNAL_TIMEOUT,
     )
 
 
@@ -77,16 +73,17 @@ def _search(query, interval=0.0, **params):
             if wait > 0:
                 time.sleep(wait)
             _last_request_at = time.monotonic()
+    params = {"q": query, "limit": 5, "bbox": US_BBOX, "lang": "en", **params}
     try:
-        response = _get({"q": query, "limit": 5, "bbox": US_BBOX, "lang": "en", **params})
+        response = _get(params)
         if response.status_code in (429, 503):
-            # Photon answers a burst with 503 and is usually fine a moment later.
+            # Photon answers a burst this way and is usually fine a moment later.
             time.sleep(1)
-            response = _get({"q": query, "limit": 5, "bbox": US_BBOX, "lang": "en", **params})
+            response = _get(params)
         response.raise_for_status()
         features = response.json()["features"]
-    except (requests.RequestException, ValueError, KeyError) as exc:
-        raise GeocodeError(f"geocoder request failed: {exc}") from exc
+    except (requests.RequestException, ValueError, LookupError, TypeError) as exc:
+        raise GeocodeError("geocoding service unavailable") from exc
     hits = []
     for feature in features:
         properties = feature["properties"]

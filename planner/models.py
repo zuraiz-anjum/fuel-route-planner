@@ -4,7 +4,7 @@ from django.db import models
 class StationQuerySet(models.QuerySet):
     def located(self):
         """Stations whose city could be placed on the map."""
-        return self.filter(lat__isnull=False)
+        return self.filter(lat__isnull=False, lon__isnull=False)
 
 
 class Station(models.Model):
@@ -16,11 +16,13 @@ class Station(models.Model):
     city = models.CharField(max_length=80)
     state = models.CharField(max_length=2)
     rack_id = models.PositiveIntegerField()
-    # Mean of every price row the file has for this station.
-    price = models.DecimalField(max_digits=7, decimal_places=4)
+    # Mean of every price row the file has for this station, to a tenth of a cent.
+    price = models.DecimalField(max_digits=6, decimal_places=3)
     price_count = models.PositiveSmallIntegerField()
     lat = models.FloatField(null=True, blank=True)
     lon = models.FloatField(null=True, blank=True)
+    # The planner keeps the table in memory and reloads it when this moves.
+    updated_at = models.DateTimeField(auto_now=True)
 
     objects = StationQuerySet.as_manager()
 

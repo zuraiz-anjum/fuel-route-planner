@@ -1,22 +1,19 @@
 """
-Geometry on route polylines.
+Geometry on route polylines: mileage along the route, where a station sits
+relative to it, and a lighter copy of the line to send back.
 
-OSRM returns a route as an encoded polyline plus its length. Everything the
-planner needs from that shape lives here: mileage along the route, where a
-station sits relative to it, and a lighter copy of the line to send back.
-
-Stations are matched to the nearest point of a dense sampling of the route
-rather than projected onto each segment. With a one mile step that is at most
-half a mile off along the route, well inside the error of placing a station
-at its city centroid, and it turns the search into a matrix product. The
-product is taken over unit vectors on the sphere, whose dot product orders
-samples exactly as great-circle distance does, so haversine only has to be
-evaluated for the winning sample.
+Stations are matched to the nearest point of a one-mile sampling of the route
+rather than projected onto every segment. That is at most half a mile off
+along the route, well inside the error of placing a station at its city
+centroid, and it turns the search into a matrix product over unit vectors on
+the sphere, whose dot product orders points exactly as great-circle distance
+does.
 """
 
 import math
 
 import numpy as np
+from shapely import LineString
 
 EARTH_RADIUS_MILES = 3958.7613
 MILES_PER_DEGREE = EARTH_RADIUS_MILES * math.pi / 180
@@ -24,35 +21,6 @@ MILES_PER_DEGREE = EARTH_RADIUS_MILES * math.pi / 180
 # Upper bound on the cells of one point x sample matrix in locate(); 500k
 # float64 cells is 4 MB.
 LOCATE_CHUNK_CELLS = 500_000
-
-
-def _next_value(encoded, index):
-    """Read one signed value starting at index; return it and the next index."""
-    result = shift = 0
-    while True:
-        byte = ord(encoded[index]) - 63
-        index += 1
-        result |= (byte & 0x1F) << shift
-        shift += 5
-        if byte < 0x20:
-            break
-    if result & 1:
-        return ~(result >> 1), index
-    return result >> 1, index
-
-
-def decode_polyline(encoded, precision=5):
-    """Decode a Google/OSRM encoded polyline into a list of (lat, lon) tuples."""
-    factor = 10.0**precision
-    points = []
-    index = lat = lon = 0
-    while index < len(encoded):
-        dlat, index = _next_value(encoded, index)
-        dlon, index = _next_value(encoded, index)
-        lat += dlat
-        lon += dlon
-        points.append((lat / factor, lon / factor))
-    return points
 
 
 def haversine_miles(lat1, lon1, lat2, lon2):
@@ -74,14 +42,16 @@ class Route:
     """A route polyline with its cumulative mileage."""
 
     def __init__(self, points, total_miles=None):
-        coords = np.asarray(points, dtype=float)
+        coords = np.asarray(points, dtype=float).reshape(-1, 2)
         self.lats = coords[:, 0]
         self.lons = coords[:, 1]
         legs = haversine_miles(self.lats[:-1], self.lons[:-1], self.lats[1:], self.lons[1:])
         self.miles = np.concatenate(([0.0], np.cumsum(legs)))
         length = self.miles[-1]
         if total_miles is not None and length > 0:
-            # Dividing first makes the last vertex land on total_miles exactly.
+            # The polyline is a simplification of the road and comes out a
+            # little short; OSRM's driven distance is the real one. Dividing
+            # first makes the last vertex land on total_miles exactly.
             self.miles = self.miles / length * total_miles
 
     @property
@@ -127,40 +97,16 @@ class Route:
         return mile, distance
 
 
-def _segment_distances(x, y, first, last):
-    """Distance from each point strictly between first and last to the segment joining them."""
-    px = x[first + 1 : last]
-    py = y[first + 1 : last]
-    dx = x[last] - x[first]
-    dy = y[last] - y[first]
-    length_sq = dx * dx + dy * dy
-    if length_sq == 0:
-        t = 0.0
-    else:
-        t = np.clip(((px - x[first]) * dx + (py - y[first]) * dy) / length_sq, 0.0, 1.0)
-    return np.hypot(px - x[first] - t * dx, py - y[first] - t * dy)
-
-
 def simplify(points, tolerance_miles):
     """Douglas-Peucker: drop points that stay within tolerance_miles of the simplified line."""
-    if len(points) < 3:
-        return list(points)
-    coords = np.asarray(points, dtype=float)
-    y = coords[:, 0] * MILES_PER_DEGREE
-    x = coords[:, 1] * MILES_PER_DEGREE * math.cos(math.radians(coords[:, 0].mean()))
-
-    keep = np.zeros(len(points), dtype=bool)
-    keep[0] = keep[-1] = True
-    stack = [(0, len(points) - 1)]
-    while stack:
-        first, last = stack.pop()
-        if last - first < 2:
-            continue
-        distances = _segment_distances(x, y, first, last)
-        worst = int(distances.argmax())
-        if distances[worst] > tolerance_miles:
-            split = first + 1 + worst
-            keep[split] = True
-            stack.append((first, split))
-            stack.append((split, last))
-    return [p for p, kept in zip(points, keep) if kept]
+    coords = np.asarray(points, dtype=float).reshape(-1, 2)
+    originals = [tuple(p) for p in coords.tolist()]
+    if len(originals) < 3:
+        return originals
+    scale = math.cos(math.radians(coords[:, 0].mean())) * MILES_PER_DEGREE
+    xy = np.column_stack((coords[:, 1] * scale, coords[:, 0] * MILES_PER_DEGREE))
+    kept = LineString(xy).simplify(tolerance_miles, preserve_topology=False)
+    # shapely hands back coordinates rather than indices; they are the input
+    # values untouched, so they map straight back to the original points.
+    index = {tuple(p): i for i, p in enumerate(xy.tolist())}
+    return [originals[index[tuple(p)]] for p in np.asarray(kept.coords).tolist()]

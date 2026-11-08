@@ -8,12 +8,18 @@ development default, so a fresh checkout runs with no configuration at all.
 import os
 from pathlib import Path
 
+from django.core.exceptions import ImproperlyConfigured
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data"
 
-SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "dev-only-key-change-me-in-production")
 DEBUG = os.environ.get("DJANGO_DEBUG", "1") == "1"
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "")
+if not SECRET_KEY:
+    if not DEBUG:
+        raise ImproperlyConfigured("set DJANGO_SECRET_KEY when running with DJANGO_DEBUG=0")
+    SECRET_KEY = "dev-only-key"
+ALLOWED_HOSTS = [h for h in os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(",") if h]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -78,24 +84,30 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Geocoding results and routes are cached so that repeating a request does not
-# hit the external services again. In-process memory is enough here; point this
-# at Redis or memcached if the app is ever run with more than one worker.
+# go back to the external services. Files survive restarts, which matters with
+# runserver reloading on every edit; swap in Redis or memcached for a real
+# deployment with several workers.
 CACHES = {
     "default": {
-        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+        "LOCATION": BASE_DIR / ".cache",
     }
 }
 
-# --- Fuel planner -----------------------------------------------------------
+# Fuel planner.
 
 FUEL_PRICES_CSV = DATA_DIR / "fuel-prices.csv"
 CITY_COORDINATES_CSV = DATA_DIR / "city_coordinates.csv"
+# Downloaded by geocode_cities on first use; not committed.
+GEONAMES_ZIP = DATA_DIR / "geonames-US.zip"
 
 OSRM_BASE_URL = os.environ.get("OSRM_BASE_URL", "https://router.project-osrm.org")
 PHOTON_BASE_URL = os.environ.get("PHOTON_BASE_URL", "https://photon.komoot.io")
-# Sent to both services; public OSM servers want to know who is calling.
-GEOCODER_USER_AGENT = os.environ.get("GEOCODER_USER_AGENT", "fuelroute/1.0")
-EXTERNAL_TIMEOUT_SECONDS = 15
+# Public OSM servers want to know who is calling.
+USER_AGENT = os.environ.get("USER_AGENT", "fuelroute/1.0")
+# Connect and read timeouts. Three calls happen in series on a cold request,
+# so each one is kept short.
+EXTERNAL_TIMEOUT = (3, 10)
 
 VEHICLE_RANGE_MILES = 500
 VEHICLE_MPG = 10
@@ -105,7 +117,10 @@ VEHICLE_MPG = 10
 # coordinates.
 ROUTE_CORRIDOR_MILES = 10
 
-# What the planner charges itself for pulling off the highway. Without it the
-# cost-optimal plan happily adds a stop to save fifty cents. Not part of the
-# reported fuel cost; override per request with ?stop_cost=.
+# The departure fill-up is priced at the cheapest station this close to the start.
+DEPARTURE_RADIUS_MILES = 25
+
+# What the planner charges itself for pulling off the highway, so that it does
+# not add a stop to save fifty cents. Not part of the reported fuel cost;
+# override per request with ?stop_cost=.
 DEFAULT_STOP_COST = 10.0

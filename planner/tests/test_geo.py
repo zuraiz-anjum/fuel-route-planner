@@ -1,24 +1,11 @@
 import numpy as np
 from django.test import SimpleTestCase
 
-from planner.geo import Route, decode_polyline, haversine_miles, simplify
+from planner.geo import Route, haversine_miles, simplify
 
 # North along the 100th meridian from 30N to 40N, then east along 40N to 90W,
 # with a vertex every degree.
 L_ROUTE = [(lat, -100.0) for lat in range(30, 41)] + [(40.0, lon) for lon in range(-99, -89)]
-
-
-class DecodePolylineTests(SimpleTestCase):
-    def test_decodes_google_documentation_example(self):
-        points = decode_polyline("_p~iF~ps|U_ulLnnqC_mqNvxq`@")
-        expected = [(38.5, -120.2), (40.7, -120.95), (43.252, -126.453)]
-        self.assertEqual(len(points), len(expected))
-        for (lat, lon), (want_lat, want_lon) in zip(points, expected):
-            self.assertAlmostEqual(lat, want_lat, places=6)
-            self.assertAlmostEqual(lon, want_lon, places=6)
-
-    def test_decodes_empty_string_to_empty_list(self):
-        self.assertEqual(decode_polyline(""), [])
 
 
 class HaversineTests(SimpleTestCase):
@@ -106,3 +93,7 @@ class SimplifyTests(SimpleTestCase):
         self.assertEqual(simplify([(35.0, -100.0)], 0.1), [(35.0, -100.0)])
         two = [(35.0, -100.0), (36.0, -100.0)]
         self.assertEqual(simplify(two, 0.1), two)
+
+    def test_accepts_an_array_and_returns_the_original_values(self):
+        points = np.array([(35.0, -100.0), (35.0, -99.95), (35.0, -99.9), (35.02, -99.85)])
+        self.assertEqual(simplify(points, 0.01), [(35.0, -100.0), (35.0, -99.9), (35.02, -99.85)])

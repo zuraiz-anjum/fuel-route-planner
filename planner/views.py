@@ -7,7 +7,7 @@ from .forms import TripForm
 from .optimizer import NoFeasiblePlan
 from .osrm import NoRouteError, RoutingError
 from .photon import GeocodeError
-from .trip import StationsNotLoaded, UnknownPlace, plan_trip
+from .trip import NoStationNearStart, StationsNotLoaded, UnknownPlace, plan_trip
 
 
 def error(message, status):
@@ -28,7 +28,7 @@ def route_api(request):
             start_fuel_gallons=data["start_fuel"],
             stop_cost=data["stop_cost"],
         )
-    except (UnknownPlace, NoRouteError, NoFeasiblePlan) as exc:
+    except (UnknownPlace, NoRouteError, NoFeasiblePlan, NoStationNearStart) as exc:
         return error(str(exc), 422)
     except (GeocodeError, RoutingError) as exc:
         return error(str(exc), 502)
@@ -38,5 +38,6 @@ def route_api(request):
     return JsonResponse(trip)
 
 
+@require_GET
 def map_page(request):
     return render(request, "planner/map.html")

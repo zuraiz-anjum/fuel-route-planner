@@ -8,6 +8,11 @@ venv/
 # Django
 db.sqlite3
 /staticfiles/
+/.cache/
+
+# GeoNames dump fetched by geocode_cities
+data/geonames-US.zip
+data/geonames-US.part
 
 # Local configuration
 .env

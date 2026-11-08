@@ -86,7 +86,7 @@ def read_city_coordinates(path=None):
     with path.open(newline="", encoding="utf-8") as fh:
         for row in csv.DictReader(fh):
             key = city_key(row["city"], row["state"])
-            if row["lat"]:
+            if row["lat"] and row["lon"]:
                 coordinates[key] = (float(row["lat"]), float(row["lon"]))
             else:
                 coordinates[key] = None

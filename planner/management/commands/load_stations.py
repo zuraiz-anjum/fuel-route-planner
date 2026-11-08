@@ -4,7 +4,8 @@ Load the fuel price file into the database.
 Each station is attached to the coordinates of its city from the geocoding
 cache. Stations whose city is not in the cache are still loaded, without
 coordinates, so they show up in the admin; the planner ignores them.
-Running the command again updates existing rows in place.
+Running the command again updates rows in place and removes stations that
+have dropped out of the file.
 """
 
 from decimal import Decimal
@@ -14,7 +15,7 @@ from django.core.management.base import BaseCommand
 from planner.models import Station
 from planner.stations import city_key, read_city_coordinates, read_stations
 
-CENT_FRACTION = Decimal("0.0001")
+TENTH_OF_A_CENT = Decimal("0.001")
 
 
 class Command(BaseCommand):
@@ -36,7 +37,7 @@ class Command(BaseCommand):
                     city=record.city,
                     state=record.state,
                     rack_id=record.rack_id,
-                    price=record.price.quantize(CENT_FRACTION),
+                    price=record.price.quantize(TENTH_OF_A_CENT),
                     price_count=record.price_count,
                     lat=point[0] if point else None,
                     lon=point[1] if point else None,
@@ -46,8 +47,11 @@ class Command(BaseCommand):
             stations,
             update_conflicts=True,
             unique_fields=["opis_id"],
-            update_fields=["name", "address", "city", "state", "rack_id", "price", "price_count", "lat", "lon"],
+            update_fields=["name", "address", "city", "state", "rack_id", "price", "price_count", "lat", "lon", "updated_at"],
         )
+        gone, _ = Station.objects.exclude(opis_id__in=[s.opis_id for s in stations]).delete()
         self.stdout.write(
-            self.style.SUCCESS(f"{len(stations)} stations loaded, {unlocated} without coordinates")
+            self.style.SUCCESS(
+                f"{len(stations)} stations loaded, {unlocated} without coordinates, {gone} removed"
+            )
         )

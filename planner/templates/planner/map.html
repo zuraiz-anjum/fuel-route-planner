@@ -67,7 +67,8 @@
   var form = document.getElementById("trip");
   var params = new URLSearchParams(location.search);
   Array.prototype.forEach.call(form.elements, function (field) {
-    if (field.name && params.has(field.name)) field.value = params.get(field.name);
+    // The API takes the last value of a repeated parameter; so does the form.
+    if (field.name && params.has(field.name)) field.value = params.getAll(field.name).pop();
   });
   if (params.has("start") && params.has("finish")) load(params);
 
@@ -95,8 +96,8 @@
     drawn.clearLayers();
     var line = trip.route.geometry.coordinates.map(function (c) { return [c[1], c[0]]; });
     var path = L.polyline(line, { color: "#1f5fbf", weight: 4 }).addTo(drawn);
-    L.marker([trip.start.lat, trip.start.lon]).addTo(drawn).bindPopup("Start: " + trip.start.label);
-    L.marker([trip.finish.lat, trip.finish.lon]).addTo(drawn).bindPopup("Finish: " + trip.finish.label);
+    L.marker([trip.start.lat, trip.start.lon]).addTo(drawn).bindPopup("Start: " + escapeHtml(trip.start.label));
+    L.marker([trip.finish.lat, trip.finish.lon]).addTo(drawn).bindPopup("Finish: " + escapeHtml(trip.finish.label));
     trip.stops.forEach(function (stop) {
       var s = stop.station;
       L.circleMarker([s.lat, s.lon], { radius: 8, color: "#d9480f", fillColor: "#ff922b", fillOpacity: 0.9 })
@@ -130,7 +131,9 @@
     trip.stops.forEach(function (stop) {
       var s = stop.station;
       var item = document.createElement("li");
-      var where = stop.kind === "departure" ? "Before leaving" : "Mile " + stop.mile.toFixed(0);
+      var where = stop.kind === "departure"
+        ? "Before leaving"
+        : "Mile " + stop.mile.toFixed(0) + " (" + stop.leg_miles.toFixed(0) + " mi on)";
       item.appendChild(el("div", where + " — " + s.name, "where"));
       item.appendChild(el("div", s.city + ", " + s.state + " · " + s.address, "detail"));
       item.appendChild(el("div",
