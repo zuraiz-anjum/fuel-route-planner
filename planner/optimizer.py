@@ -1,25 +1,24 @@
 """
 Choosing where to buy fuel along a route, and how much.
 
-The route arrives here already reduced to a line: candidate stations at mile
-markers, each with a price per gallon. The search is a dynamic programme over
-the range left in the tank, counted in whole miles rather than gallons, so the
-state at each stop is a small array holding the cheapest way to be there with
-0..500 miles in the tank. Whole miles make the answer exact up to a one-mile
-grid, which is much finer than the city centroids the stations are placed by,
-and they let each stop be handled with a few numpy operations over the whole
-array instead of a loop over fuel levels.
+The route arrives here reduced to a line: candidate stations at mile markers,
+each with a price and how far it sits off the road. The search is a dynamic
+programme over the range left in the tank, counted in tenths of a mile, so
+the state at each stop is one array holding the cheapest way to be there with
+any amount of fuel. Each stop is then a few vectorised operations, and the
+answer is exact to a tenth of a mile.
 
 Every purchase away from the origin is charged a fixed stop cost in the
-objective. Without it the cheapest plan will pull off the highway to save
-fifty cents. The stop cost only steers the choice of stops; it is never part
-of the money reported as spent.
+objective so the plan does not pull off the highway to save fifty cents. The
+stop cost only steers the choice; it is never part of the money reported.
 """
 
 import math
 from dataclasses import dataclass
 
 import numpy as np
+
+STEPS_PER_MILE = 10
 
 
 @dataclass(frozen=True)
@@ -29,14 +28,15 @@ class Candidate:
     mile: float  # distance from the origin along the route
     price: float  # dollars per gallon
     ref: object = None  # opaque handle for the caller; never inspected here
+    off_route_miles: float = 0.0  # one way; stopping means driving it there and back
 
 
 @dataclass(frozen=True)
 class Purchase:
     candidate: Candidate
     gallons: float
-    tank_on_arrival: float  # gallons
-    tank_on_departure: float  # gallons
+    tank_on_arrival: float  # gallons, on the route before turning off
+    tank_on_departure: float  # gallons, back on the route afterwards
     cost: float  # gallons * price, without the stop cost
 
 
@@ -54,54 +54,52 @@ class NoFeasiblePlan(Exception):
     def __init__(self, from_mile, to_mile):
         self.from_mile = from_mile
         self.to_mile = to_mile
-        super().__init__(
-            f"no fuel stop within range between mile {from_mile:.0f} and mile {to_mile:.0f}"
-        )
+        super().__init__(f"no fuel stop within range between mile {from_mile:.1f} and mile {to_mile:.1f}")
 
 
 def plan_fuel_stops(candidates, total_miles, *, departure=None, range_miles=500.0, mpg=10.0,
                     start_fuel_gallons=0.0, stop_cost=0.0):
     """Choose purchases that get the vehicle to total_miles for the least money."""
-    full = round(range_miles)
+    full = round(range_miles * STEPS_PER_MILE)
     levels = np.arange(full + 1)
     cost = np.full(full + 1, np.inf)
-    # The allowance keeps a full 50 gallons that arrives as 49.9999999 from
-    # losing a mile; otherwise rounding down is the safe direction.
-    cost[min(full, math.floor(start_fuel_gallons * mpg + 1e-9))] = 0.0
+    # The allowance keeps a full tank that arrives as 49.9999999 gallons from
+    # losing a step; otherwise rounding down is the safe direction.
+    cost[min(full, math.floor(start_fuel_gallons * mpg * STEPS_PER_MILE + 1e-6))] = 0.0
 
     visits = []
     if departure is not None:
-        visits.append((0, 0.0, departure, 0.0))
+        visits.append((0, 0.0, departure, 0, 0.0))
     for candidate in sorted((c for c in candidates if 0 <= c.mile <= total_miles), key=lambda c: c.mile):
-        visits.append((round(candidate.mile), candidate.mile, candidate, stop_cost))
-    visits.append((math.ceil(total_miles), total_miles, None, 0.0))
+        position = round(candidate.mile * STEPS_PER_MILE)
+        detour = round(candidate.off_route_miles * STEPS_PER_MILE)
+        visits.append((position, candidate.mile, candidate, detour, stop_cost))
+    visits.append((math.ceil(total_miles * STEPS_PER_MILE), total_miles, None, 0, 0.0))
 
     steps = []
     here, here_mile = 0, 0.0
-    for position, mile, candidate, penalty in visits:
+    for position, mile, candidate, detour, penalty in visits:
         gap = position - here
         if gap > full:
             raise NoFeasiblePlan(here_mile, mile)
-        if gap:
-            cost[:-gap] = cost[gap:]
-            cost[-gap:] = np.inf
-            if cost.min() == np.inf:
-                raise NoFeasiblePlan(here_mile, mile)
+        cost = drive(cost, gap)
+        if cost.min() == np.inf:
+            raise NoFeasiblePlan(here_mile, mile)
         here, here_mile = position, mile
         if candidate is None:
             break
-
-        # Leaving with L after arriving with a <= L costs cost[a] + (L - a) * price per
-        # mile, so the best a for every L is a running minimum of cost[a] - a * price.
-        price_of_levels = levels * (candidate.price / mpg)
-        base = cost - price_of_levels
-        running = np.minimum.accumulate(base)
-        source = np.maximum.accumulate(np.where(base <= running, levels, 0))
-        bought = running + price_of_levels + penalty
-        # The margin makes float noise count as a tie, and a tie means not stopping.
-        better = bought < cost - 1e-9
-        cost = np.where(better, bought, cost)
-        steps.append((position, candidate, np.where(better, source, -1)))
+        # Stopping means driving out to the station and back, so the purchase
+        # is weighed on what is left after the way out, and the way back comes
+        # off again. Passing by costs nothing.
+        bought, source = buy(drive(cost, detour), levels, candidate.price / mpg / STEPS_PER_MILE, penalty)
+        back = drive(bought, detour)
+        from_level = np.full(full + 1, -1)
+        from_level[: full + 1 - detour] = source[detour:]
+        # Only a stop that actually buys fuel counts; turning off and coming
+        # back empty-handed is never a plan.
+        better = (back < cost - 1e-6) & (from_level < levels + detour)
+        steps.append((position, candidate, detour, np.where(better, from_level, -1)))
+        cost = np.where(better, back, cost)
 
     arrival = int(np.argmin(cost))
     purchases = _backtrack(steps, here, arrival, mpg)
@@ -109,26 +107,50 @@ def plan_fuel_stops(candidates, total_miles, *, departure=None, range_miles=500.
         purchases=purchases,
         total_gallons=math.fsum(p.gallons for p in purchases),
         total_cost=math.fsum(p.cost for p in purchases),
-        tank_on_arrival=arrival / mpg,
+        tank_on_arrival=arrival / STEPS_PER_MILE / mpg,
     )
+
+
+def drive(cost, steps):
+    """Range left after driving steps forward; levels that run dry become impossible."""
+    if steps == 0:
+        return cost
+    driven = np.full_like(cost, np.inf)
+    driven[:-steps] = cost[steps:]
+    return driven
+
+
+def buy(cost, levels, price_per_step, penalty):
+    """Cheapest way to leave at each level after buying here, and the level each came from."""
+    # Leaving with L after arriving with a <= L costs cost[a] + (L - a) * price,
+    # so the best a for every L is a running minimum of cost[a] - a * price.
+    base = cost - levels * price_per_step
+    running = np.minimum.accumulate(base)
+    source = np.maximum.accumulate(np.where(base <= running, levels, 0))
+    return running + levels * price_per_step + penalty, source
 
 
 def _backtrack(steps, destination, arrival, mpg):
     """Walk back from the destination and return the purchases in route order."""
+    gallons_per_step = 1 / STEPS_PER_MILE / mpg
     purchases = []
     level, ahead = arrival, destination
-    for position, candidate, bought_from in reversed(steps):
+    for position, candidate, detour, from_level in reversed(steps):
         leaving = level + ahead - position
-        level = int(bought_from[leaving]) if bought_from[leaving] >= 0 else leaving
-        if leaving > level:
-            gallons = (leaving - level) / mpg
-            purchases.append(Purchase(
-                candidate=candidate,
-                gallons=gallons,
-                tank_on_arrival=level / mpg,
-                tank_on_departure=leaving / mpg,
-                cost=gallons * candidate.price,
-            ))
+        pumped_from = int(from_level[leaving])
+        if pumped_from >= 0:
+            level = pumped_from + detour
+            purchases.append(
+                Purchase(
+                    candidate=candidate,
+                    gallons=(leaving + detour - pumped_from) * gallons_per_step,
+                    tank_on_arrival=level * gallons_per_step,
+                    tank_on_departure=leaving * gallons_per_step,
+                    cost=(leaving + detour - pumped_from) * gallons_per_step * candidate.price,
+                )
+            )
+        else:
+            level = leaving
         ahead = position
     purchases.reverse()
     return purchases

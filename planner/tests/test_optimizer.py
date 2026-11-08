@@ -160,3 +160,44 @@ class PlanFuelStopsTests(SimpleTestCase):
             self.assertAlmostEqual(plan.total_gallons, sum(p.gallons for p in plan.purchases))
             self.assertAlmostEqual(plan.total_cost, sum(p.cost for p in plan.purchases))
             self.assertGreaterEqual(plan.total_gallons * MPG, total_miles - 1e-9, msg=f"instance {n}")
+
+
+class DetourTests(SimpleTestCase):
+    def test_detour_fuel_is_carried_there_and_bought_back(self):
+        departure = Candidate(0.0, 3.00, ref="origin")
+        cheap = Candidate(100.0, 2.00, ref="cheap", off_route_miles=5.0)
+        plan = plan_fuel_stops([cheap], 300.0, departure=departure)
+        # 105 miles of fuel to reach the pump; then 5 miles back plus 200 on.
+        self.assertAlmostEqual(plan.purchases[0].gallons, 10.5)
+        self.assertAlmostEqual(plan.purchases[1].tank_on_arrival, 0.5)
+        self.assertAlmostEqual(plan.purchases[1].gallons, 20.5)
+        self.assertAlmostEqual(plan.purchases[1].tank_on_departure, 20.0)
+        self.assertAlmostEqual(plan.total_gallons, 31.0)
+
+    def test_station_beyond_the_fuel_left_for_its_detour_is_skipped(self):
+        far_off = Candidate(492.0, 1.00, ref="tempting", off_route_miles=9.0)
+        plan = plan_fuel_stops([far_off], 495.0, start_fuel_gallons=TANK)
+        self.assertEqual(plan.purchases, [])
+
+    def test_detour_can_outweigh_a_lower_price(self):
+        departure = Candidate(0.0, 3.00, ref="origin")
+        on_route = Candidate(100.0, 2.90, ref="on")
+        off_route = Candidate(100.0, 2.85, ref="off", off_route_miles=8.0)
+        plan = plan_fuel_stops([on_route, off_route], 300.0, departure=departure)
+        self.assertEqual([p.candidate.ref for p in plan.purchases], ["origin", "on"])
+
+
+class GridTests(SimpleTestCase):
+    def test_positions_are_kept_to_a_tenth_of_a_mile(self):
+        departure = Candidate(0.0, 3.00)
+        # A real gap of 500.8 miles cannot be driven on a 500-mile tank.
+        with self.assertRaises(NoFeasiblePlan):
+            plan_fuel_stops([Candidate(0.6, 3.00), Candidate(501.4, 3.00)], 600.0, departure=departure)
+        # A real gap of 499.9 can.
+        plan = plan_fuel_stops([Candidate(0.4, 3.00), Candidate(500.3, 3.00)], 600.0, departure=departure)
+        self.assertAlmostEqual(plan.total_gallons, 60.0)
+
+    def test_infeasible_message_names_the_gap(self):
+        with self.assertRaises(NoFeasiblePlan) as caught:
+            plan_fuel_stops([Candidate(0.4, 3.00)], 520.7, departure=Candidate(0.0, 3.00))
+        self.assertEqual(str(caught.exception), "no fuel stop within range between mile 0.4 and mile 520.7")
