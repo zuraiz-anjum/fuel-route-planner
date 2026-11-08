@@ -25,7 +25,11 @@ PARTLY_DONE = (
     "New Castle,DE,,,,\n"
 )
 
-GAZETTEER = {("bigcabin", "OK"): (36.5, -95.2, "Big Cabin")}
+class FakeGazetteer:
+    places = {("Big Cabin", "OK"): (36.5, -95.2, "Big Cabin")}
+
+    def find(self, city, state):
+        return self.places.get((city, state))
 
 GILA_BEND = Place(lat=32.9478, lon=-112.7168, label="Gila Bend, Arizona, United States")
 
@@ -46,8 +50,8 @@ class GeocodeCitiesCommandTests(SimpleTestCase):
         self.zip.touch()
         self.addCleanup(mock.patch.stopall)
         mock.patch("planner.management.commands.geocode_cities.ensure_dump", return_value=self.zip).start()
-        self.build_index = mock.patch(
-            "planner.management.commands.geocode_cities.build_index", return_value=GAZETTEER
+        self.gazetteer = mock.patch(
+            "planner.management.commands.geocode_cities.Gazetteer", return_value=FakeGazetteer()
         ).start()
         self.photon = mock.patch(
             "planner.management.commands.geocode_cities.geocode_city", side_effect=photon_answers
@@ -104,10 +108,10 @@ class GeocodeCitiesCommandTests(SimpleTestCase):
 
     def test_nothing_left_to_look_up_does_not_load_the_gazetteer(self):
         self.run_command()
-        self.build_index.reset_mock()
+        self.gazetteer.reset_mock()
         stdout, _ = self.run_command()
         self.assertIn("3 cities, 3 cached, 0 to look up", stdout)
-        self.build_index.assert_not_called()
+        self.gazetteer.assert_not_called()
 
     def test_header_is_written_once_across_runs(self):
         self.run_command()

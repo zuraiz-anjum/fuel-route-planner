@@ -20,7 +20,7 @@ import time
 from django.conf import settings
 from django.core.management.base import BaseCommand
 
-from planner.geonames import build_index, ensure_dump, normalize_name
+from planner.geonames import Gazetteer, ensure_dump
 from planner.photon import GeocodeError, geocode_city
 from planner.stations import city_key, read_city_coordinates, read_stations
 
@@ -70,7 +70,7 @@ class Command(BaseCommand):
 
         if not settings.GEONAMES_ZIP.exists():
             self.stdout.write("downloading the GeoNames US gazetteer (about 80 MB)")
-        gazetteer = build_index(ensure_dump())
+        gazetteer = Gazetteer(ensure_dump(), todo)
 
         write_header = not path.exists() or path.stat().st_size == 0
         found = asked = missing = 0
@@ -81,7 +81,7 @@ class Command(BaseCommand):
 
             leftovers = []
             for city, state in todo:
-                point = gazetteer.get((normalize_name(city), state))
+                point = gazetteer.find(city, state)
                 if point is None:
                     leftovers.append((city, state))
                     continue
