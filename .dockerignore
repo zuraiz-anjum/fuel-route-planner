@@ -1,0 +1,12 @@
+.git
+.github
+.venv
+.cache
+.idea
+.vscode
+__pycache__
+*.pyc
+db.sqlite3
+staticfiles
+data/geonames-US.zip
+data/geonames-US.part

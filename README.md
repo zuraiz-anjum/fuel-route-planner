@@ -42,6 +42,20 @@ coordinates" below says how it was made and when to remake it.
 `/healthz/` answers 200 with the station counts once they are loaded and 503
 before, without calling anything external.
 
+### In a container
+
+    docker build -t fuel-route-planner .
+    docker run --rm -p 8000:8000 fuel-route-planner
+
+The image runs gunicorn with `DJANGO_DEBUG=0`, serves its own static files
+through WhiteNoise, and on every start migrates and loads the stations
+before listening on port 8000, so there is nothing to keep between runs. It
+accepts any `Host` header on the assumption that a proxy in front of it
+checks that; set `DJANGO_ALLOWED_HOSTS` to pin it. Without a
+`DJANGO_SECRET_KEY` a fresh one is generated at each start, which only
+matters for staying logged in to the admin across restarts. The container's
+`HEALTHCHECK` polls `/healthz/`.
+
 ## The API
 
 `GET /api/route/`
@@ -257,7 +271,7 @@ Everything has a development default. Override with environment variables:
 |----------|---------|
 | `DJANGO_DEBUG` | `1`; set `0` in production, which then requires a secret key |
 | `DJANGO_SECRET_KEY` | a fixed development key while `DJANGO_DEBUG=1` |
-| `DJANGO_ALLOWED_HOSTS` | `localhost,127.0.0.1` |
+| `DJANGO_ALLOWED_HOSTS` | `localhost,127.0.0.1`; `*` in the image |
 | `OSRM_BASE_URL` | `https://router.project-osrm.org` |
 | `PHOTON_BASE_URL` | `https://photon.komoot.io` |
 | `USER_AGENT` | `fuelroute/1.0`, sent to both services |
@@ -274,10 +288,12 @@ GeoNames matching, the city table and its extraction, route geometry, the
 optimiser (including the comparison with the greedy algorithm on random
 routes), both external clients with canned responses, the geocoding command,
 and the API with the external services mocked. They run in a few seconds,
-need no network, and run on GitHub Actions for every push.
+need no network, and run on GitHub Actions for every push, which also builds
+the image and waits for its health check.
 
 ## Layout
 
+    Dockerfile, docker-entrypoint.sh
     data/                     price file, station city coordinates, US city table
     fuelroute/                settings and the URL root
     planner/
