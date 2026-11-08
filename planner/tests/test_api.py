@@ -10,6 +10,7 @@ from django.test import TestCase, override_settings
 from django.urls import reverse
 from rest_framework.throttling import AnonRateThrottle
 
+from planner import trip
 from planner.geo import haversine_miles
 from planner.models import Station
 from planner.osrm import NoRouteError, RouteResult, RoutingError
@@ -287,23 +288,60 @@ class RouteApiTests(TestCase):
         self.assertEqual(self.fetch_route.call_count, 1)
 
 
+def slow_route(*args):
+    time.sleep(0.2)
+    return straight_route()
+
+
+def together(count, function, *args):
+    """Run the call in several threads at once; collect what each returned or raised."""
+    outcomes = [None] * count
+
+    def run(i):
+        try:
+            outcomes[i] = ("ok", function(*args))
+        except Exception as exc:
+            outcomes[i] = ("error", exc)
+
+    threads = [threading.Thread(target=run, args=(i,)) for i in range(count)]
+    for thread in threads:
+        thread.start()
+    for thread in threads:
+        thread.join()
+    return outcomes
+
+
 @override_settings(CACHES=LOCAL_CACHE)
 class RouteFetchTests(TestCase):
-    def test_identical_requests_arriving_together_fetch_the_route_once(self):
+    def setUp(self):
         cache.clear()
 
-        def slow_route(*args):
-            time.sleep(0.2)
-            return straight_route()
-
+    def test_identical_requests_arriving_together_fetch_the_route_once(self):
         with mock.patch("planner.trip.fetch_route", side_effect=slow_route) as fetch:
-            threads = [threading.Thread(target=load_leg, args=(START, FINISH)) for _ in range(3)]
-            for thread in threads:
-                thread.start()
-            for thread in threads:
-                thread.join()
+            outcomes = together(3, load_leg, START, FINISH)
         self.assertEqual(fetch.call_count, 1)
+        self.assertEqual([kind for kind, _ in outcomes], ["ok"] * 3)
         self.assertIsNotNone(cache.get("route:35.00000,-100.00000:35.00000,-80.00000"))
+
+    def test_waiters_get_the_answer_even_when_the_cache_cannot_keep_it(self):
+        with (
+            mock.patch("planner.trip.fetch_route", side_effect=slow_route) as fetch,
+            mock.patch("planner.trip.cache_set"),
+        ):
+            outcomes = together(3, load_leg, START, FINISH)
+        self.assertEqual(fetch.call_count, 1)
+        self.assertEqual(len({id(leg) for _, leg in outcomes}), 1)
+
+    def test_a_failed_fetch_fails_the_waiters_too_and_leaves_nothing_behind(self):
+        def failing_route(*args):
+            time.sleep(0.2)
+            raise RoutingError("routing service unavailable")
+
+        with mock.patch("planner.trip.fetch_route", side_effect=failing_route) as fetch:
+            outcomes = together(3, load_leg, START, FINISH)
+        self.assertEqual(fetch.call_count, 1)
+        self.assertTrue(all(kind == "error" and isinstance(exc, RoutingError) for kind, exc in outcomes))
+        self.assertEqual(trip._flights, {})
 
 
 class HealthTests(TestCase):

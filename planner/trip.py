@@ -139,28 +139,49 @@ def resolve_place(query):
     return place
 
 
-_fetching = {}
-_fetching_guard = threading.Lock()
+class Flight:
+    """One route fetch in progress, and the answer for everyone waiting on it."""
+
+    def __init__(self):
+        self.done = threading.Event()
+        self.leg = None
+        self.error = None
+
+
+_flights = {}
+_flights_guard = threading.Lock()
 
 
 def load_leg(start, finish):
     """The route between two places, cached so that repeats cost nothing."""
     key = "route:%.5f,%.5f:%.5f,%.5f" % (start.lat, start.lon, finish.lat, finish.lon)
     leg = cache_get(key)
-    if leg is None:
-        # Identical requests arriving together wait for one fetch instead of
-        # each asking OSRM. The lock is per process, which is as far as it
-        # needs to go here.
-        with _fetching_guard:
-            lock = _fetching.setdefault(key, threading.Lock())
-        with lock:
-            leg = cache_get(key)
-            if leg is None:
-                leg = fetch_leg(start, finish)
-                cache_set(key, leg, ROUTE_CACHE_SECONDS)
-        with _fetching_guard:
-            _fetching.pop(key, None)
-    return leg
+    if leg is not None:
+        return leg
+    # Identical requests arriving together share one fetch instead of each
+    # asking OSRM: the first in fetches, the rest wait for its answer, or its
+    # error. Per process, which is as far as it needs to go here.
+    with _flights_guard:
+        flight = _flights.get(key)
+        leading = flight is None
+        if leading:
+            flight = _flights[key] = Flight()
+    if not leading:
+        flight.done.wait()
+        if flight.error is not None:
+            raise flight.error
+        return flight.leg
+    try:
+        flight.leg = fetch_leg(start, finish)
+        cache_set(key, flight.leg, ROUTE_CACHE_SECONDS)
+        return flight.leg
+    except Exception as exc:
+        flight.error = exc
+        raise
+    finally:
+        with _flights_guard:
+            _flights.pop(key, None)
+        flight.done.set()
 
 
 def fetch_leg(start, finish):
