@@ -227,6 +227,10 @@ def plan_trip(start_query, finish_query, start_fuel_gallons=0.0, stop_cost=None)
         )
         previous_mile = candidate.mile
 
+    # Totals are sums of the figures shown, so the arithmetic checks to the cent.
+    total_gallons = round(sum(stop["gallons"] for stop in stops), 2)
+    total_cost = round(sum(stop["cost"] for stop in stops), 2)
+
     return {
         "start": describe(start, start_query),
         "finish": describe(finish, finish_query),
@@ -248,11 +252,9 @@ def plan_trip(start_query, finish_query, start_fuel_gallons=0.0, stop_cost=None)
         "stops": stops,
         "summary": {
             "fuel_consumed_gallons": round(route.total_miles / mpg, 2),
-            "fuel_purchased_gallons": round(plan.total_gallons, 2),
-            "total_fuel_cost": round(plan.total_cost, 2),
-            "average_price_per_gallon": (
-                round(plan.total_cost / plan.total_gallons, 3) if plan.total_gallons else None
-            ),
+            "fuel_purchased_gallons": total_gallons,
+            "total_fuel_cost": total_cost,
+            "average_price_per_gallon": round(total_cost / total_gallons, 3) if total_gallons else None,
             "tank_on_arrival_gallons": round(plan.tank_on_arrival, 2),
             "en_route_stops": sum(1 for stop in stops if stop["kind"] == "en_route"),
         },

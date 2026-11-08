@@ -148,6 +148,14 @@ class RouteApiTests(TestCase):
         self.assertEqual(response.json()["error"], "start and finish are the same place")
         self.fetch_route.assert_not_called()
 
+    def test_totals_are_the_sums_of_the_stops_shown(self):
+        self.seed_stations()
+        trip = self.plan(stop_cost=0).json()
+        self.assertEqual(trip["summary"]["total_fuel_cost"], round(sum(s["cost"] for s in trip["stops"]), 2))
+        self.assertEqual(
+            trip["summary"]["fuel_purchased_gallons"], round(sum(s["gallons"] for s in trip["stops"]), 2)
+        )
+
     def test_coordinates_outside_the_us_are_rejected(self):
         self.seed_stations()
         response = self.plan(start="51.5,-0.1")
