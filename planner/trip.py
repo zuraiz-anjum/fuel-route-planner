@@ -176,7 +176,8 @@ def load_leg(start, finish):
         flight.leg = fetch_leg(start, finish)
         cache_set(key, flight.leg, ROUTE_CACHE_SECONDS)
         return flight.leg
-    except Exception as exc:
+    except BaseException as exc:
+        # Including an interrupt: waiters must never be handed an empty flight.
         flight.error = exc
         raise
     finally:
