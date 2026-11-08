@@ -58,6 +58,14 @@ class Route:
     def total_miles(self):
         return float(self.miles[-1])
 
+    # The mileage is derived from the points; recomputing it on the way out
+    # of the cache costs a few milliseconds, storing it a third of the bytes.
+    def __getstate__(self):
+        return {"lats": self.lats, "lons": self.lons, "total_miles": self.total_miles}
+
+    def __setstate__(self, state):
+        self.__init__(np.column_stack((state["lats"], state["lons"])), state["total_miles"])
+
     def sample(self, step_miles=1.0):
         """Points every step_miles along the route: (lats, lons, miles) arrays, both ends included."""
         total = self.total_miles
@@ -100,13 +108,14 @@ class Route:
 def simplify(points, tolerance_miles):
     """Douglas-Peucker: drop points that stay within tolerance_miles of the simplified line."""
     coords = np.asarray(points, dtype=float).reshape(-1, 2)
-    originals = [tuple(p) for p in coords.tolist()]
-    if len(originals) < 3:
-        return originals
+    if len(coords) < 3:
+        return [tuple(p) for p in coords.tolist()]
     scale = math.cos(math.radians(coords[:, 0].mean())) * MILES_PER_DEGREE
     xy = np.column_stack((coords[:, 1] * scale, coords[:, 0] * MILES_PER_DEGREE))
-    kept = LineString(xy).simplify(tolerance_miles, preserve_topology=False)
-    # shapely hands back coordinates rather than indices; they are the input
-    # values untouched, so they map straight back to the original points.
-    index = {tuple(p): i for i, p in enumerate(xy.tolist())}
-    return [originals[index[tuple(p)]] for p in np.asarray(kept.coords).tolist()]
+    kept = np.asarray(LineString(xy).simplify(tolerance_miles, preserve_topology=False).coords)
+    # Back from miles to degrees. Rounding to a nanodegree takes out the
+    # floating-point noise of the round trip, so the input values come back
+    # exactly as they went in.
+    lats = np.round(kept[:, 1] / MILES_PER_DEGREE, 9)
+    lons = np.round(kept[:, 0] / scale, 9)
+    return list(zip(lats.tolist(), lons.tolist()))
