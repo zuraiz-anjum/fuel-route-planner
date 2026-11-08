@@ -71,11 +71,12 @@ def plan_fuel_stops(candidates, total_miles, *, departure=None, range_miles=500.
     if departure is not None:
         visits.append((0, 0.0, departure, 0, 0.0))
     finish = math.ceil(total_miles * STEPS_PER_MILE)
-    for candidate in sorted((c for c in candidates if c.mile >= 0), key=lambda c: c.mile):
+    # A station in the last tenth of a mile is at the finish for all the model
+    # can tell, and the only thing to buy there is a few drops; finishing in a
+    # station's own town puts one there every time.
+    last_useful_mile = total_miles - 1 / STEPS_PER_MILE
+    for candidate in sorted((c for c in candidates if 0 <= c.mile <= last_useful_mile), key=lambda c: c.mile):
         position = round(candidate.mile * STEPS_PER_MILE)
-        if position >= finish:
-            # A station at the finish is no use; the plan would buy a few drops there.
-            break
         detour = round(candidate.off_route_miles * STEPS_PER_MILE)
         visits.append((position, candidate.mile, candidate, detour, stop_cost))
     visits.append((finish, total_miles, None, 0, 0.0))

@@ -1,3 +1,4 @@
+import math
 import random
 
 from django.test import SimpleTestCase
@@ -128,11 +129,20 @@ class PlanFuelStopsTests(SimpleTestCase):
         self.assertAlmostEqual(plan.total_cost, 105.0)
 
     def test_a_station_at_the_finish_is_not_a_stop(self):
+        # Whatever the trip length does to the rounding: a whole tenth, a hair
+        # over one, and the Tallahassee to Mobile length that slipped through.
         departure = Candidate(0.0, 3.00)
-        stations = [Candidate(299.98, 1.00, ref="at the finish"), Candidate(300.0, 1.00, ref="past it")]
-        plan = plan_fuel_stops(stations, 300.0, departure=departure)
-        self.assertEqual([p.candidate.ref for p in plan.purchases], [None])
-        self.assertAlmostEqual(plan.total_cost, 90.0)
+        for total in (300.0, 300.04, 243.24):
+            stations = [Candidate(total - 0.05, 1.00, ref="at the finish"), Candidate(total, 1.00, ref="on the line")]
+            plan = plan_fuel_stops(stations, total, departure=departure)
+            self.assertEqual([p.candidate.ref for p in plan.purchases], [None], total)
+            # The finish rounds up to the next tenth of a mile, the safe direction.
+            self.assertAlmostEqual(plan.total_cost, math.ceil(total * 10) / 100 * 3.00, places=6)
+
+    def test_a_station_a_little_before_the_finish_is_still_a_stop(self):
+        departure = Candidate(0.0, 3.00)
+        plan = plan_fuel_stops([Candidate(299.8, 1.00, ref="just before")], 300.0, departure=departure)
+        self.assertEqual([p.candidate.ref for p in plan.purchases], [None, "just before"])
 
     def test_cheaper_of_two_stations_at_same_mile_is_used(self):
         departure = Candidate(0.0, 3.50)
