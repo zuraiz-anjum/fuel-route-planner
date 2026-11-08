@@ -75,7 +75,7 @@ class Command(BaseCommand):
         write_header = not path.exists() or path.stat().st_size == 0
         found = asked = missing = 0
         with path.open("a", newline="", encoding="utf-8") as fh:
-            writer = csv.DictWriter(fh, fieldnames=FIELDS)
+            writer = csv.DictWriter(fh, fieldnames=FIELDS, lineterminator="\n")
             if write_header:
                 writer.writeheader()
 
