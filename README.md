@@ -152,8 +152,11 @@ gallons from somewhere, and the plan accounts for all of them. By default the
 tank is treated as empty at the start and the first entry in `stops` is a
 fill-up before leaving, priced at the cheapest station within 10 miles of the
 start (or the nearest one within 100 miles, if there is nothing closer).
-Every stop after that is at a station from the price file that sits within
-10 miles of the route. `total_fuel_cost` is what all that fuel costs at the
+That first stop prices the fuel; it is not a leg of the trip. Its distance
+from the start is reported for information and is not driven in the model,
+since a truck that starts empty has to be got to a pump somehow and the
+model has no opinion on how. Every stop after that is at a station from the
+price file that sits within 10 miles of the route. `total_fuel_cost` is what all that fuel costs at the
 pump. Pass `start_fuel=50` to plan a trip that leaves on a full tank; then
 only the fuel bought on the way is counted, and a trip shorter than the
 range needs no stop at all.
@@ -168,8 +171,10 @@ planner weighs options it charges each stop en route `stop_cost` (default
 $10, roughly what a stop costs in time). The penalty only shapes the choice;
 it is never added to the reported cost. Set `stop_cost=0` for the pure
 price-optimal plan. On the price file as it stands, New York to Los Angeles
-makes 6 stops at the default and 8 stops at zero, to save $3.72; Chicago to
-Atlanta makes 1 stop instead of 3, giving up $3.56.
+makes 6 stops at the default and 9 stops at zero, to save about $4; Chicago
+to Atlanta makes 1 stop instead of 3, giving up about $3.50. (The routes
+come from a live map, so the cents drift from one month to the next; the
+shape of the answer does not.)
 
 Turning off to a station costs fuel too. Each station's distance from the
 route is driven there and back in the model, so a station eight miles off
@@ -180,7 +185,10 @@ to the pump.
 The optimiser is exact for this model to a tenth of a mile: it is a dynamic
 programme over how much range is left in the tank at each station
 (`planner/optimizer.py` explains it). The tests check it against the textbook
-greedy algorithm on random routes.
+greedy algorithm on random routes. It runs the tank down to the last tenth
+of a mile and keeps no reserve, because the brief fixes the range at 500
+miles; a planner for real trucks would set `VEHICLE_RANGE_MILES` to what the
+driver is willing to use and keep the rest.
 
 ## How a request is served
 
@@ -197,13 +205,14 @@ greedy algorithm on random routes.
    marker and with its distance from the road.
 4. The optimiser picks the stops.
 
-A cold request makes one external call for cities and coordinates, at most
-three otherwise, and takes under two seconds, nearly all of it waiting for
-OSRM. Repeating it takes
-30 ms for a short trip and under 300 ms coast to coast, which is the
-corridor match over 6,600 stations plus the optimiser. The cache is a
-directory of files under `.cache/`, so it survives the development server
-restarting.
+A cold request makes one external call for cities and coordinates and
+three otherwise (two geocodes and the route; a geocode answered 429 or 503
+is retried once), and takes about two seconds, nearly all of it waiting for
+OSRM. Repeating it takes about 25 ms for a short trip and about 300 ms
+coast to coast, which is the corridor match over 6,600 stations plus the
+optimiser. The cache is a directory of files under `.cache/`, so it
+survives the development server restarting; two identical requests
+arriving together share one fetch.
 
 ## Station coordinates
 
@@ -299,11 +308,11 @@ default stop cost live at the bottom of `fuelroute/settings.py`.
 
     python manage.py test
 
-A hundred and twenty-eight tests cover the price file reader and loader, the
-GeoNames matching, the city table and its extraction, route geometry, the
-optimiser (including the comparison with the greedy algorithm on random
-routes), both external clients with canned responses, the geocoding command,
-and the API with the external services mocked. They run in a few seconds,
+A hundred and thirty-seven tests cover the price file reader and loader, the
+GeoNames matching, the city table and its extraction, the outline, route
+geometry, the optimiser (including the comparison with the greedy algorithm
+on random routes), both external clients with canned responses, the
+geocoding command, and the API with the external services mocked. They run in a few seconds,
 need no network, and run on GitHub Actions for every push, which also builds
 the image and waits for its health check.
 
