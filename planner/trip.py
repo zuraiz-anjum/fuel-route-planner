@@ -40,6 +40,11 @@ US_BOXES = [
 # cross-country polyline from tens of thousands of points down to a few thousand.
 RESPONSE_GEOMETRY_TOLERANCE_MILES = 0.03
 
+# "Dallas" and "Dallas, TX" resolve to slightly different points; a trip
+# between them is not a trip. Checked after geocoding, since the two inputs
+# can be spelt quite differently and still mean the same place.
+SAME_PLACE_MILES = 0.5
+
 # With no station within this distance of the start there is nowhere to fill
 # up before leaving, and the caller has to say how much fuel is in the tank.
 DEPARTURE_REACH_MILES = 100
@@ -54,6 +59,11 @@ class UnknownPlace(Exception):
 class StationsNotLoaded(Exception):
     def __init__(self):
         super().__init__("no stations in the database; run manage.py load_stations")
+
+
+class SamePlace(Exception):
+    def __init__(self):
+        super().__init__("start and finish are the same place")
 
 
 class NoStationNearStart(Exception):
@@ -166,6 +176,8 @@ def plan_trip(start_query, finish_query, start_fuel_gallons=0.0, stop_cost=None)
 
     start = resolve_place(start_query)
     finish = resolve_place(finish_query)
+    if haversine_miles(start.lat, start.lon, finish.lat, finish.lon) < SAME_PLACE_MILES:
+        raise SamePlace()
     leg = load_leg(start, finish)
     route = leg.route
 

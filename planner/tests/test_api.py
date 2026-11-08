@@ -140,6 +140,13 @@ class RouteApiTests(TestCase):
         self.geocode.assert_not_called()
         self.assertEqual(response.json()["start"]["label"], "Amarillo, Texas, United States")
 
+    def test_start_and_finish_in_the_same_place_are_rejected(self):
+        self.seed_stations()
+        response = self.plan(start="Dallas, TX", finish="dallas texas")
+        self.assertEqual(response.status_code, 422)
+        self.assertEqual(response.json()["error"], "start and finish are the same place")
+        self.fetch_route.assert_not_called()
+
     def test_coordinates_outside_the_us_are_rejected(self):
         self.seed_stations()
         response = self.plan(start="51.5,-0.1")
