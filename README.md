@@ -208,9 +208,9 @@ driver is willing to use and keep the rest.
 A cold request makes one external call for cities and coordinates and
 three otherwise (two geocodes and the route; a geocode answered 429 or 503
 is retried once), and takes about two seconds, nearly all of it waiting for
-OSRM. Repeating it takes about 25 ms for a short trip and about 300 ms
-coast to coast, which is the corridor match over 6,600 stations plus the
-optimiser. The cache is a directory of files under `.cache/`, so it
+OSRM. Repeating it takes tens of milliseconds for a short trip and a few
+hundred coast to coast, which is the corridor match over 6,600 stations plus
+the optimiser. The cache is a directory of files under `.cache/`, so it
 survives the development server restarting; two identical requests
 arriving together share one fetch.
 
@@ -240,9 +240,11 @@ census tracts and hamlets with bigger populations than the towns they are
 named after; Oak Grove, KY and its five stations at I-24 exit 86 sat sixty
 miles away until this rule. Those 270 were then checked against Photon: it
 agreed with the ranking on 248, settled 8 ties between places nothing else
-told apart, and pointed elsewhere for 10, which were checked by hand against
-the stations' highway exits and left where the gazetteer put them. Photon
-was wrong about three hamlet ties on a first pass, so
+told apart, pointed 3 times at a dot on the map beside a town of thousands
+(the town was kept), had no answer for 1, and pointed elsewhere for 7,
+which were checked by hand against the stations' highway exits and left
+where the gazetteer put them. Photon was wrong about three hamlet ties on a
+first pass, so
 `data/city_overrides.csv` settles those by hand, with the exits as the
 reason, and wins over everything. The city table below takes station towns
 from the coordinates file, so the two agree by construction and a test says
@@ -320,7 +322,7 @@ default stop cost live at the bottom of `fuelroute/settings.py`.
 
     python manage.py test
 
-A hundred and thirty-seven tests cover the price file reader and loader, the
+A hundred and fifty-three tests cover the price file reader and loader, the
 GeoNames matching, the city table and its extraction, the outline, route
 geometry, the optimiser (including the comparison with the greedy algorithm
 on random routes), both external clients with canned responses, the
