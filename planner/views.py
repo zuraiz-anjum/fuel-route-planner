@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.views.decorators.http import require_GET
 
 from .forms import TripForm
+from .models import Station
 from .optimizer import NoFeasiblePlan
 from .osrm import NoRouteError, RoutingError
 from .photon import GeocodeError
@@ -41,3 +42,11 @@ def route_api(request):
 @require_GET
 def map_page(request):
     return render(request, "planner/map.html")
+
+
+@require_GET
+def health(request):
+    """Whether the service can plan a trip. Nothing external is touched."""
+    located = Station.objects.located().count()
+    body = {"status": "ok" if located else "no stations loaded", "stations": Station.objects.count(), "located": located}
+    return JsonResponse(body, status=200 if located else 503)

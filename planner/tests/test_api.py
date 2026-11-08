@@ -207,3 +207,18 @@ class RouteApiTests(TestCase):
         self.plan(stop_cost=0)
         self.assertEqual(self.fetch_route.call_count, 1)
 
+
+class HealthTests(TestCase):
+    def test_unavailable_until_stations_are_loaded(self):
+        response = self.client.get(reverse("health"))
+        self.assertEqual(response.status_code, 503)
+        self.assertEqual(response.json()["status"], "no stations loaded")
+
+    def test_reports_how_many_stations_are_loaded_and_placed(self):
+        station(1, 35.0, -100.0, "3.000")
+        Station.objects.create(
+            opis_id=2, name="Unplaced", address="", city="Nowhere", state="TX", rack_id=1, price="3.000", price_count=1
+        )
+        response = self.client.get(reverse("health"))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json(), {"status": "ok", "stations": 2, "located": 1})

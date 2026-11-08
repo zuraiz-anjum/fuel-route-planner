@@ -38,6 +38,8 @@ A few more to try:
 and takes a few seconds. The coordinates file is committed; "Station
 coordinates" below says how it was made and when to remake it.
 `python manage.py createsuperuser` and `/admin/` let you browse the stations.
+`/healthz/` answers 200 with the station counts once they are loaded and 503
+before, without calling anything external.
 
 ## The API
 
