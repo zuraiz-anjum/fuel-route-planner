@@ -1,3 +1,5 @@
+from urllib.parse import urlencode
+
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.decorators.http import require_GET
@@ -45,7 +47,9 @@ class RouteView(APIView):
             return error(str(exc), 502)
         except StationsNotLoaded as exc:
             return error(str(exc), 503)
-        trip["map_url"] = request.build_absolute_uri(reverse("map") + "?" + request.query_params.urlencode())
+        # The same request on the map page, carrying only what the API understood.
+        shown = {name: request.query_params[name] for name in params.fields if request.query_params.get(name)}
+        trip["map_url"] = request.build_absolute_uri(reverse("map")) + "?" + urlencode(shown)
         return Response(trip)
 
 
@@ -56,7 +60,11 @@ class HealthView(APIView):
 
     def get(self, request):
         located = Station.objects.located().count()
-        body = {"status": "ok" if located else "no stations loaded", "stations": Station.objects.count(), "located": located}
+        body = {
+            "status": "ok" if located else "no stations loaded",
+            "stations": Station.objects.count(),
+            "located": located,
+        }
         return Response(body, status=200 if located else 503)
 
 

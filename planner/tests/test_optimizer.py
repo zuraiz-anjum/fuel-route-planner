@@ -44,7 +44,8 @@ def random_instances(count=200):
             for n in range(rng.randint(5, 60))
         ]
         miles = sorted([0.0, total_miles] + [c.mile for c in candidates])
-        # A few miles of margin, since positions are rounded to whole miles.
+        # A few miles of margin, so that rounding to the tenth-of-a-mile grid
+        # never makes a crossable gap uncrossable.
         if max(b - a for a, b in zip(miles, miles[1:])) > RANGE - 5:
             continue
         departure = Candidate(mile=0.0, price=rng.uniform(2.5, 5.0), ref="departure")
@@ -142,10 +143,13 @@ class PlanFuelStopsTests(SimpleTestCase):
         self.assertEqual(forward, backward)
 
     def test_matches_greedy_on_random_routes(self):
+        # The greedy works in continuous miles, the planner on a grid of tenths,
+        # which is worth a hundredth of a gallon per leg: four cents over 200
+        # instances, never more.
         for n, (candidates, total_miles, departure) in enumerate(random_instances()):
             plan = plan_fuel_stops(candidates, total_miles, departure=departure)
             expected = greedy_cost(candidates + [departure], total_miles)
-            self.assertAlmostEqual(plan.total_cost, expected, delta=1.0, msg=f"instance {n}")
+            self.assertAlmostEqual(plan.total_cost, expected, delta=0.05, msg=f"instance {n}")
 
     def test_plan_invariants_hold_on_random_routes(self):
         for n, (candidates, total_miles, departure) in enumerate(random_instances()):

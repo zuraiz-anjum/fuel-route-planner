@@ -47,7 +47,9 @@ class Command(BaseCommand):
             stations,
             update_conflicts=True,
             unique_fields=["opis_id"],
-            update_fields=["name", "address", "city", "state", "rack_id", "price", "price_count", "lat", "lon", "updated_at"],
+            update_fields=[
+                "name", "address", "city", "state", "rack_id", "price", "price_count", "lat", "lon", "updated_at",
+            ],
         )
         gone, _ = Station.objects.exclude(opis_id__in=[s.opis_id for s in stations]).delete()
         self.stdout.write(

@@ -120,6 +120,22 @@ class RouteApiTests(TestCase):
         self.assertEqual(trip["stops"][0]["station"]["name"], "Across town but cheaper")
         self.assertAlmostEqual(trip["stops"][0]["off_route_miles"], 6.6, delta=0.2)
 
+    def test_the_nearest_station_within_a_hundred_miles_prices_the_departure(self):
+        station(2, 35.0, -99.0, "3.000")
+        station(3, 35.0, -92.0, "2.500")
+        station(4, 35.0, -85.0, "3.200")
+        station(7, 35.0, -99.5, "3.300", name="Half an hour away")
+        station(8, 35.3, -99.5, "3.100", name="A little further and cheaper")
+        trip = self.plan(stop_cost=0).json()
+        self.assertEqual(trip["stops"][0]["kind"], "departure")
+        self.assertEqual(trip["stops"][0]["station"]["name"], "Half an hour away")
+        self.assertAlmostEqual(trip["stops"][0]["off_route_miles"], 28.3, delta=0.3)
+
+    def test_map_url_carries_only_the_apis_own_parameters(self):
+        self.seed_stations()
+        trip = self.plan(stop_cost=0, start_fuel="", format="json", extra="ignored").json()
+        self.assertEqual(trip["map_url"], "http://testserver/map/?start=Start%2C+TX&finish=Finish%2C+GA&stop_cost=0")
+
     def test_without_a_station_near_the_start_the_tank_must_be_given(self):
         station(3, 35.0, -92.0, "2.500")
         response = self.plan()
@@ -172,7 +188,12 @@ class RouteApiTests(TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             not_a_directory = Path(tmp) / "cache"
             not_a_directory.write_text("")
-            broken = {"default": {"BACKEND": "django.core.cache.backends.filebased.FileBasedCache", "LOCATION": str(not_a_directory)}}
+            broken = {
+                "default": {
+                    "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+                    "LOCATION": str(not_a_directory),
+                }
+            }
             with override_settings(CACHES=broken), self.assertLogs("planner", "WARNING") as logs:
                 self.assertEqual(self.plan().status_code, 200)
                 self.assertEqual(self.plan().status_code, 200)

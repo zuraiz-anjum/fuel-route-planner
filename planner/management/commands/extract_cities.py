@@ -69,6 +69,7 @@ class Command(BaseCommand):
         with settings.US_CITIES_CSV.open("w", newline="", encoding="utf-8") as fh:
             writer = csv.writer(fh, lineterminator="\n")
             writer.writerow(FIELDS)
-            for (_, state), (population, name, lat, lon) in sorted(best.items(), key=lambda item: (item[0][1], item[1][1])):
+            by_state_and_name = sorted(best.items(), key=lambda item: (item[0][1], item[1][1]))
+            for (_, state), (population, name, lat, lon) in by_state_and_name:
                 writer.writerow([name, state, f"{lat:.5f}", f"{lon:.5f}", population])
         self.stdout.write(self.style.SUCCESS(f"{len(best)} cities written to {settings.US_CITIES_CSV.name}"))

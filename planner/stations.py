@@ -18,10 +18,7 @@ from pathlib import Path
 
 from django.conf import settings
 
-US_STATES = frozenset(
-    "AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO "
-    "MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY DC".split()
-)
+from .states import STATE_NAMES
 
 
 @dataclass(frozen=True)
@@ -53,7 +50,7 @@ def read_stations(path=None):
     with path.open(newline="", encoding="utf-8-sig") as fh:
         for row in csv.DictReader(fh):
             state = row["State"].strip().upper()
-            if state not in US_STATES:
+            if state not in STATE_NAMES:
                 continue
             rows_by_id[int(row["OPIS Truckstop ID"])].append(row)
 
