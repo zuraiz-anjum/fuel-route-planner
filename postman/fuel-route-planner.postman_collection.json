@@ -1,0 +1,122 @@
+{
+  "info": {
+    "name": "Fuel route planner",
+    "description": "Requests against a local server (python manage.py runserver). Change base_url to point elsewhere.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {"key": "base_url", "value": "http://127.0.0.1:8000"}
+  ],
+  "item": [
+    {
+      "name": "Dallas to Los Angeles",
+      "request": {
+        "method": "GET",
+        "description": "A 1,400-mile trip from an empty tank: a fill-up before leaving and three stops on the way.",
+        "url": {
+          "raw": "{{base_url}}/api/route/?start=Dallas, TX&finish=Los Angeles, CA",
+          "host": ["{{base_url}}"],
+          "path": ["api", "route", ""],
+          "query": [
+            {"key": "start", "value": "Dallas, TX"},
+            {"key": "finish", "value": "Los Angeles, CA"}
+          ]
+        }
+      }
+    },
+    {
+      "name": "New York to Los Angeles, pure price-optimal",
+      "request": {
+        "method": "GET",
+        "description": "stop_cost=0 takes every stop that saves money, however little; compare the stop count with the default.",
+        "url": {
+          "raw": "{{base_url}}/api/route/?start=New York, NY&finish=Los Angeles, CA&stop_cost=0",
+          "host": ["{{base_url}}"],
+          "path": ["api", "route", ""],
+          "query": [
+            {"key": "start", "value": "New York, NY"},
+            {"key": "finish", "value": "Los Angeles, CA"},
+            {"key": "stop_cost", "value": "0"}
+          ]
+        }
+      }
+    },
+    {
+      "name": "Chicago to Atlanta on a full tank",
+      "request": {
+        "method": "GET",
+        "description": "start_fuel=50 leaves with a full tank, so only the fuel bought on the way is counted.",
+        "url": {
+          "raw": "{{base_url}}/api/route/?start=Chicago, IL&finish=Atlanta, GA&start_fuel=50",
+          "host": ["{{base_url}}"],
+          "path": ["api", "route", ""],
+          "query": [
+            {"key": "start", "value": "Chicago, IL"},
+            {"key": "finish", "value": "Atlanta, GA"},
+            {"key": "start_fuel", "value": "50"}
+          ]
+        }
+      }
+    },
+    {
+      "name": "Coordinates, Dallas to Houston",
+      "request": {
+        "method": "GET",
+        "description": "Either end can be lat,lon instead of a name. A trip shorter than the range needs no stop en route.",
+        "url": {
+          "raw": "{{base_url}}/api/route/?start=32.7767,-96.7970&finish=29.7604,-95.3698",
+          "host": ["{{base_url}}"],
+          "path": ["api", "route", ""],
+          "query": [
+            {"key": "start", "value": "32.7767,-96.7970"},
+            {"key": "finish", "value": "29.7604,-95.3698"}
+          ]
+        }
+      }
+    },
+    {
+      "name": "Same place (422)",
+      "request": {
+        "method": "GET",
+        "description": "The two spellings resolve to the same point, which is not a trip.",
+        "url": {
+          "raw": "{{base_url}}/api/route/?start=Dallas, TX&finish=Dallas, Texas",
+          "host": ["{{base_url}}"],
+          "path": ["api", "route", ""],
+          "query": [
+            {"key": "start", "value": "Dallas, TX"},
+            {"key": "finish", "value": "Dallas, Texas"}
+          ]
+        }
+      }
+    },
+    {
+      "name": "Missing finish (400)",
+      "request": {
+        "method": "GET",
+        "description": "Validation errors name the parameter.",
+        "url": {
+          "raw": "{{base_url}}/api/route/?start=Dallas, TX&start_fuel=99",
+          "host": ["{{base_url}}"],
+          "path": ["api", "route", ""],
+          "query": [
+            {"key": "start", "value": "Dallas, TX"},
+            {"key": "start_fuel", "value": "99"}
+          ]
+        }
+      }
+    },
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "description": "200 with the station counts once load_stations has run; 503 before.",
+        "url": {
+          "raw": "{{base_url}}/healthz/",
+          "host": ["{{base_url}}"],
+          "path": ["healthz", ""]
+        }
+      }
+    }
+  ]
+}

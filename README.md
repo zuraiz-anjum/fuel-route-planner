@@ -34,6 +34,9 @@ to try:
     /api/route/?start=Chicago,%20IL&finish=Atlanta,%20GA&start_fuel=50
     /api/route/?start=32.7767,-96.7970&finish=29.7604,-95.3698&stop_cost=0
 
+The same requests are in `postman/fuel-route-planner.postman_collection.json`
+for Postman, with the server address as a `base_url` variable.
+
 `load_stations` reads `data/fuel-prices.csv` together with
 `data/city_coordinates.csv`, the position of every city in the price file,
 and takes a few seconds. The coordinates file is committed; "Station
@@ -233,7 +236,8 @@ are folded the way the gazetteer folds them, so `St. Louis` and `Saint
 Louis`, `Ft Worth` and `Fort Worth` all land, and where a state has several
 places of one name the most populous answers, which is what someone typing
 it means. A bare name (`Flagstaff`), an address, or a hamlet below the
-threshold that sells no fuel goes to Photon as before.
+threshold that sells no fuel goes to Photon as before. Both tables are
+derived from GeoNames data, published under CC BY 4.0.
 
 ## Design notes
 
@@ -308,3 +312,4 @@ the image and waits for its health check.
       management/commands/    extract_cities, geocode_cities, load_stations
       templates/planner/      the map page
       tests/
+    postman/                  a collection of the requests above
