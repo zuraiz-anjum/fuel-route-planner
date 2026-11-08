@@ -2,9 +2,9 @@
 Client for the Photon geocoder (photon.komoot.io).
 
 Photon serves OpenStreetMap data, needs no key, answers in a fraction of a
-second and asks only for fair use. Two lookups go through here: free-text
-places typed by the user and the city/state pairs of the price file. Both are
-restricted to the United States.
+second and asks only for fair use. Two lookups go through here: typed-in
+places the city table cannot answer, and price-file towns GeoNames does not
+know. Both are restricted to the United States.
 """
 
 import hashlib
@@ -16,6 +16,8 @@ import requests
 from django.conf import settings
 from django.core.cache import cache
 
+from .states import STATE_NAMES
+
 # Places do not move, and the public server is not always there when you need it.
 PLACE_CACHE_SECONDS = 30 * 24 * 3600
 
@@ -24,21 +26,6 @@ PLACE_CACHE_SECONDS = 30 * 24 * 3600
 US_BBOX = "-180,18,-65,72"
 
 SETTLEMENTS = {"city", "town", "village", "hamlet"}
-
-STATE_NAMES = {
-    "AL": "Alabama", "AK": "Alaska", "AZ": "Arizona", "AR": "Arkansas", "CA": "California",
-    "CO": "Colorado", "CT": "Connecticut", "DE": "Delaware", "DC": "District of Columbia",
-    "FL": "Florida", "GA": "Georgia", "HI": "Hawaii", "ID": "Idaho", "IL": "Illinois",
-    "IN": "Indiana", "IA": "Iowa", "KS": "Kansas", "KY": "Kentucky", "LA": "Louisiana",
-    "ME": "Maine", "MD": "Maryland", "MA": "Massachusetts", "MI": "Michigan", "MN": "Minnesota",
-    "MS": "Mississippi", "MO": "Missouri", "MT": "Montana", "NE": "Nebraska", "NV": "Nevada",
-    "NH": "New Hampshire", "NJ": "New Jersey", "NM": "New Mexico", "NY": "New York",
-    "NC": "North Carolina", "ND": "North Dakota", "OH": "Ohio", "OK": "Oklahoma", "OR": "Oregon",
-    "PA": "Pennsylvania", "RI": "Rhode Island", "SC": "South Carolina", "SD": "South Dakota",
-    "TN": "Tennessee", "TX": "Texas", "UT": "Utah", "VT": "Vermont", "VA": "Virginia",
-    "WA": "Washington", "WV": "West Virginia", "WI": "Wisconsin", "WY": "Wyoming",
-}
-
 
 class GeocodeError(Exception):
     """Photon could not be reached or returned something unusable."""

@@ -6,9 +6,10 @@ the route, the stops that get the truck there for the least money, and what
 the fuel for the trip costs. The vehicle does 10 miles to the gallon and has
 a 500-mile range, so long routes need several stops.
 
-Built on Django 6.1. Routing comes from the public OSRM server and geocoding
-from Photon; neither needs an API key, so a fresh clone runs as is. Fuel
-prices come from the OPIS price file in `data/`.
+Built on Django 6.1. Routing comes from the public OSRM server. A city and
+state is looked up in a table bundled with the project; anything else is
+geocoded with Photon. Neither service needs an API key, so a fresh clone runs
+as is. Fuel prices come from the OPIS price file in `data/`.
 
 ## Running it
 
@@ -44,7 +45,7 @@ coordinates" below says how it was made and when to remake it.
 
 | Parameter    | Required | Meaning |
 |--------------|----------|---------|
-| `start`      | yes      | A place name (`Dallas, TX`, `Flagstaff`) or `lat,lon`. Must be in the US. |
+| `start`      | yes      | A city and state (`Dallas, TX`, `dallas texas`), any other place (`Flagstaff`, an address) or `lat,lon`. Must be in the US. |
 | `finish`     | yes      | Same. |
 | `start_fuel` | no       | Gallons in the tank at departure, 0 to 50. Default 0, which means the plan starts with a fill-up; see "What a plan means". |
 | `stop_cost`  | no       | Dollars the planner charges itself per stop en route, 0 to 1000. Default 10. |
@@ -100,8 +101,8 @@ left out:
 }
 ```
 
-With place names, `start` and `finish` carry the geocoder's label
-("Dallas, Texas, United States") instead of the bare coordinates.
+With place names, `start` and `finish` carry a label ("Dallas, Texas,
+United States") instead of the bare coordinates.
 
 `route.geometry` is GeoJSON, simplified to about fifty metres so that a
 cross-country route is a few thousand points rather than tens of thousands.
@@ -159,8 +160,11 @@ greedy algorithm on random routes.
 
 ## How a request is served
 
-1. The two places are geocoded with Photon, unless given as coordinates.
-   Results are cached for a month; places do not move.
+1. The two places are resolved. Coordinates are taken as they are; a city
+   and state (`Dallas, TX`, `Dallas, Texas`, `Dallas TX`) is looked up in
+   `data/us_cities.csv` without leaving the process; anything else is
+   geocoded with Photon, and those answers are cached for a month, since
+   places do not move.
 2. One request to OSRM returns the route geometry and distance. The route is
    prepared once (mileage along it, a simplified copy for the response) and
    cached for a day.
@@ -169,8 +173,9 @@ greedy algorithm on random routes.
    marker and with its distance from the road.
 4. The optimiser picks the stops.
 
-A cold request makes at most three external calls and takes under two
-seconds, nearly all of it waiting for OSRM. Repeating it takes
+A cold request makes one external call for cities and coordinates, at most
+three otherwise, and takes under two seconds, nearly all of it waiting for
+OSRM. Repeating it takes
 30 ms for a short trip and under 300 ms coast to coast, which is the
 corridor match over 6,600 stations plus the optimiser. The cache is a
 directory of files under `.cache/`, so it survives the development server
@@ -200,6 +205,18 @@ The 7,531 US rows in the price file collapse to 6,626 stations; where a
 station appears more than once its prices are averaged. Canadian stations are
 dropped.
 
+## Place names
+
+`data/us_cities.csv` is what lets `Dallas, TX` resolve without a geocoder:
+every populated place in the GeoNames US dump with at least a thousand
+people, plus every town in the price file whatever its size, 16,781 rows in
+all. `python manage.py extract_cities` rebuilds it from the same dump. Names
+are folded the way the gazetteer folds them, so `St. Louis` and `Saint
+Louis`, `Ft Worth` and `Fort Worth` all land, and where a state has several
+places of one name the most populous answers, which is what someone typing
+it means. A bare name (`Flagstaff`), an address, or a hamlet below the
+threshold that sells no fuel goes to Photon as before.
+
 ## Design notes
 
 OSRM and Photon were chosen because they need no account, so the project
@@ -209,7 +226,9 @@ anything beyond a demo. Nominatim was the first choice for geocoding and was
 dropped when its public server throttled the one-off bulk job and its
 one-request-per-second limit turned out to be the slowest part of a cold
 request. The bulk job then moved offline altogether, which is where it should
-have started.
+have started. Typed-in places went straight to Photon at first too; the city
+table came when the public server's bad afternoons turned out to be the only
+thing that could make an ordinary request fail.
 
 There is no GeoDjango or PostGIS. The spatial work is one corridor match per
 request over a few thousand points, which numpy does in milliseconds in
@@ -244,25 +263,26 @@ default stop cost live at the bottom of `fuelroute/settings.py`.
 
     python manage.py test
 
-A hundred and five tests cover the price file reader and loader, the
-GeoNames matching, route geometry, the optimiser (including the comparison
-with the greedy algorithm on random routes), both external clients with
-canned responses, the geocoding command, and the API with the external
-services mocked. They run in a few seconds, need no network, and run on
-GitHub Actions for every push.
+A hundred and twenty-six tests cover the price file reader and loader, the
+GeoNames matching, the city table and its extraction, route geometry, the
+optimiser (including the comparison with the greedy algorithm on random
+routes), both external clients with canned responses, the geocoding command,
+and the API with the external services mocked. They run in a few seconds,
+need no network, and run on GitHub Actions for every push.
 
 ## Layout
 
-    data/                     price file and geocoded city coordinates
+    data/                     price file, station city coordinates, US city table
     fuelroute/                settings and the URL root
     planner/
       stations.py             reading the data files
       geonames.py             the offline gazetteer
+      cities.py, states.py    "City, ST" without a geocoder
       photon.py, osrm.py      the two external services
       geo.py                  mileage along the route, corridor matching, simplification
       optimizer.py            choosing the stops
       trip.py                 puts a request together
       forms.py, views.py      the HTTP layer
-      management/commands/    geocode_cities, load_stations
+      management/commands/    extract_cities, geocode_cities, load_stations
       templates/planner/      the map page
       tests/

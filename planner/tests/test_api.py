@@ -133,6 +133,13 @@ class RouteApiTests(TestCase):
         self.geocode.assert_not_called()
         self.assertEqual(response.json()["start"]["label"], "35.00000, -100.00000")
 
+    def test_a_city_and_state_are_resolved_without_the_geocoder(self):
+        self.seed_stations()
+        response = self.plan(start="Amarillo, TX", finish="Charlotte, NC", start_fuel=50)
+        self.assertEqual(response.status_code, 200)
+        self.geocode.assert_not_called()
+        self.assertEqual(response.json()["start"]["label"], "Amarillo, Texas, United States")
+
     def test_coordinates_outside_the_us_are_rejected(self):
         self.seed_stations()
         response = self.plan(start="51.5,-0.1")
@@ -192,3 +199,4 @@ class RouteApiTests(TestCase):
         self.plan()
         self.plan(stop_cost=0)
         self.assertEqual(self.fetch_route.call_count, 1)
+

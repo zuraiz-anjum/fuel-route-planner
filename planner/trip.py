@@ -3,8 +3,9 @@ Putting a trip together: resolve the two places, fetch the route, find the
 stations within reach of it and choose where to buy fuel.
 
 Besides geocoding the end points, the route is the only thing fetched per
-request, so a trip costs at most three external calls, and none at all when
-the end points are coordinates and the route is cached.
+request, so a trip costs at most three external calls. "City, ST" and
+coordinates are resolved locally, so for most requests it is one call, and
+none once the route is cached.
 """
 
 import re
@@ -15,6 +16,7 @@ from django.conf import settings
 from django.core.cache import cache
 from django.db.models import Count, Max
 
+from .cities import find_city
 from .geo import Route, haversine_miles, simplify
 from .models import Station
 from .optimizer import Candidate, plan_fuel_stops
@@ -109,13 +111,13 @@ def in_united_states(lat, lon):
 
 
 def resolve_place(query):
-    """Turn user input into a Place: either 'lat,lon' or something to geocode."""
+    """Turn user input into a Place: 'lat,lon', 'City, ST' or something to geocode."""
     match = COORDINATES.match(query)
     if match:
         lat, lon = float(match[1]), float(match[2])
         place = Place(lat=lat, lon=lon, label=f"{lat:.5f}, {lon:.5f}")
     else:
-        place = geocode_place(query)
+        place = find_city(query) or geocode_place(query)
     if place is None or not in_united_states(place.lat, place.lon):
         raise UnknownPlace(query)
     return place

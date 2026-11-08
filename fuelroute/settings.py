@@ -98,6 +98,7 @@ CACHES = {
 
 FUEL_PRICES_CSV = DATA_DIR / "fuel-prices.csv"
 CITY_COORDINATES_CSV = DATA_DIR / "city_coordinates.csv"
+US_CITIES_CSV = DATA_DIR / "us_cities.csv"
 # Downloaded by geocode_cities on first use; not committed.
 GEONAMES_ZIP = DATA_DIR / "geonames-US.zip"
 
