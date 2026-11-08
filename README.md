@@ -57,7 +57,10 @@ accepts any `Host` header on the assumption that a proxy in front of it
 checks that; set `DJANGO_ALLOWED_HOSTS` to pin it. Without a
 `DJANGO_SECRET_KEY` a fresh one is generated at each start, which only
 matters for staying logged in to the admin across restarts. The container's
-`HEALTHCHECK` polls `/healthz/`.
+`HEALTHCHECK` polls `/healthz/`. With `DJANGO_DEBUG=0` the cookies are
+marked secure and `X-Forwarded-Proto` is trusted, on the assumption of a
+TLS-terminating proxy in front; redirecting to HTTPS and HSTS belong to that
+proxy, and `manage.py check --deploy` lists exactly those two.
 
 ## The API
 
@@ -284,6 +287,7 @@ Everything has a development default. Override with environment variables:
 | `DJANGO_DEBUG` | `1`; set `0` in production, which then requires a secret key |
 | `DJANGO_SECRET_KEY` | a fixed development key while `DJANGO_DEBUG=1` |
 | `DJANGO_ALLOWED_HOSTS` | `localhost,127.0.0.1`; `*` in the image |
+| `NUM_PROXIES` | `0`; the number of proxies in front, so the throttle counts by the real client address |
 | `OSRM_BASE_URL` | `https://router.project-osrm.org` |
 | `PHOTON_BASE_URL` | `https://photon.komoot.io` |
 | `USER_AGENT` | `fuelroute/1.0`, sent to both services |

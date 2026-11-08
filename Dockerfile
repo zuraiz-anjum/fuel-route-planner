@@ -15,7 +15,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 # A throwaway key: collectstatic only needs the settings to load.
 RUN DJANGO_SECRET_KEY=build python manage.py collectstatic --noinput \
-    && useradd --system --no-create-home app \
+    && useradd --system --create-home app \
     && chown -R app:app /app
 USER app
 

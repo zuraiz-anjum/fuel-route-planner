@@ -20,6 +20,12 @@ if not SECRET_KEY:
         raise ImproperlyConfigured("set DJANGO_SECRET_KEY when running with DJANGO_DEBUG=0")
     SECRET_KEY = "dev-only-key"
 ALLOWED_HOSTS = [h for h in os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(",") if h]
+if not DEBUG:
+    # Deployed behind a proxy that terminates TLS, sets X-Forwarded-Proto and
+    # strips it from clients. Redirecting to HTTPS and HSTS are the proxy's job.
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -86,6 +92,9 @@ STATIC_URL = "static/"
 # it for the admin and the browsable API; collectstatic fills STATIC_ROOT
 # when the image is built.
 STATIC_ROOT = BASE_DIR / "staticfiles"
+# Until collectstatic has run (development, tests) WhiteNoise serves from the
+# app directories instead of warning about the missing folder.
+WHITENOISE_AUTOREFRESH = WHITENOISE_USE_FINDERS = not STATIC_ROOT.is_dir()
 STORAGES = {
     "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
     "staticfiles": {"BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"},
@@ -107,10 +116,13 @@ CACHES = {
 # The API is Django REST Framework. Anonymous clients get sixty requests a
 # minute, which is plenty for a person and stops one script from spending
 # the public OSRM server's goodwill; errors keep this project's {"error": ...}
-# shape rather than the framework's {"detail": ...}.
+# shape rather than the framework's {"detail": ...}. The throttle keys on the
+# client address, which behind a proxy is the last entry of X-Forwarded-For
+# the proxy wrote, hence NUM_PROXIES; with none, the header is ignored.
 REST_FRAMEWORK = {
     "DEFAULT_THROTTLE_CLASSES": ["planner.throttling.AnonThrottle"],
     "DEFAULT_THROTTLE_RATES": {"anon": "60/min"},
+    "NUM_PROXIES": int(os.environ.get("NUM_PROXIES", "0")),
     "EXCEPTION_HANDLER": "planner.views.api_exception",
 }
 
