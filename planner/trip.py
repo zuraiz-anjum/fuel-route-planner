@@ -14,9 +14,9 @@ from dataclasses import dataclass
 
 import numpy as np
 from django.conf import settings
-from django.core.cache import cache
 from django.db.models import Count, Max
 
+from .caching import cache_get, cache_set
 from .cities import find_city
 from .geo import Route, haversine_miles, simplify
 from .models import Station
@@ -142,7 +142,7 @@ _fetching_guard = threading.Lock()
 def load_leg(start, finish):
     """The route between two places, cached so that repeats cost nothing."""
     key = "route:%.5f,%.5f:%.5f,%.5f" % (start.lat, start.lon, finish.lat, finish.lon)
-    leg = cache.get(key)
+    leg = cache_get(key)
     if leg is None:
         # Identical requests arriving together wait for one fetch instead of
         # each asking OSRM. The lock is per process, which is as far as it
@@ -150,10 +150,10 @@ def load_leg(start, finish):
         with _fetching_guard:
             lock = _fetching.setdefault(key, threading.Lock())
         with lock:
-            leg = cache.get(key)
+            leg = cache_get(key)
             if leg is None:
                 leg = fetch_leg(start, finish)
-                cache.set(key, leg, ROUTE_CACHE_SECONDS)
+                cache_set(key, leg, ROUTE_CACHE_SECONDS)
         with _fetching_guard:
             _fetching.pop(key, None)
     return leg

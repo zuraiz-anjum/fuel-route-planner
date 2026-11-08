@@ -109,7 +109,7 @@ CACHES = {
 # the public OSRM server's goodwill; errors keep this project's {"error": ...}
 # shape rather than the framework's {"detail": ...}.
 REST_FRAMEWORK = {
-    "DEFAULT_THROTTLE_CLASSES": ["rest_framework.throttling.AnonRateThrottle"],
+    "DEFAULT_THROTTLE_CLASSES": ["planner.throttling.AnonThrottle"],
     "DEFAULT_THROTTLE_RATES": {"anon": "60/min"},
     "EXCEPTION_HANDLER": "planner.views.api_exception",
 }

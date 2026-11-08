@@ -1,5 +1,7 @@
+import tempfile
 import threading
 import time
+from pathlib import Path
 from unittest import mock
 
 import numpy as np
@@ -164,6 +166,18 @@ class RouteApiTests(TestCase):
         self.assertEqual(
             trip["summary"]["fuel_purchased_gallons"], round(sum(s["gallons"] for s in trip["stops"]), 2)
         )
+
+    def test_an_unusable_cache_does_not_take_the_api_down(self):
+        self.seed_stations()
+        with tempfile.TemporaryDirectory() as tmp:
+            not_a_directory = Path(tmp) / "cache"
+            not_a_directory.write_text("")
+            broken = {"default": {"BACKEND": "django.core.cache.backends.filebased.FileBasedCache", "LOCATION": str(not_a_directory)}}
+            with override_settings(CACHES=broken), self.assertLogs("planner", "WARNING") as logs:
+                self.assertEqual(self.plan().status_code, 200)
+                self.assertEqual(self.plan().status_code, 200)
+        self.assertEqual(self.fetch_route.call_count, 2)
+        self.assertTrue(any("cache unavailable" in line for line in logs.output))
 
     def test_coordinates_outside_the_us_are_rejected(self):
         self.seed_stations()
