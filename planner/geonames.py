@@ -45,7 +45,7 @@ def ensure_dump(path=None):
     if path.exists():
         return path
     partial = path.with_suffix(".part")
-    with requests.get(DUMP_URL, stream=True, timeout=settings.EXTERNAL_TIMEOUT_SECONDS) as response:
+    with requests.get(DUMP_URL, stream=True, timeout=settings.EXTERNAL_TIMEOUT) as response:
         response.raise_for_status()
         with partial.open("wb") as fh:
             for chunk in response.iter_content(1 << 20):

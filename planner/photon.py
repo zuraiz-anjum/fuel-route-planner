@@ -74,6 +74,7 @@ def _search(query, interval=0.0, **params):
                 time.sleep(wait)
             _last_request_at = time.monotonic()
     params = {"q": query, "limit": 5, "bbox": US_BBOX, "lang": "en", **params}
+    hits = []
     try:
         response = _get(params)
         if response.status_code in (429, 503):
@@ -81,15 +82,13 @@ def _search(query, interval=0.0, **params):
             time.sleep(1)
             response = _get(params)
         response.raise_for_status()
-        features = response.json()["features"]
+        for feature in response.json()["features"]:
+            properties = feature["properties"]
+            if properties.get("countrycode") == "US":
+                lon, lat = feature["geometry"]["coordinates"]
+                hits.append((properties, lat, lon))
     except (requests.RequestException, ValueError, LookupError, TypeError) as exc:
         raise GeocodeError("geocoding service unavailable") from exc
-    hits = []
-    for feature in features:
-        properties = feature["properties"]
-        if properties.get("countrycode") == "US":
-            lon, lat = feature["geometry"]["coordinates"]
-            hits.append((properties, lat, lon))
     return hits
 
 

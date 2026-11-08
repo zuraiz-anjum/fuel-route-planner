@@ -5,9 +5,10 @@ The price file has no coordinates, only an address, city and state, and the
 addresses are highway junctions that no geocoder resolves. City centroids are
 close enough to place a stop on a route, so that is what we look up.
 
-Most cities are found offline in the GeoNames gazetteer, which is downloaded
-on first use. Whatever GeoNames does not know is asked of Photon, gently, with
-long waits if it throttles us. Results are appended to
+Nearly every city is found offline in the GeoNames gazetteer, which is
+downloaded on first use. Those are written first; whatever GeoNames does not
+know is then asked of Photon, gently, with long waits if it throttles us, so
+an outage there never holds up the offline work. Results are appended to
 data/city_coordinates.csv as they arrive and the command skips anything
 already there, so it can be stopped and resumed. The finished file is
 committed; nobody needs to run this unless the price file changes.
@@ -26,6 +27,15 @@ from planner.stations import city_key, read_city_coordinates, read_stations
 FIELDS = ["city", "state", "lat", "lon", "label", "source"]
 # Throttling and outages pass; waiting them out beats restarting by hand.
 RETRY_WAITS = [15, 30, 60, 120] + [300] * 5
+
+
+def write_row(writer, fh, city, state, point=None, source=""):
+    row = {"city": city, "state": state, "lat": "", "lon": "", "label": "", "source": source}
+    if point:
+        lat, lon, label = point
+        row.update(lat=f"{lat:.6f}", lon=f"{lon:.6f}", label=label)
+    writer.writerow(row)
+    fh.flush()
 
 
 class Command(BaseCommand):
@@ -63,33 +73,36 @@ class Command(BaseCommand):
         gazetteer = build_index(ensure_dump())
 
         write_header = not path.exists() or path.stat().st_size == 0
-        counts = {"geonames": 0, "photon": 0, "missing": 0}
+        found = asked = missing = 0
         with path.open("a", newline="", encoding="utf-8") as fh:
             writer = csv.DictWriter(fh, fieldnames=FIELDS)
             if write_header:
                 writer.writeheader()
+
+            leftovers = []
             for city, state in todo:
-                row = {"city": city, "state": state, "lat": "", "lon": "", "label": "", "source": ""}
-                found = gazetteer.get((normalize_name(city), state))
-                if found:
-                    lat, lon, label = found
-                    row.update(lat=f"{lat:.6f}", lon=f"{lon:.6f}", label=label, source="geonames")
+                point = gazetteer.get((normalize_name(city), state))
+                if point is None:
+                    leftovers.append((city, state))
+                    continue
+                write_row(writer, fh, city, state, point, "geonames")
+                found += 1
+            self.stdout.write(f"{found} found in GeoNames; asking Photon about {len(leftovers)}")
+
+            for city, state in leftovers:
+                try:
+                    place = self.ask_photon(city, state, options["interval"])
+                except GeocodeError as exc:
+                    self.stderr.write(f"giving up on Photon for now: {exc}; run again later for the rest")
+                    break
+                if place is None:
+                    missing += 1
+                    self.stderr.write(f"no result for {city}, {state}")
+                    write_row(writer, fh, city, state)
                 else:
-                    try:
-                        place = self.ask_photon(city, state, options["interval"])
-                    except GeocodeError as exc:
-                        self.stderr.write(f"giving up after repeated failures: {exc}")
-                        break
-                    if place is None:
-                        self.stderr.write(f"no result for {city}, {state}")
-                    else:
-                        row.update(lat=f"{place.lat:.6f}", lon=f"{place.lon:.6f}", label=place.label, source="photon")
-                counts[row["source"] or "missing"] += 1
-                writer.writerow(row)
-                fh.flush()
-        self.stdout.write(
-            f"{counts['geonames']} from GeoNames, {counts['photon']} from Photon, {counts['missing']} not found"
-        )
+                    asked += 1
+                    write_row(writer, fh, city, state, (place.lat, place.lon, place.label), "photon")
+        self.stdout.write(f"{found} from GeoNames, {asked} from Photon, {missing} not found")
 
     def ask_photon(self, city, state, interval):
         """One city, waiting out throttling and outages before giving up."""
