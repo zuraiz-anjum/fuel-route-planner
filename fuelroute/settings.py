@@ -92,8 +92,8 @@ FUEL_PRICES_CSV = DATA_DIR / "fuel-prices.csv"
 CITY_COORDINATES_CSV = DATA_DIR / "city_coordinates.csv"
 
 OSRM_BASE_URL = os.environ.get("OSRM_BASE_URL", "https://router.project-osrm.org")
-NOMINATIM_BASE_URL = os.environ.get("NOMINATIM_BASE_URL", "https://nominatim.openstreetmap.org")
-# Nominatim's usage policy requires a User-Agent that identifies the application.
+PHOTON_BASE_URL = os.environ.get("PHOTON_BASE_URL", "https://photon.komoot.io")
+# Sent to both services; public OSM servers want to know who is calling.
 GEOCODER_USER_AGENT = os.environ.get("GEOCODER_USER_AGENT", "fuelroute/1.0")
 EXTERNAL_TIMEOUT_SECONDS = 15
 

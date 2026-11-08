@@ -1,0 +1,133 @@
+"""
+Client for the Photon geocoder (photon.komoot.io).
+
+Photon serves OpenStreetMap data, answers in a fraction of a second and has no
+hard rate limit, only a request to be fair. It took over from Nominatim here
+after the public Nominatim server throttled the one-off job that geocodes
+every city in the price file; it also resolves spellings such as "Mc Calla"
+that Nominatim does not.
+
+Two lookups go through here: free-text places typed by the user and the
+city/state pairs of the price file. Both are restricted to the United States.
+"""
+
+import hashlib
+import threading
+import time
+from dataclasses import dataclass
+
+import requests
+from django.conf import settings
+from django.core.cache import cache
+
+PLACE_CACHE_SECONDS = 24 * 3600
+
+# Hawaii to Maine. The box also covers bits of Canada and Mexico, so hits are
+# checked by country code as well.
+US_BBOX = "-180,18,-65,72"
+
+SETTLEMENTS = {"city", "town", "village", "hamlet"}
+
+STATE_NAMES = {
+    "AL": "Alabama", "AK": "Alaska", "AZ": "Arizona", "AR": "Arkansas", "CA": "California",
+    "CO": "Colorado", "CT": "Connecticut", "DE": "Delaware", "DC": "District of Columbia",
+    "FL": "Florida", "GA": "Georgia", "HI": "Hawaii", "ID": "Idaho", "IL": "Illinois",
+    "IN": "Indiana", "IA": "Iowa", "KS": "Kansas", "KY": "Kentucky", "LA": "Louisiana",
+    "ME": "Maine", "MD": "Maryland", "MA": "Massachusetts", "MI": "Michigan", "MN": "Minnesota",
+    "MS": "Mississippi", "MO": "Missouri", "MT": "Montana", "NE": "Nebraska", "NV": "Nevada",
+    "NH": "New Hampshire", "NJ": "New Jersey", "NM": "New Mexico", "NY": "New York",
+    "NC": "North Carolina", "ND": "North Dakota", "OH": "Ohio", "OK": "Oklahoma", "OR": "Oregon",
+    "PA": "Pennsylvania", "RI": "Rhode Island", "SC": "South Carolina", "SD": "South Dakota",
+    "TN": "Tennessee", "TX": "Texas", "UT": "Utah", "VT": "Vermont", "VA": "Virginia",
+    "WA": "Washington", "WV": "West Virginia", "WI": "Wisconsin", "WY": "Wyoming",
+}
+
+
+class GeocodeError(Exception):
+    """Photon could not be reached or returned something unusable."""
+
+
+@dataclass(frozen=True)
+class Place:
+    lat: float
+    lon: float
+    label: str
+
+
+_session = requests.Session()
+_pace_lock = threading.Lock()
+_last_request_at = 0.0
+
+
+def _get(params):
+    return _session.get(
+        settings.PHOTON_BASE_URL + "/api/",
+        params=params,
+        headers={"User-Agent": settings.GEOCODER_USER_AGENT},
+        timeout=settings.EXTERNAL_TIMEOUT_SECONDS,
+    )
+
+
+def _search(query, interval=0.0, **params):
+    """Hits inside the US for a query, as (properties, lat, lon) tuples."""
+    global _last_request_at
+    if interval:
+        with _pace_lock:
+            wait = _last_request_at + interval - time.monotonic()
+            if wait > 0:
+                time.sleep(wait)
+            _last_request_at = time.monotonic()
+    try:
+        response = _get({"q": query, "limit": 5, "bbox": US_BBOX, "lang": "en", **params})
+        if response.status_code in (429, 503):
+            # Photon answers a burst with 503 and is usually fine a moment later.
+            time.sleep(1)
+            response = _get({"q": query, "limit": 5, "bbox": US_BBOX, "lang": "en", **params})
+        response.raise_for_status()
+        features = response.json()["features"]
+    except (requests.RequestException, ValueError, KeyError) as exc:
+        raise GeocodeError(f"geocoder request failed: {exc}") from exc
+    hits = []
+    for feature in features:
+        properties = feature["properties"]
+        if properties.get("countrycode") == "US":
+            lon, lat = feature["geometry"]["coordinates"]
+            hits.append((properties, lat, lon))
+    return hits
+
+
+def _label(properties):
+    parts = []
+    for key in ("name", "city", "state", "country"):
+        value = properties.get(key)
+        if value and value not in parts:
+            parts.append(value)
+    return ", ".join(parts)
+
+
+def geocode_place(query):
+    """Resolve free text to a Place inside the US, or None if nothing matched."""
+    normalized = " ".join(query.split()).casefold()
+    key = "geocode:" + hashlib.sha1(normalized.encode()).hexdigest()
+    found, place = cache.get(key, (False, None))
+    if not found:
+        hits = _search(query)
+        place = Place(lat=hits[0][1], lon=hits[0][2], label=_label(hits[0][0])) if hits else None
+        cache.set(key, (True, place), PLACE_CACHE_SECONDS)
+    return place
+
+
+def geocode_city(city, state, interval=0.0):
+    """Resolve a city/state pair to the centre of the settlement, or None."""
+    state_name = STATE_NAMES[state]
+    hits = [
+        (properties, lat, lon)
+        for properties, lat, lon in _search(f"{city}, {state_name}", interval, osm_tag="place")
+        if properties.get("state") in (state_name, state)
+    ]
+    # A town beats a suburb or neighbourhood of the same name elsewhere in the state.
+    hits.sort(key=lambda hit: hit[0].get("osm_value") not in SETTLEMENTS)
+    if not hits:
+        return None
+    properties, lat, lon = hits[0]
+    return Place(lat=lat, lon=lon, label=_label(properties))

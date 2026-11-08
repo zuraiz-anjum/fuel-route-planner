@@ -5,8 +5,8 @@ from django.urls import reverse
 
 from planner.geo import haversine_miles
 from planner.models import Station
-from planner.nominatim import GeocodeError, Place
 from planner.osrm import NoRouteError, RouteResult, RoutingError
+from planner.photon import GeocodeError, Place
 from planner.trip import station_arrays
 
 # A straight route due east along the 35th parallel, a little over 1,100 miles.

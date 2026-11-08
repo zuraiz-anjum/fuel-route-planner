@@ -16,9 +16,9 @@ from django.conf import settings
 
 from .geo import Route, decode_polyline, haversine_miles, simplify
 from .models import Station
-from .nominatim import Place, geocode_place
 from .optimizer import Candidate, plan_fuel_stops
 from .osrm import fetch_route
+from .photon import Place, geocode_place
 
 COORDINATES = re.compile(r"^\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*$")
 

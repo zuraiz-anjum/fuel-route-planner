@@ -4,9 +4,9 @@ from django.urls import reverse
 from django.views.decorators.http import require_GET
 
 from .forms import TripForm
-from .nominatim import GeocodeError
 from .optimizer import NoFeasiblePlan
 from .osrm import NoRouteError, RoutingError
+from .photon import GeocodeError
 from .trip import StationsNotLoaded, UnknownPlace, plan_trip
 
 
