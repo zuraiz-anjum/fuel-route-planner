@@ -6,11 +6,14 @@ gets you throttled; both Nominatim and Photon did exactly that. GeoNames
 publishes the whole US gazetteer as a single download, so the bulk lookup is
 done offline against it.
 
-Places are matched on a normalised name plus the state. A populated place
-wins over a township or other administrative area, which wins over a
-locality or spot feature; among equals the larger population wins. Names
-that only differ in word order ("Pueblo of Acoma" against "Acoma Pueblo")
-are matched as a last resort.
+Places are matched on a normalised name plus the state. A place's own name
+counts for more than a name it is merely also known by: El Paso lists
+"Franklin" among its old names, and the Franklin in the price file is the
+small town in Robertson County. Then a populated place wins over a township
+or other administrative area, which wins over a locality or spot feature,
+and among equals the larger population wins. Names that only differ in word
+order ("Pueblo of Acoma" against "Acoma Pueblo") are matched as a last
+resort.
 """
 
 import csv
@@ -101,20 +104,27 @@ class Gazetteer:
                 if feature_class not in CLASS_RANK or (feature_class == "A" and code not in AREA_CODES):
                     continue
                 state = fields[ADMIN1]
-                rank = (CLASS_RANK[feature_class], code not in SECONDARY_CODES, int(fields[POPULATION] or 0))
                 place = (float(fields[LAT]), float(fields[LON]), fields[NAME])
-                names = {fields[NAME], fields[ASCII_NAME], *fields[ALTERNATE_NAMES].split(",")}
+                own = {fields[NAME], fields[ASCII_NAME]}
                 if feature_class == "A":
-                    names |= {area_name(name) for name in list(names)}
-                for name in names:
-                    if not name:
-                        continue
-                    key = (normalize_name(name), state)
-                    if key in exact_wanted and (key not in exact or rank > exact[key][0]):
-                        exact[key] = (rank, place)
-                    key = (loose_name(name), state)
-                    if key in loose_wanted and (key not in loose or rank > loose[key][0]):
-                        loose[key] = (rank, place)
+                    own |= {area_name(name) for name in list(own)}
+                also_known_as = set(fields[ALTERNATE_NAMES].split(",")) - own
+                for is_own, names in ((True, own), (False, also_known_as)):
+                    rank = (
+                        is_own,
+                        CLASS_RANK[feature_class],
+                        code not in SECONDARY_CODES,
+                        int(fields[POPULATION] or 0),
+                    )
+                    for name in names:
+                        if not name:
+                            continue
+                        key = (normalize_name(name), state)
+                        if key in exact_wanted and (key not in exact or rank > exact[key][0]):
+                            exact[key] = (rank, place)
+                        key = (loose_name(name), state)
+                        if key in loose_wanted and (key not in loose or rank > loose[key][0]):
+                            loose[key] = (rank, place)
         self.exact = {key: place for key, (rank, place) in exact.items()}
         self.loose = {key: place for key, (rank, place) in loose.items()}
 

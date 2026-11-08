@@ -217,7 +217,12 @@ in the GeoNames US gazetteer, an 80 MB download fetched on first use and not
 committed, and would ask Photon only about names GeoNames does not know. It
 knew all 3,808 once the file's spellings were folded in: "S Coffeyville" for
 South Coffeyville, "Pueblo Of Acoma" for Acoma Pueblo, and New England towns
-that GeoNames files as administrative areas ("Town of Corinth"). The command
+that GeoNames files as administrative areas ("Town of Corinth"). A place's
+own name is matched before names other places are merely also known by,
+which matters more than it sounds: El Paso lists "Franklin" among its old
+names, and the first version of the matcher put the Franklin, TX truck stop
+592 miles from home, with forty other towns astray by twenty miles or more.
+A test now checks every station against the city table below. The command
 is resumable and skips what is already cached, so it only needs to run again
 if the price file gains new cities; anything neither source knows is loaded
 without coordinates and ignored by the planner.

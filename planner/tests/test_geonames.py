@@ -36,13 +36,15 @@ DUMP = "\n".join(
         dump_line(13, "Corinth", "", 44.9, -69.0, "PPL", "ME", 0),
         dump_line(14, "Corinth", "", 44.95, -69.05, "", "ME", 0, feature_class="S"),
         dump_line(15, "Dallas", "", 32.7767, -96.7970, "PPLA2", "TX", 1300000),
+        dump_line(16, "Franklin", "", 31.0260, -96.4850, "PPL", "TX", 1600),
+        dump_line(17, "El Paso", "Franklin,Magoffinsville", 31.7587, -106.4869, "PPLA2", "TX", 678000),
     ]
 )
 
 CITIES = [
     ("Mc Calla", "AL"), ("Saint Louis", "MO"), ("Springfield", "IL"), ("Springfield", "MO"),
     ("Mount Pleasant", "MI"), ("A Mountain", "AZ"), ("S Coffeyville", "OK"), ("Crescent", "PA"),
-    ("Willow Beach", "AZ"), ("Pueblo Of Acoma", "NM"), ("Corinth", "ME"),
+    ("Willow Beach", "AZ"), ("Pueblo Of Acoma", "NM"), ("Corinth", "ME"), ("Franklin", "TX"),
 ]
 
 
@@ -84,6 +86,9 @@ class GazetteerTests(SimpleTestCase):
     def test_matches_alternate_names(self):
         self.assertEqual(self.gazetteer.find("Mc Calla", "AL"), (33.3487, -87.0142, "McCalla"))
         self.assertEqual(self.gazetteer.find("Saint Louis", "MO")[2], "St. Louis")
+
+    def test_a_towns_own_name_beats_a_bigger_places_alternate_name(self):
+        self.assertEqual(self.gazetteer.find("Franklin", "TX"), (31.0260, -96.4850, "Franklin"))
 
     def test_town_beats_section_of_town_regardless_of_population(self):
         self.assertEqual(self.gazetteer.find("Springfield", "IL")[:2], (39.7817, -89.6501))

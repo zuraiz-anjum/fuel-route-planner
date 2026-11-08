@@ -1,8 +1,9 @@
 from django.test import SimpleTestCase
 
 from planner.cities import find_city, readings
+from planner.geo import haversine_miles
 from planner.states import state_code
-from planner.stations import read_stations
+from planner.stations import read_city_coordinates, read_stations
 
 
 class StateCodeTests(SimpleTestCase):
@@ -71,6 +72,16 @@ class FindCityTests(SimpleTestCase):
         towns = {(s.city, s.state) for s in read_stations()}
         missing = sorted(town for town in towns if find_city("%s, %s" % town) is None)
         self.assertEqual(missing, [])
+
+    def test_stations_sit_where_the_city_table_puts_their_town(self):
+        # The coordinates file and the city table are built separately from
+        # GeoNames; a town placed differently in the two is a matching bug.
+        astray = []
+        for (city, state), point in read_city_coordinates().items():
+            place = find_city(f"{city}, {state}")
+            if point and place and haversine_miles(point[0], point[1], place.lat, place.lon) > 10:
+                astray.append((city, state))
+        self.assertEqual(astray, [])
 
     def test_unknown_places_and_bare_names_are_left_to_the_geocoder(self):
         for query in ("Nowhere, TX", "Dallas", "Paris, France", "Dallas, Ontario", "100 Main St, Dallas, TX"):
