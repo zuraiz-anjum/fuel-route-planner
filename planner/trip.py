@@ -40,10 +40,11 @@ US_BOXES = [
 # cross-country polyline from tens of thousands of points down to a few thousand.
 RESPONSE_GEOMETRY_TOLERANCE_MILES = 0.03
 
-# "Dallas" and "Dallas, TX" resolve to slightly different points; a trip
-# between them is not a trip. Checked after geocoding, since the two inputs
-# can be spelt quite differently and still mean the same place.
-SAME_PLACE_MILES = 0.5
+# The city table and the geocoder put the same city centre up to a mile
+# apart ("Dallas, TX" against "Dallas"), and a drive of a mile or two needs
+# no fuel plan anyway. Checked after resolving, since the two inputs can be
+# spelt quite differently and still mean the same place.
+SAME_PLACE_MILES = 2.0
 
 # With no station within this distance of the start there is nowhere to fill
 # up before leaving, and the caller has to say how much fuel is in the tank.
@@ -63,7 +64,7 @@ class StationsNotLoaded(Exception):
 
 class SamePlace(Exception):
     def __init__(self):
-        super().__init__("start and finish are the same place")
+        super().__init__(f"start and finish are within {SAME_PLACE_MILES:g} miles of each other")
 
 
 class NoStationNearStart(Exception):

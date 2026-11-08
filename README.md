@@ -137,7 +137,7 @@ Errors come back as `{"error": "..."}`:
 | Status | When |
 |--------|------|
 | 400 | Missing or invalid parameters; `details` says which. |
-| 422 | A place could not be found in the US, start and finish are the same place, no road connects the two, no station is within 100 miles of the start to fill up at, or some stretch is longer than the range with no station in it. |
+| 422 | A place could not be found in the US, start and finish are within two miles of each other, no road connects the two, no station is within 100 miles of the start to fill up at, or some stretch is longer than the range with no station in it. |
 | 429 | More than 60 requests in a minute from one address. |
 | 502 | OSRM or Photon failed or timed out. |
 | 503 | No stations loaded yet; run `load_stations`. |

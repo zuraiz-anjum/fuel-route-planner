@@ -14,7 +14,12 @@ from planner.photon import GeocodeError, Place
 # A straight route due east along the 35th parallel, a little over 1,100 miles.
 START = Place(lat=35.0, lon=-100.0, label="Start, Texas")
 FINISH = Place(lat=35.0, lon=-80.0, label="Finish, Georgia")
-PLACES = {"Start, TX": START, "Finish, GA": FINISH}
+PLACES = {
+    "Start, TX": START,
+    "Finish, GA": FINISH,
+    # Where the real geocoder puts Dallas: nearly a mile from the city table's point.
+    "Dallas": Place(lat=32.77627, lon=-96.79686, label="Dallas, Texas, United States"),
+}
 
 LOCAL_CACHE = {"default": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache"}}
 
@@ -143,9 +148,10 @@ class RouteApiTests(TestCase):
 
     def test_start_and_finish_in_the_same_place_are_rejected(self):
         self.seed_stations()
-        response = self.plan(start="Dallas, TX", finish="dallas texas")
-        self.assertEqual(response.status_code, 422)
-        self.assertEqual(response.json()["error"], "start and finish are the same place")
+        for finish in ("dallas texas", "Dallas"):
+            response = self.plan(start="Dallas, TX", finish=finish)
+            self.assertEqual(response.status_code, 422, finish)
+            self.assertEqual(response.json()["error"], "start and finish are within 2 miles of each other")
         self.fetch_route.assert_not_called()
 
     def test_totals_are_the_sums_of_the_stops_shown(self):
