@@ -74,6 +74,18 @@ def read_stations(path=None):
     return stations
 
 
+def read_city_overrides(path=None):
+    """{city_key: (lat, lon, note)} for the towns whose position was settled by hand."""
+    path = Path(path or settings.CITY_OVERRIDES_CSV)
+    if not path.exists():
+        return {}
+    with path.open(newline="", encoding="utf-8") as fh:
+        return {
+            city_key(row["city"], row["state"]): (float(row["lat"]), float(row["lon"]), row["note"])
+            for row in csv.DictReader(fh)
+        }
+
+
 def read_city_coordinates(path=None):
     """Return {city_key: (lat, lon) or None} from the geocoding cache file."""
     path = Path(path or settings.CITY_COORDINATES_CSV)

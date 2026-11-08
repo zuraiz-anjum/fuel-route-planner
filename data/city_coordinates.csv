@@ -37,10 +37,8 @@ Stuart,IA,41.503320,-94.318570,Stuart,geonames
 West Memphis,AR,35.146480,-90.184540,West Memphis,geonames
 Atwood,CO,40.547760,-103.269660,Atwood,geonames
 Salina,KS,38.840280,-97.611420,Salina,geonames
-Highland,IN,41.553650,-87.451980,Highland,geonames
 Sardinia,OH,39.007840,-83.808540,Sardinia,geonames
 Ocean Springs,MS,30.411310,-88.827810,Ocean Springs,geonames
-Mount Vernon,KY,38.025630,-84.495220,Mount Vernon,geonames
 Ocala,FL,29.187200,-82.140090,Ocala,geonames
 Port Allen,LA,30.452140,-91.210110,Port Allen,geonames
 Lake Village,IN,41.137530,-87.448640,Lake Village,geonames
@@ -68,7 +66,6 @@ Gansevoort,NY,43.196180,-73.651780,Gansevoort,geonames
 Hammond,IN,41.583370,-87.500040,Hammond,geonames
 Jacksonville,TX,31.963780,-95.270500,Jacksonville,geonames
 Yuma,AZ,32.725320,-114.624400,Yuma,geonames
-Sunbury,OH,40.242560,-82.859070,Sunbury,geonames
 Seville,OH,41.010060,-81.862360,Seville,geonames
 Hebron,OH,39.961730,-82.491270,Hebron,geonames
 Perrysburg,OH,41.557000,-83.627160,Perrysburg,geonames
@@ -101,14 +98,11 @@ Egan,LA,30.236870,-92.505970,Egan,geonames
 Troutdale,OR,45.539290,-122.387310,Troutdale,geonames
 Rock Springs,WY,41.587460,-109.202900,Rock Springs,geonames
 Prosser,WA,46.206800,-119.768920,Prosser,geonames
-Cottondale,AL,31.205180,-85.381880,Cottondale,geonames
 Concordia,MO,38.983350,-93.568550,Concordia,geonames
 Sidney,NE,41.142760,-102.977980,Sidney,geonames
 Lebanon,NH,43.642290,-72.251760,Lebanon,geonames
 Montgomery,NY,41.527590,-74.236820,Montgomery,geonames
-Geneva,OH,39.662010,-82.433490,Geneva,geonames
 Albany,OR,44.636510,-123.105930,Albany,geonames
-Holladay,TN,35.870620,-88.145870,Holladay,geonames
 Canutillo,TX,31.911490,-106.600270,Canutillo,geonames
 Thorofare,NJ,39.842340,-75.196290,West Deptford Township,geonames
 Summit,SD,45.304410,-97.036470,Summit,geonames
@@ -121,7 +115,6 @@ Alexandria,MO,40.359490,-91.455430,Alexandria,geonames
 Barneveld,WI,43.015550,-89.895400,Barneveld,geonames
 North Chicago,IL,42.325580,-87.841180,North Chicago,geonames
 Sylvania,GA,32.750440,-81.636780,Sylvania,geonames
-Pelham,AL,33.285670,-86.809990,Pelham,geonames
 Mc Calla,AL,33.348720,-87.014160,McCalla,geonames
 Conway,AR,35.088700,-92.442100,Conway,geonames
 Phoenix,AZ,33.448380,-112.074040,Phoenix,geonames
@@ -139,12 +132,10 @@ Oakwood,IL,40.116150,-87.778360,Oakwood,geonames
 Divernon,IL,39.565610,-89.657320,Divernon,geonames
 Greenfield,IN,39.785040,-85.769420,Greenfield,geonames
 Knightstown,IN,39.795600,-85.526360,Knightstown,geonames
-Cedar Creek,TX,30.087160,-97.500830,Cedar Creek,geonames
 Shelbyville,IN,39.521440,-85.776920,Shelbyville,geonames
 Terre Haute,IN,39.466700,-87.413910,Terre Haute,geonames
 Valparaiso,IN,41.473090,-87.061140,Valparaiso,geonames
 Emporia,KS,38.403900,-96.181660,Emporia,geonames
-Georgetown,KY,38.209800,-84.558830,Georgetown,geonames
 Lebanon Junction,KY,37.834510,-85.731900,Lebanon Junction,geonames
 Saint Francisville,LA,30.779900,-91.376500,Saint Francisville,geonames
 Leominster,MA,42.525090,-71.759790,Leominster,geonames
@@ -158,22 +149,17 @@ Lamar,MO,37.495050,-94.276610,Lamar,geonames
 Palmyra,MO,39.794210,-91.523210,Palmyra,geonames
 Sedalia,MO,38.704460,-93.228260,Sedalia,geonames
 West Plains,MO,36.728120,-91.852370,West Plains,geonames
-Corinth,MS,34.934250,-88.522270,Corinth,geonames
 Greenville,MS,33.408980,-91.059780,Greenville,geonames
 Red Banks,MS,34.828150,-89.564530,Red Banks,geonames
 Mebane,NC,36.095970,-79.266960,Mebane,geonames
 Sanford,NC,35.479880,-79.180300,Sanford,geonames
 Wilmington,NC,34.235560,-77.946040,Wilmington,geonames
-Wilson,NC,35.721270,-77.915540,Wilson,geonames
 Grand Island,NE,40.925010,-98.342010,Grand Island,geonames
 Bordentown,NJ,40.146220,-74.711830,Bordentown,geonames
-Fairfield,NJ,40.883710,-74.305980,Fairfield,geonames
 Mahwah,NJ,41.088710,-74.143760,Mahwah,geonames
-Palmyra,NJ,40.007060,-75.028230,Palmyra,geonames
 Milan,NM,35.169760,-107.890890,Milan,geonames
 Rolling Prairie,IN,41.670880,-86.615850,Rolling Prairie,geonames
 Canton,OH,40.798950,-81.378450,Canton,geonames
-Lima,OH,40.742550,-84.105230,Lima,geonames
 Montpelier,OH,41.584500,-84.605510,Montpelier,geonames
 Billings,OK,36.528920,-97.443940,Billings,geonames
 Clinton,OK,35.515610,-98.967310,Clinton,geonames
@@ -181,7 +167,6 @@ Covington,IN,40.141700,-87.394740,Covington,geonames
 Breezewood,PA,39.999250,-78.238620,Breezewood,geonames
 Gettysburg,PA,39.830930,-77.231100,Gettysburg,geonames
 Lafayette,IN,40.416700,-86.875290,Lafayette,geonames
-Mechanicsburg,PA,40.214260,-77.008590,Mechanicsburg,geonames
 Lugoff,SC,34.227370,-80.689250,Lugoff,geonames
 Cheyenne,WY,41.139980,-104.820250,Cheyenne,geonames
 Chesnee,SC,35.148450,-81.860940,Chesnee,geonames
@@ -234,7 +219,6 @@ Buna,TX,30.432980,-93.962400,Buna,geonames
 Abbott,TX,31.884880,-97.073340,Abbott,geonames
 Howard City,MI,43.395580,-85.467820,Howard City,geonames
 Midland,TX,31.997350,-102.077910,Midland,geonames
-Panhandle,TX,35.345600,-101.380440,Panhandle,geonames
 Perryton,TX,36.400030,-100.802650,Perryton,geonames
 Okeechobee,FL,27.243930,-80.829780,Okeechobee,geonames
 Hattiesburg,MS,31.327120,-89.290340,Hattiesburg,geonames
@@ -282,7 +266,7 @@ Superior,WI,46.720770,-92.104080,Superior,geonames
 Sheboygan,WI,43.750830,-87.714530,Sheboygan,geonames
 Bruceton Mills,WV,39.658690,-79.641160,Bruceton Mills,geonames
 Huntington,WV,38.419250,-82.445150,Huntington,geonames
-Ivydale,WV,38.535650,-81.034830,Ivydale,geonames
+Ivydale,WV,38.535650,-81.034830,Ivydale,hand
 Mills,WY,42.840520,-106.365860,Mills,geonames
 Casper,WY,42.866630,-106.313080,Casper,geonames
 Douglas,WY,42.759690,-105.382210,Douglas,geonames
@@ -300,8 +284,7 @@ Thurmont,MD,39.623710,-77.410820,Thurmont,geonames
 Fairmont,MN,43.652180,-94.461080,Fairmont,geonames
 Saint Cloud,MN,45.560800,-94.162490,Saint Cloud,geonames
 Raphine,VA,37.937350,-79.232810,Raphine,geonames
-Mount Nebo,WV,38.200110,-80.851210,Mount Nebo,geonames
-Jackson,OH,39.052020,-82.636550,Jackson,geonames
+Mount Nebo,WV,38.200110,-80.851210,Mount Nebo,hand
 Ravenna,OH,41.157560,-81.242050,Ravenna,geonames
 Lynn,AL,34.047050,-87.549740,Lynn,geonames
 North Little Rock,AR,34.769540,-92.267090,North Little Rock,geonames
@@ -313,12 +296,10 @@ Millbury,OH,41.566160,-83.424650,Millbury,geonames
 Cross Plains,TN,36.548660,-86.696110,Cross Plains,geonames
 Bartow,FL,27.896410,-81.843140,Bartow,geonames
 Bedford,PA,40.018690,-78.503910,Bedford,geonames
-Rock Hill,SC,34.924870,-81.025080,Rock Hill,geonames
 Christiana,TN,35.710070,-86.399440,Christiana,geonames
 Portsmouth,VA,36.835430,-76.298270,Portsmouth,geonames
 Prentice,WI,45.546070,-90.286540,Prentice,geonames
 Royse City,TX,32.975120,-96.332480,Royse City,geonames
-Franklin,OH,39.558950,-84.304110,Franklin,geonames
 Janesville,WI,42.682790,-89.018720,Janesville,geonames
 Rawlins,WY,41.791070,-107.238660,Rawlins,geonames
 Penns Grove,NJ,39.729560,-75.467970,Penns Grove,geonames
@@ -357,11 +338,8 @@ Harrisburg,PA,40.273700,-76.884420,Harrisburg,geonames
 Steele,ND,46.854710,-99.915940,Steele,geonames
 Charlotte,NC,35.227090,-80.843130,Charlotte,geonames
 Jamestown,ND,46.910540,-98.708440,Jamestown,geonames
-Monroe,LA,32.509310,-92.119300,Monroe,geonames
 Kadoka,SD,43.833880,-101.509870,Kadoka,geonames
-Knoxville,AL,33.591770,-85.897190,Knoxville,geonames
 Delta,LA,32.325700,-90.927050,Delta,geonames
-Live Oak,FL,30.294950,-82.984020,Live Oak,geonames
 Greencastle,PA,39.790370,-77.727770,Greencastle,geonames
 Cardwell,MO,36.047010,-90.292880,Cardwell,geonames
 Madison Heights,VA,37.430980,-79.123080,Madison Heights,geonames
@@ -382,14 +360,11 @@ Manchester,TN,35.481740,-86.088600,Manchester,geonames
 Colman,SD,43.982470,-96.814500,Colman,geonames
 Perham,MN,46.594400,-95.572540,Perham,geonames
 Polk City,FL,28.182510,-81.823970,Polk City,geonames
-Oak Grove,KY,37.344210,-86.754710,Oak Grove,geonames
 Bald Knob,AR,35.309810,-91.567910,Bald Knob,geonames
 Pompano Beach,FL,26.237860,-80.124770,Pompano Beach,geonames
-Summerville,SC,33.018500,-80.175650,Summerville,geonames
 Falfurrias,TX,27.226990,-98.144170,Falfurrias,geonames
 Earle,AR,35.275090,-90.466770,Earle,geonames
 Lusk,WY,42.762470,-104.452170,Lusk,geonames
-Milton,PA,41.012030,-76.847740,Milton,geonames
 Central Square,NY,43.286740,-76.146040,Central Square,geonames
 Greenland,NH,43.036200,-70.832830,Greenland,geonames
 Meridian,MS,32.364310,-88.703660,Meridian,geonames
@@ -438,7 +413,6 @@ Cochranton,PA,41.520050,-80.048390,Cochranton,geonames
 Albany,NY,42.652580,-73.756230,Albany,geonames
 West Helena,AR,34.550660,-90.641770,West Helena,geonames
 Columbus,MT,45.636610,-109.252110,Columbus,geonames
-Newport,AR,35.604800,-91.281800,Newport,geonames
 Emporia,VA,36.685980,-77.542480,Emporia,geonames
 Burlington,CO,39.306110,-102.269360,Burlington,geonames
 Crook,CO,40.858880,-102.801030,Crook,geonames
@@ -451,11 +425,9 @@ Deer Lodge,MT,46.395760,-112.730040,Deer Lodge,geonames
 Bradenton,FL,27.498930,-82.574820,Bradenton,geonames
 Palisades Park,NJ,40.848160,-73.997640,Palisades Park,geonames
 Fort Lauderdale,FL,26.122310,-80.143380,Fort Lauderdale,geonames
-Lebanon,TN,36.208110,-86.291100,Lebanon,geonames
 Moberly,MO,39.418370,-92.438240,Moberly,geonames
 Lake Placid,FL,27.298340,-81.371240,Lake Placid,geonames
 Mattawan,MI,42.209480,-85.784450,Mattawan,geonames
-Garland,TX,32.912620,-96.638880,Garland,geonames
 Elk City,OK,35.411990,-99.404260,Elk City,geonames
 Macclenny,FL,30.282180,-82.122060,Macclenny,geonames
 El Dorado,AR,33.207630,-92.666270,El Dorado,geonames
@@ -468,8 +440,6 @@ Pryor,OK,36.308430,-95.316910,Pryor,geonames
 Enid,OK,36.395590,-97.878390,Enid,geonames
 Atlanta,GA,33.749000,-84.387980,Atlanta,geonames
 Douglas,GA,31.508810,-82.849870,Douglas,geonames
-Midway,GA,31.805770,-81.430660,Midway,geonames
-Thomasville,GA,30.836580,-83.978780,Thomasville,geonames
 Bemidji,MN,47.473560,-94.880280,Bemidji,geonames
 Post Falls,ID,47.717960,-116.951590,Post Falls,geonames
 Port Wentworth,GA,32.149090,-81.163170,Port Wentworth,geonames
@@ -479,7 +449,6 @@ Bunker Hill,KS,38.875840,-98.703970,Bunker Hill,geonames
 Rising Fawn,GA,34.760080,-85.531080,Rising Fawn,geonames
 Jean,NV,35.778870,-115.323880,Jean,geonames
 Lawrenceburg,IN,39.090890,-84.849950,Lawrenceburg,geonames
-Pleasant View,TN,36.394220,-87.036670,Pleasant View,geonames
 Corfu,NY,42.960060,-78.405580,Corfu,geonames
 Shreveport,LA,32.525150,-93.750180,Shreveport,geonames
 Winchester,KY,37.990080,-84.179650,Winchester,geonames
@@ -500,11 +469,9 @@ New Virginia,IA,41.182220,-93.728830,New Virginia,geonames
 Missouri Valley,IA,41.556380,-95.887790,Missouri Valley,geonames
 Sikeston,MO,36.876720,-89.587860,Sikeston,geonames
 Moriarty,NM,34.990050,-106.049190,Moriarty,geonames
-Bethany,MO,40.268330,-94.028290,Bethany,geonames
 Toledo,IA,41.995550,-92.576860,Toledo,geonames
 Underwood,IA,41.386940,-95.676670,Underwood,geonames
 Delco,NC,34.315720,-78.224720,Delco,geonames
-Rogers,MN,45.188850,-93.553010,Rogers,geonames
 Waterloo,IA,42.492760,-92.342960,Waterloo,geonames
 Williamsburg,IA,41.661120,-92.009070,Williamsburg,geonames
 Glencoe,KY,38.714510,-84.822730,Glencoe,geonames
@@ -518,9 +485,6 @@ Bloomington,IL,40.484200,-88.993690,Bloomington,geonames
 Metropolis,IL,37.151170,-88.732000,Metropolis,geonames
 Mahomet,IL,40.195310,-88.404220,Mahomet,geonames
 Fergus Falls,MN,46.283020,-96.077560,Fergus Falls,geonames
-Greenwood,LA,32.442930,-93.972960,Greenwood,geonames
-Wildwood,FL,28.865420,-82.040580,Wildwood,geonames
-Lexington,VA,37.784020,-79.442820,Lexington,geonames
 Warrenton,VA,38.713450,-77.795270,Warrenton,geonames
 Lincoln,IL,40.148380,-89.364820,Lincoln,geonames
 Marshall,IL,39.391430,-87.693640,Marshall,geonames
@@ -536,10 +500,8 @@ West Liberty,IA,41.570020,-91.263770,West Liberty,geonames
 Weatherford,TX,32.759300,-97.797250,Weatherford,geonames
 Mountain Home,ID,43.132950,-115.691200,Mountain Home,geonames
 Trinidad,CO,37.169460,-104.500540,Trinidad,geonames
-Lincoln,AL,33.613160,-86.118310,Lincoln,geonames
 Beaumont,TX,30.086050,-94.101850,Beaumont,geonames
 Motley,MN,46.336630,-94.646120,Motley,geonames
-Three Forks,MT,45.892430,-111.552190,Three Forks,geonames
 Newton,KS,38.046680,-97.345040,Newton,geonames
 Woodhull,IL,41.178930,-90.315960,Woodhull,geonames
 Commerce,GA,34.204000,-83.457110,Commerce,geonames
@@ -555,7 +517,6 @@ Clanton,AL,32.838740,-86.629430,Clanton,geonames
 Rural Retreat,VA,36.893730,-81.275930,Rural Retreat,geonames
 Wisconsin Rapids,WI,44.383580,-89.817350,Wisconsin Rapids,geonames
 Marshall,MI,42.272260,-84.963310,Marshall,geonames
-Wilson,WI,44.953580,-92.173520,Wilson,geonames
 Billings,MT,45.783290,-108.500690,Billings,geonames
 Centreville,MD,39.041780,-76.066330,Centreville,geonames
 Linden,NJ,40.622050,-74.244590,Linden,geonames
@@ -668,7 +629,6 @@ Ozona,TX,30.710170,-101.200670,Ozona,geonames
 Beresford,SD,43.080540,-96.773660,Beresford,geonames
 Perry,FL,30.117660,-83.582740,Perry,geonames
 Lafayette,LA,30.224090,-92.019840,Lafayette,geonames
-Petersburg,VA,37.227930,-77.401930,Petersburg,geonames
 Amelia Court House,VA,37.342930,-77.980560,Amelia Court House,geonames
 Arkadelphia,AR,34.120930,-93.053780,Arkadelphia,geonames
 Roswell,NM,33.394370,-104.524910,Roswell,geonames
@@ -711,12 +671,10 @@ South Vienna,OH,39.927000,-83.612420,South Vienna,geonames
 Richland,MO,37.856980,-92.404340,Richland,geonames
 Foristell,MO,38.815050,-90.955970,Foristell,geonames
 Cabool,MO,37.123940,-92.101270,Cabool,geonames
-Denton,TX,33.214840,-97.133070,Denton,geonames
 North Bend,WA,47.495660,-121.786780,North Bend,geonames
 Napoleon,OH,41.392270,-84.125220,Napoleon,geonames
 Maryville,MO,40.346100,-94.872470,Maryville,geonames
 West Burlington,IA,40.825040,-91.156540,West Burlington,geonames
-Fredericksburg,VA,38.303180,-77.460540,Fredericksburg,geonames
 Saint Peters,MO,38.800330,-90.626510,Saint Peters,geonames
 Simpsonville,KY,38.222570,-85.355230,Simpsonville,geonames
 Malvern,AR,34.362310,-92.812950,Malvern,geonames
@@ -738,16 +696,13 @@ London,KY,37.128980,-84.083260,London,geonames
 Dunseith,ND,48.813060,-100.060970,Dunseith,geonames
 Sayre,OK,35.291160,-99.640100,Sayre,geonames
 La Grande,OR,45.324580,-118.087720,La Grande,geonames
-Richland,MS,32.239040,-90.158420,Richland,geonames
 Mathis,TX,28.094460,-97.828050,Mathis,geonames
 Forest City,MO,39.982500,-95.191920,Forest City,geonames
 Wendover,UT,40.737150,-114.037510,Wendover,geonames
 Boulder,MT,46.236590,-112.120830,Boulder,geonames
 Holland,MI,42.787520,-86.108930,Holland,geonames
-Park City,MT,45.632720,-108.917930,Park City,geonames
 Gillette,WY,44.291090,-105.502220,Gillette,geonames
 Faucett,MO,39.600000,-94.797460,Faucett,geonames
-Gainesville,TX,33.625940,-97.133350,Gainesville,geonames
 Pasco,WA,46.239580,-119.100570,Pasco,geonames
 Livingston,MT,45.662440,-110.561040,Livingston,geonames
 Hagerstown,MD,39.641760,-77.719990,Hagerstown,geonames
@@ -762,7 +717,6 @@ Vero Beach,FL,27.638640,-80.397270,Vero Beach,geonames
 Rensselaer,IN,40.936700,-87.150860,Rensselaer,geonames
 Gurnee,IL,42.370300,-87.902020,Gurnee,geonames
 Franklin,TN,35.925060,-86.868890,Franklin,geonames
-Mocksville,NC,35.894030,-80.561450,Mocksville,geonames
 Sioux Falls,SD,43.543690,-96.727960,Sioux Falls,geonames
 Fremont,NE,41.433330,-96.498080,Fremont,geonames
 Cullman,AL,34.174820,-86.843610,Cullman,geonames
@@ -774,7 +728,6 @@ Clearwater,MN,45.419410,-94.048870,Clearwater,geonames
 Grosse Tete,LA,30.411030,-91.433720,Grosse Tete,geonames
 Lewis,NY,44.275050,-73.565690,Lewis,geonames
 Walterboro,SC,32.905170,-80.666770,Walterboro,geonames
-Kutztown,PA,40.517320,-75.777420,Kutztown,geonames
 Ashland,VA,37.759030,-77.479980,Ashland,geonames
 Hastings,NE,40.586120,-98.388390,Hastings,geonames
 Deming,NM,32.268700,-107.758640,Deming,geonames
@@ -804,37 +757,28 @@ Tacoma,WA,47.252880,-122.444290,Tacoma,geonames
 Ellensburg,WA,46.996510,-120.547850,Ellensburg,geonames
 Tumwater,WA,47.007320,-122.909310,Tumwater,geonames
 Bracey,VA,36.599590,-78.143050,Bracey,geonames
-Chesapeake,VA,36.819040,-76.274940,Chesapeake,geonames
 Coralville,IA,41.676400,-91.580450,Coralville,geonames
 Beaver,UT,38.276910,-112.641050,Beaver,geonames
 Tooele,UT,40.530780,-112.298280,Tooele,geonames
 Salt Lake City,UT,40.760780,-111.891050,Salt Lake City,geonames
 Farmington,NM,36.728060,-108.218690,Farmington,geonames
-Snyder,TX,32.717890,-100.917620,Snyder,geonames
 Sweetwater,TX,32.470950,-100.405940,Sweetwater,geonames
 Lubbock,TX,33.577860,-101.855170,Lubbock,geonames
 Big Spring,TX,32.250400,-101.478740,Big Spring,geonames
 San Marcos,TX,29.883270,-97.941390,San Marcos,geonames
-Antioch,TN,35.789790,-88.974230,Antioch,geonames
-Denmark,TN,36.338390,-87.729190,Denmark,geonames
 Ardmore,TN,34.992030,-86.846670,Ardmore,geonames
 Aberdeen,SD,45.464700,-98.486480,Aberdeen,geonames
 Murdo,SD,43.888320,-100.712910,Murdo,geonames
 Manning,SC,33.695160,-80.210910,Manning,geonames
 Emlenton,PA,41.177280,-79.707830,Emlenton,geonames
 Milesburg,PA,40.941730,-77.785000,Milesburg,geonames
-Bloomsburg,PA,41.003700,-76.454950,Bloomsburg,geonames
-Clearfield,PA,41.027280,-78.439190,Clearfield,geonames
-Myerstown,PA,40.374540,-76.302730,Myerstown,geonames
 Brookville,PA,41.161170,-79.083090,Brookville,geonames
 Carlisle,PA,40.201480,-77.188870,Carlisle,geonames
 Lamar,PA,41.016180,-77.531100,Lamar,geonames
 Portland,OR,45.523450,-122.676210,Portland,geonames
-London,OH,39.886450,-83.448250,London,geonames
 Youngstown,OH,41.099780,-80.649520,Youngstown,geonames
 Hubbard,OH,41.156450,-80.569240,Hubbard,geonames
 Apalachin,NY,42.069520,-76.154650,Apalachin,geonames
-Eaton,OH,39.743940,-84.636620,Eaton,geonames
 Buffalo,NY,42.886450,-78.878370,Buffalo,geonames
 Kingsville,OH,41.890890,-80.676190,Kingsville,geonames
 Jeffersonville,OH,39.653670,-83.563810,Jeffersonville,geonames
@@ -843,7 +787,6 @@ Saluda,NC,35.236230,-82.349280,Saluda,geonames
 Phelps,NY,42.957560,-77.057470,Phelps,geonames
 Salisbury,NC,35.670970,-80.474230,Salisbury,geonames
 Canaan,NY,42.412030,-73.447060,Canaan,geonames
-Nichols,NY,42.021740,-76.366880,Nichols,geonames
 Glenmont,NY,42.604800,-73.769570,Glenmont,geonames
 Santa Rosa,NM,34.938670,-104.682490,Santa Rosa,geonames
 Clovis,NM,34.404800,-103.205230,Clovis,geonames
@@ -861,12 +804,10 @@ Missoula,MT,46.872150,-113.994000,Missoula,geonames
 Salamanca,NY,42.157840,-78.715030,Salamanca,geonames
 Laurel,MT,45.669120,-108.771530,Laurel,geonames
 Strafford,MO,37.268380,-93.117130,Strafford,geonames
-Oak Grove,MO,39.005010,-94.129390,Oak Grove,geonames
 Matthews,MO,36.759220,-89.586750,Matthews,geonames
 Kingdom City,MO,38.952820,-91.939070,Kingdom City,geonames
 Lebanon,MO,37.680600,-92.663790,Lebanon,geonames
 Tillatoba,MS,33.984840,-89.896760,Tillatoba,geonames
-Belmont,OH,39.729500,-84.139660,Belmont,geonames
 Tekonsha,MI,42.093380,-84.985810,Tekonsha,geonames
 Ironton,OH,38.536750,-82.682940,Ironton,geonames
 Trenton,MI,42.139490,-83.178260,Trenton,geonames
@@ -883,7 +824,6 @@ Sonora,KY,37.524230,-85.893020,Sonora,geonames
 Florence,KY,38.998950,-84.626610,Florence,geonames
 Wakeeney,KS,39.025010,-99.879570,WaKeeney,geonames
 Marietta,OH,39.415350,-81.454840,Marietta,geonames
-Monroeville,OH,41.244220,-82.696290,Monroeville,geonames
 Altoona,IA,41.644160,-93.464660,Altoona,geonames
 North Baltimore,OH,41.182830,-83.678270,North Baltimore,geonames
 Sioux City,IA,42.499990,-96.400310,Sioux City,geonames
@@ -896,11 +836,9 @@ Cambridge City,IN,39.812550,-85.171630,Cambridge City,geonames
 Clayton,IN,39.689210,-86.522500,Clayton,geonames
 Greensburg,IN,39.337270,-85.483580,Greensburg,geonames
 Morris,IL,41.357250,-88.421180,Morris,geonames
-Marion,IL,37.730610,-88.933130,Marion,geonames
 East Saint Louis,IL,38.624500,-90.150940,East Saint Louis,geonames
 Mc Lean,IL,40.314480,-89.169810,McLean,geonames
 Cusseta,AL,32.784850,-85.305780,Cusseta,geonames
-Forest Park,GA,33.622050,-84.369090,Forest Park,geonames
 Adairsville,GA,34.368700,-84.934110,Adairsville,geonames
 Lagrange,GA,33.039290,-85.031330,LaGrange,geonames
 Pinconning,MI,43.853630,-83.964990,Pinconning,geonames
@@ -937,7 +875,6 @@ Carlin,NV,40.713810,-116.103970,Carlin,geonames
 New Paris,OH,39.856990,-84.793290,New Paris,geonames
 Beloit,WI,42.508350,-89.031780,Beloit,geonames
 Seminole,OK,35.224520,-96.670570,Seminole,geonames
-Ridgeway,VA,36.989310,-79.482530,Ridgeway,geonames
 Nephi,UT,39.710230,-111.836320,Nephi,geonames
 Pecos,TX,31.422910,-103.493230,Pecos,geonames
 Walters,OK,34.359810,-98.307830,Walters,geonames
@@ -956,7 +893,6 @@ Dalton,PA,41.534240,-75.736030,Dalton,geonames
 Wayne,PA,40.044000,-75.387690,Wayne,geonames
 West Columbia,SC,33.993490,-81.073980,West Columbia,geonames
 Lebo,KS,38.416680,-95.853040,Lebo,geonames
-Chesterton,IN,41.610590,-87.064200,Chesterton,geonames
 Cowpens,SC,35.016790,-81.803990,Cowpens,geonames
 Villa Rica,GA,33.732050,-84.919110,Villa Rica,geonames
 North Augusta,SC,33.501800,-81.965120,North Augusta,geonames
@@ -981,7 +917,6 @@ Moran,KS,37.916150,-95.170250,Moran,geonames
 Maple Hill,KS,39.084720,-96.028050,Maple Hill,geonames
 Whiteland,IN,39.550050,-86.079710,Whiteland,geonames
 Rochester,IN,41.064760,-86.215830,Rochester,geonames
-Palm Bay,FL,28.034460,-80.588660,Palm Bay,geonames
 Opelika,AL,32.645410,-85.378280,Opelika,geonames
 Mcallen,TX,26.203410,-98.230010,McAllen,geonames
 Dansville,NY,42.560900,-77.696110,Dansville,geonames
@@ -1031,8 +966,6 @@ North East,PA,42.215610,-79.834220,North East,geonames
 Tafton,PA,41.404530,-75.182950,Tafton,geonames
 Kingston Springs,TN,36.102000,-87.115010,Kingston Springs,geonames
 Alvord,TX,33.358450,-97.694750,Alvord,geonames
-Anthony,TX,31.999270,-106.605550,Anthony,geonames
-Mount Vernon,TX,33.188730,-95.221330,Mount Vernon,geonames
 Elmendorf,TX,29.256070,-98.332790,Elmendorf,geonames
 Black River Falls,WI,44.294680,-90.851530,Black River Falls,geonames
 Fremont,WI,44.259700,-88.864830,Fremont,geonames
@@ -1050,8 +983,6 @@ Natchitoches,LA,31.760720,-93.086270,Natchitoches,geonames
 Mount Morris,MI,43.118640,-83.694960,Mount Morris,geonames
 Saltillo,MS,34.376490,-88.681720,Saltillo,geonames
 Fort Ann,NY,43.414240,-73.487610,Fort Ann,geonames
-Sunnyside,WA,46.323740,-120.008650,Sunnyside,geonames
-Dalton,GA,34.769800,-84.970220,Dalton,geonames
 Erie,PA,42.129220,-80.085060,Erie,geonames
 Milldale,CT,41.565930,-72.891770,Milldale,geonames
 Globe,AZ,33.394220,-110.786500,Globe,geonames
@@ -1108,7 +1039,6 @@ Kingsland,GA,30.799960,-81.689830,Kingsland,geonames
 Brooklyn,IA,41.733610,-92.445460,Brooklyn,geonames
 Maysville,KY,38.641190,-83.744370,Maysville,geonames
 Ranger,TX,32.469850,-98.678950,Ranger,geonames
-Pearl,MS,32.274590,-90.132030,Pearl,geonames
 Winslow,AZ,35.024190,-110.697360,Winslow,geonames
 Littlefield,TX,33.917310,-102.324900,Littlefield,geonames
 Sayre,PA,41.978960,-76.515500,Sayre,geonames
@@ -1116,7 +1046,6 @@ Reddick,FL,29.366640,-82.197320,Reddick,geonames
 Dillon,MT,45.216310,-112.637520,Dillon,geonames
 Kansas City,MO,39.099730,-94.578570,Kansas City,geonames
 Clinton,TN,36.103410,-84.131860,Clinton,geonames
-Buffalo,TX,31.463790,-96.058020,Buffalo,geonames
 Osseo,WI,44.572180,-91.227380,Osseo,geonames
 Rapid River,MI,45.926910,-86.967080,Rapid River,geonames
 San Antonio,FL,28.336110,-82.274530,San Antonio,geonames
@@ -1133,10 +1062,7 @@ Belfield,ND,46.885290,-103.199620,Belfield,geonames
 Liverpool,NY,43.106460,-76.217700,Liverpool,geonames
 Bentleyville,PA,40.116740,-80.008390,Bentleyville,geonames
 Jim Thorpe,PA,40.875920,-75.732410,Jim Thorpe,geonames
-Plainfield,PA,40.203140,-77.289980,Plainfield,geonames
-Middletown,PA,40.199810,-76.731080,Middletown,geonames
 Bowmansville,PA,40.196760,-76.017440,Bowmansville,geonames
-Newburg,PA,40.137310,-77.554710,Newburg,geonames
 Carrington,ND,47.449720,-99.126220,Carrington,geonames
 Dickson,TN,36.077000,-87.387790,Dickson,geonames
 Conover,NC,35.706520,-81.218690,Conover,geonames
@@ -1156,11 +1082,9 @@ Monahans,TX,31.594300,-102.892650,Monahans,geonames
 Dyer,IN,41.494200,-87.521710,Dyer,geonames
 Clinton,SC,34.472630,-81.880660,Clinton,geonames
 Eagle Pass,TX,28.709140,-100.499520,Eagle Pass,geonames
-Pleasant Hill,NC,35.873470,-79.481690,Pleasant Hill,geonames
 Aurora,CO,39.729430,-104.831920,Aurora,geonames
 Millersport,OH,39.900060,-82.534050,Millersport,geonames
 Ballinger,TX,31.738210,-99.947310,Ballinger,geonames
-Midway,FL,30.406480,-87.005530,Midway,geonames
 New Braunfels,TX,29.703000,-98.124450,New Braunfels,geonames
 Sierra Blanca,TX,31.174570,-105.357180,Sierra Blanca,geonames
 Okemah,OK,35.432590,-96.305010,Okemah,geonames
@@ -1174,16 +1098,13 @@ Du Bois,PA,41.119230,-78.760030,DuBois,geonames
 Bronte,TX,31.887370,-100.291760,Bronte,geonames
 Springdale,AR,36.186740,-94.128810,Springdale,geonames
 Clinton,IA,41.844470,-90.188740,Clinton,geonames
-Palestine,AR,34.972320,-90.902620,Palestine,geonames
 Joseph City,AZ,34.955860,-110.334010,Joseph City,geonames
 Fort Pierce,FL,27.446710,-80.325610,Fort Pierce,geonames
 Troy,IL,38.729210,-89.883150,Troy,geonames
 Springville,UT,40.165230,-111.610750,Springville,geonames
 Ashford,AL,31.182960,-85.236320,Ashford,geonames
 Daleville,AL,31.310170,-85.712990,Daleville,geonames
-Enterprise,AL,31.315170,-85.855220,Enterprise,geonames
 Headland,AL,31.351280,-85.342160,Headland,geonames
-Mount Vernon,AL,31.085180,-88.013330,Mount Vernon,geonames
 Maplesville,AL,32.788970,-86.873530,Maplesville,geonames
 Walsenburg,CO,37.624180,-104.780260,Walsenburg,geonames
 North Haven,CT,41.390930,-72.859540,North Haven,geonames
@@ -1231,15 +1152,11 @@ Bedford,OH,41.393110,-81.536510,Bedford,geonames
 Wooster,OH,40.805170,-81.936460,Wooster,geonames
 Dewey,OK,36.795920,-95.935540,Dewey,geonames
 Tamaqua,PA,40.797310,-75.969370,Tamaqua,geonames
-Georgetown,SC,33.376830,-79.294500,Georgetown,geonames
 Pageland,SC,34.773210,-80.391730,Pageland,geonames
 Harleyville,SC,33.214610,-80.447870,Harleyville,geonames
 Huron,SD,44.363320,-98.214260,Huron,geonames
-Bryan,TX,30.674360,-96.369960,Bryan,geonames
 Canton,TX,32.556520,-95.863300,Canton,geonames
 New Boston,TX,33.459840,-94.415480,New Boston,geonames
-Plainview,TX,34.184790,-101.706840,Plainview,geonames
-Shamrock,TX,35.214220,-100.249010,Shamrock,geonames
 Roanoke,VA,37.270970,-79.941430,Roanoke,geonames
 Rock Island,WA,47.377070,-120.143950,Rock Island,geonames
 Cadott,WI,44.948020,-91.150700,Cadott,geonames
@@ -1270,8 +1187,6 @@ Lombard,IL,41.880030,-88.007840,Lombard,geonames
 Olney,IL,38.730880,-88.085320,Olney,geonames
 Cicero,IL,41.845590,-87.753940,Cicero,geonames
 Wenona,IL,41.052530,-89.050360,Wenona,geonames
-Georgetown,IN,40.740600,-86.504730,Georgetown,geonames
-Goshen,IN,41.582270,-85.834440,Goshen,geonames
 Jasper,IN,38.391440,-86.931110,Jasper,geonames
 Farina,IL,38.834210,-88.772280,Farina,geonames
 Garden City,KS,37.971690,-100.872660,Garden City,geonames
@@ -1279,15 +1194,12 @@ Oberlin,KS,39.818340,-100.528200,Oberlin,geonames
 Franklin,LA,29.796040,-91.501500,Franklin,geonames
 Blandford,MA,42.180650,-72.927320,Blandford,geonames
 Framingham,MA,42.279260,-71.416170,Framingham,geonames
-Ludlow,MA,42.160090,-72.475920,Ludlow,geonames
 Westborough,MA,42.269540,-71.616180,Westborough,geonames
 Mardela Springs,MD,38.459840,-75.759100,Mardela Springs,geonames
 Westover,MD,38.124010,-75.706320,Westover,geonames
 Bay City,MI,43.594470,-83.888860,Bay City,geonames
-Canton,MI,42.308650,-83.482160,Canton,geonames
 Clare,MI,43.819470,-84.768630,Clare,geonames
 Fenton,MI,42.797810,-83.704950,Fenton,geonames
-Burton,MI,42.999470,-83.616340,Burton,geonames
 Forest Lake,MN,45.278860,-92.985220,Forest Lake,geonames
 New York Mills,MN,46.518020,-95.376150,New York Mills,geonames
 Thief River Falls,MN,48.119140,-96.181150,Thief River Falls,geonames
@@ -1298,14 +1210,10 @@ Lathrop,MO,39.548340,-94.329950,Lathrop,geonames
 Perryville,MO,37.724220,-89.861220,Perryville,geonames
 Heidelberg,MS,31.886820,-88.983940,Heidelberg,geonames
 Lauderdale,MS,32.520690,-88.511700,Lauderdale,geonames
-Walnut,MS,34.946200,-88.899780,Walnut,geonames
-Wiggins,MS,30.858240,-89.135330,Wiggins,geonames
 Chinook,MT,48.590000,-109.231280,Chinook,geonames
 Lewistown,MT,47.062470,-109.428240,Lewistown,geonames
-Clinton,NC,34.997950,-78.323330,Clinton,geonames
 Garner,NC,35.711260,-78.614170,Garner,geonames
 Greensboro,NC,36.072640,-79.791980,Greensboro,geonames
-Union Grove,NC,35.665160,-76.609100,Union Grove,geonames
 Devils Lake,ND,48.112780,-98.865120,Devils Lake,geonames
 Valley City,ND,46.923310,-98.003150,Valley City,geonames
 West Chesterfield,NH,42.904250,-72.515640,West Chesterfield,geonames
@@ -1319,25 +1227,20 @@ North Brunswick,NJ,40.454000,-74.482000,North Brunswick,geonames
 Phillipsburg,NJ,40.693710,-75.190180,Phillipsburg,geonames
 Secaucus,NJ,40.789550,-74.056530,Secaucus,geonames
 Alamogordo,NM,32.899530,-105.960270,Alamogordo,geonames
-Red Creek,NY,43.247290,-76.723560,Red Creek,geonames
 Rochester,NY,43.154780,-77.615560,Rochester,geonames
 Amherst,OH,41.397820,-82.222380,Amherst,geonames
 Clyde,OH,41.304220,-82.975190,Clyde,geonames
-Genoa,OH,40.782840,-81.466510,Genoa,geonames
-Mantua,OH,41.283940,-81.223990,Mantua,geonames
 Maumee,OH,41.562830,-83.653820,Maumee,geonames
 New Springfield,OH,40.917280,-80.606180,New Springfield,geonames
 Oregon,OH,41.643660,-83.486880,Oregon,geonames
 Grant,OK,33.943160,-95.513570,Grant,geonames
 Springer,OK,34.314540,-97.142790,Springer,geonames
-Bethel,PA,40.474540,-76.291340,Bethel,geonames
 Levittown,PA,40.155110,-74.828770,Levittown,geonames
 Somerset,PA,40.008410,-79.078080,Somerset,geonames
 Verona,PA,40.506460,-79.843100,Verona,geonames
 Warren,PA,41.843950,-79.145040,Warren,geonames
 Waterfall,PA,40.127580,-78.062780,Waterfall,geonames
 Greenville,SC,34.852620,-82.394010,Greenville,geonames
-Greenwood,SC,34.195400,-82.161790,Greenwood,geonames
 Greer,SC,34.938730,-82.227060,Greer,geonames
 Hemingway,SC,33.753780,-79.447560,Hemingway,geonames
 Marion,SC,34.178220,-79.400610,Marion,geonames
@@ -1349,10 +1252,8 @@ Mason,TN,35.411750,-89.532850,Mason,geonames
 Bulls Gap,TN,36.257040,-83.086000,Bulls Gap,geonames
 Ripley,TN,35.745360,-89.529800,Ripley,geonames
 Union City,TN,36.424230,-89.057010,Union City,geonames
-Centerville,TX,31.257960,-95.978290,Centerville,geonames
 Seminole,TX,32.718990,-102.644910,Seminole,geonames
 Vega,TX,35.242830,-102.428260,Vega,geonames
-Franklin,VA,36.677650,-76.922460,Franklin,geonames
 Martinsville,VA,36.691530,-79.872540,Martinsville,geonames
 Bland,VA,37.102060,-81.116200,Bland,geonames
 Townsend,VA,37.184590,-75.958260,Townsend,geonames
@@ -1364,18 +1265,14 @@ Horicon,WI,43.451380,-88.631210,Horicon,geonames
 Redgranite,WI,44.041920,-89.098450,Redgranite,geonames
 Sparta,WI,43.944130,-90.812910,Sparta,geonames
 Whitewater,WI,42.833620,-88.732330,Whitewater,geonames
-Jonestown,PA,40.413700,-76.478300,Jonestown,geonames
 Clinton,AR,35.591470,-92.460440,Clinton,geonames
 Wiggins,CO,40.230540,-104.072730,Wiggins,geonames
-Hastings,FL,29.718020,-81.508130,Hastings,geonames
-Hazlehurst,GA,31.869630,-82.594300,Hazlehurst,geonames
 Delaware,IA,42.475270,-91.345420,Delaware,geonames
 El Paso,IL,40.739200,-89.016460,El Paso,geonames
 Belvidere,IL,42.263910,-88.844270,Belvidere,geonames
 Bristol,IN,41.721440,-85.817490,Bristol,geonames
 Owensboro,KY,37.774220,-87.113330,Owensboro,geonames
 Ashland,KY,38.478410,-82.637940,Ashland,geonames
-Cut Off,LA,29.542720,-90.338140,Cut Off,geonames
 Gaylord,MI,45.027510,-84.674750,Gaylord,geonames
 New Boston,MI,42.162540,-83.402990,New Boston,geonames
 Smiths Creek,MI,42.913920,-82.603810,Smiths Creek,geonames
@@ -1385,7 +1282,6 @@ West Fargo,ND,46.874970,-96.900360,West Fargo,geonames
 Gordon,NE,42.804720,-102.203220,Gordon,geonames
 Northwood,NH,43.194250,-71.150900,Northwood,geonames
 South Amboy,NJ,40.477880,-74.290700,South Amboy,geonames
-Charleston,TN,35.287300,-84.758270,Charleston,geonames
 Tully,NY,42.798120,-76.109370,Tully,geonames
 Cincinnati,OH,39.127110,-84.514390,Cincinnati,geonames
 Warfield,VA,36.895700,-77.825830,Warfield,geonames
@@ -1403,8 +1299,6 @@ Berea,KY,37.568690,-84.296320,Berea,geonames
 Le Roy,IL,40.351980,-88.764240,Le Roy,geonames
 North Platte,NE,41.123890,-100.765420,North Platte,geonames
 Checotah,OK,35.470100,-95.523040,Checotah,geonames
-Fairview,TN,35.982010,-87.121400,Fairview,geonames
-Clear Brook,VA,39.256490,-78.096110,Clear Brook,geonames
 Decatur,TX,33.234280,-97.586140,Decatur,geonames
 Edmond,OK,35.652830,-97.478100,Edmond,geonames
 Stevens Point,WI,44.523580,-89.574560,Stevens Point,geonames
@@ -1451,7 +1345,6 @@ Athens,GA,33.960950,-83.377940,Athens,geonames
 Independence,IA,42.468600,-91.889340,Independence,geonames
 Cokeville,WY,42.082440,-110.955190,Cokeville,geonames
 Olive Branch,MS,34.961760,-89.829530,Olive Branch,geonames
-Jamestown,SC,33.286000,-79.692570,Jamestown,geonames
 Saint Matthews,SC,33.664880,-80.777870,Saint Matthews,geonames
 Wilmer,TX,32.589020,-96.685270,Wilmer,geonames
 Torrington,WY,42.062460,-104.184390,Torrington,geonames
@@ -1459,7 +1352,6 @@ Wellston,MI,44.216950,-85.957850,Wellston,geonames
 Bow,NH,43.132030,-71.549240,Bow,geonames
 Crump,TN,35.221750,-88.318090,Crump,geonames
 Prescott,AR,33.802610,-93.381010,Prescott,geonames
-Lee,FL,30.419960,-83.301130,Lee,geonames
 Winona,MS,33.482070,-89.728140,Winona,geonames
 Newport News,VA,36.980380,-76.429750,Newport News,geonames
 De Witt,IA,41.823360,-90.538190,De Witt,geonames
@@ -1474,7 +1366,6 @@ Caldwell,OH,39.747850,-81.516510,Caldwell,geonames
 Iowa,LA,30.236870,-93.013760,Iowa,geonames
 Kinston,NC,35.262660,-77.581640,Kinston,geonames
 Beatrice,NE,40.268060,-96.746970,Beatrice,geonames
-Blairs,VA,36.679860,-79.373080,Blairs,geonames
 Chester,VA,37.356820,-77.441650,Chester,geonames
 Gaffney,SC,35.071790,-81.649820,Gaffney,geonames
 Pendleton,KY,38.462290,-85.303570,Pendleton,geonames
@@ -1490,7 +1381,6 @@ Ottawa Lake,MI,41.773620,-83.727320,Ottawa Lake,geonames
 New Deal,TX,33.737310,-101.836560,New Deal,geonames
 Higginsville,MO,39.072510,-93.717160,Higginsville,geonames
 Williams,IA,42.488310,-93.544930,Williams,geonames
-Liberty,MO,39.246110,-94.419120,Liberty,geonames
 South Beloit,IL,42.493070,-89.036780,South Beloit,geonames
 Owatonna,MN,44.083850,-93.226040,Owatonna,geonames
 Saint Paul,MN,44.944410,-93.093270,Saint Paul,geonames
@@ -1499,7 +1389,6 @@ Biloxi,MS,30.396030,-88.885310,Biloxi,geonames
 White Pine,TN,36.107590,-83.286830,White Pine,geonames
 Waco,TX,31.549330,-97.146670,Waco,geonames
 Woodward,OK,36.433650,-99.390390,Woodward,geonames
-Sulphur Springs,TX,33.138450,-95.601070,Sulphur Springs,geonames
 Clayton,NM,36.451690,-103.184100,Clayton,geonames
 Glade Spring,VA,36.791220,-81.771230,Glade Spring,geonames
 Eufaula,OK,35.287220,-95.582500,Eufaula,geonames
@@ -1517,7 +1406,6 @@ Mayer,AZ,34.397810,-112.236270,Mayer,geonames
 Fruita,CO,39.158870,-108.728990,Fruita,geonames
 Kissimmee,FL,28.304680,-81.416670,Kissimmee,geonames
 Chatsworth,GA,34.765910,-84.769940,Chatsworth,geonames
-Jefferson,GA,34.117050,-83.572390,Jefferson,geonames
 Lula,GA,34.387600,-83.666290,Lula,geonames
 Midland,GA,32.574860,-84.827150,Midland,geonames
 Valdosta,GA,30.833340,-83.280320,Valdosta,geonames
@@ -1532,8 +1420,6 @@ Butler,IN,41.429770,-84.871350,Butler,geonames
 Elkhart,IN,41.681990,-85.976670,Elkhart,geonames
 Frankfort,IN,40.279480,-86.510840,Frankfort,geonames
 Howe,IN,41.721440,-85.420540,Howe,geonames
-Middlebury,IN,41.675330,-85.706100,Middlebury,geonames
-Broussard,LA,30.147150,-91.961230,Broussard,geonames
 Fredonia,KS,37.533940,-95.826650,Fredonia,geonames
 Wathena,KS,39.759160,-94.949690,Wathena,geonames
 Garnett,KS,38.280580,-95.241920,Garnett,geonames
@@ -1547,7 +1433,6 @@ Convent,LA,30.020760,-90.829820,Convent,geonames
 Belle Chasse,LA,29.854930,-89.990630,Belle Chasse,geonames
 Larose,LA,29.572440,-90.381750,Larose,geonames
 Marrero,LA,29.899370,-90.100350,Marrero,geonames
-Springhill,LA,33.005970,-93.466840,Springhill,geonames
 Vivian,LA,32.871530,-93.987400,Vivian,geonames
 Uxbridge,MA,42.077320,-71.629510,Uxbridge,geonames
 North Oxford,MA,42.150090,-71.868410,North Oxford,geonames
@@ -1616,7 +1501,6 @@ Hamilton,TX,31.703770,-98.123920,Hamilton,geonames
 Iowa Park,TX,33.951480,-98.668670,Iowa Park,geonames
 Kosse,TX,31.307680,-96.631920,Kosse,geonames
 Memphis,TX,34.724780,-100.534010,Memphis,geonames
-Prairie Hill,TX,31.655170,-96.788880,Prairie Hill,geonames
 Premont,TX,27.360590,-98.123620,Premont,geonames
 Timpson,TX,31.903780,-94.395200,Timpson,geonames
 Trenton,TX,33.430670,-96.338590,Trenton,geonames
@@ -1641,7 +1525,6 @@ Livonia,MI,42.368370,-83.352710,Livonia,geonames
 Bridgeton,MO,38.767000,-90.411510,Bridgeton,geonames
 Madison,WI,43.073050,-89.401230,Madison,geonames
 New Berlin,WI,42.976400,-88.108420,New Berlin,geonames
-Mountain Top,PA,41.169530,-75.877420,Mountain Top,geonames
 Richmond,IN,39.828940,-84.890240,Richmond,geonames
 Broken Bow,OK,34.029280,-94.739100,Broken Bow,geonames
 Pueblo Of Acoma,NM,34.896440,-107.581720,Acoma Pueblo,geonames
@@ -1686,7 +1569,6 @@ Brooksville,FL,28.555540,-82.389910,Brooksville,geonames
 Middleburg,FL,30.068850,-81.860380,Middleburg,geonames
 West Palm Beach,FL,26.715340,-80.053370,West Palm Beach,geonames
 Americus,GA,32.072390,-84.232690,Americus,geonames
-Buena Vista,GA,32.319040,-84.517140,Buena Vista,geonames
 Donalsonville,GA,31.040460,-84.879090,Donalsonville,geonames
 Fortson,GA,32.607080,-84.937150,Fortson,geonames
 Lumber City,GA,31.929350,-82.679580,Lumber City,geonames
@@ -1700,7 +1582,6 @@ Mediapolis,IA,41.008090,-91.164040,Mediapolis,geonames
 Muscatine,IA,41.424470,-91.043210,Muscatine,geonames
 Osceola,IA,41.033890,-93.765500,Osceola,geonames
 Pella,IA,41.408050,-92.916310,Pella,geonames
-Riverside,IA,41.479740,-91.581280,Riverside,geonames
 Spirit Lake,IA,43.422180,-95.102220,Spirit Lake,geonames
 Storm Lake,IA,42.641090,-95.209720,Storm Lake,geonames
 Walnut,IA,41.477490,-95.221940,Walnut,geonames
@@ -1716,7 +1597,6 @@ Willow Springs,IL,41.740870,-87.860330,Willow Springs,geonames
 Wood Dale,IL,41.963360,-87.978960,Wood Dale,geonames
 Decatur,IN,40.830600,-84.929130,Decatur,geonames
 Medaryville,IN,41.080600,-86.891960,Medaryville,geonames
-Waterloo,IN,41.431990,-85.019970,Waterloo,geonames
 Iola,KS,37.924480,-95.399980,Iola,geonames
 Hiawatha,KS,39.852500,-95.535820,Hiawatha,geonames
 Johnson,KS,37.570570,-101.751000,Johnson,geonames
@@ -1747,7 +1627,6 @@ Newburg,MD,38.377350,-76.953310,Newburg,geonames
 Auburn,ME,44.097850,-70.231170,Auburn,geonames
 Medway,ME,45.608940,-68.530860,Medway,geonames
 Portland,ME,43.657370,-70.258900,Portland,geonames
-Riverview,MI,42.174210,-83.179370,Riverview,geonames
 Cadillac,MI,44.251950,-85.401160,Cadillac,geonames
 Casco,MI,42.752530,-82.671580,Casco,geonames
 Champion,MI,46.513820,-87.963470,Champion,geonames
@@ -1755,7 +1634,6 @@ Dearborn,MI,42.322260,-83.176310,Dearborn,geonames
 Newberry,MI,46.355000,-85.509560,Newberry,geonames
 Reed City,MI,43.875020,-85.510050,Reed City,geonames
 Belleville,MI,42.204760,-83.485210,Belleville,geonames
-Wyoming,MI,42.913360,-85.705310,Wyoming,geonames
 Alexandria,MN,45.885240,-95.377540,Alexandria,geonames
 Clara City,MN,44.954960,-95.366400,Clara City,geonames
 Duluth,MN,46.783270,-92.106580,Duluth,geonames
@@ -1777,7 +1655,6 @@ New Augusta,MS,31.202630,-89.036680,New Augusta,geonames
 Newton,MS,32.321260,-89.163390,Newton,geonames
 Terry,MS,32.096260,-90.294260,Terry,geonames
 Water Valley,MS,34.151500,-89.631470,Water Valley,geonames
-Bethel,NC,35.807100,-77.378860,Bethel,geonames
 Goldsboro,NC,35.384880,-77.992770,Goldsboro,geonames
 Lumberton,NC,34.618340,-79.010450,Lumberton,geonames
 Morehead City,NC,34.722940,-76.726040,Morehead City,geonames
@@ -1795,24 +1672,19 @@ Trenton,NE,40.175550,-101.012940,Trenton,geonames
 Wayne,NE,42.230560,-97.017820,Wayne,geonames
 Epping,NH,43.033420,-71.074230,Epping,geonames
 East Rutherford,NJ,40.833990,-74.097090,East Rutherford,geonames
-Edison,NJ,40.518720,-74.412100,Edison,geonames
 Richwood,NJ,39.722610,-75.165460,Richwood,geonames
 Clementon,NJ,39.811500,-74.982940,Clementon,geonames
 Ledgewood,NJ,40.881210,-74.655990,Ledgewood,geonames
 North Bergen,NJ,40.804270,-74.012080,North Bergen,geonames
 Towaoc,CO,37.204440,-108.729540,Towaoc,geonames
-Pennsauken,NJ,39.956220,-75.057950,Pennsauken,geonames
 Vineland,NJ,39.486230,-75.025730,Vineland,geonames
-Lemitar,NM,34.159790,-106.910310,Lemitar,geonames
 Algodones,NM,35.380590,-106.479190,Algodones,geonames
 Hawthorne,NV,38.524640,-118.624580,Hawthorne,geonames
 Harpursville,NY,42.178410,-75.624630,Harpursville,geonames
 Limestone,NY,42.027290,-78.629470,Limestone,geonames
 Otego,NY,42.397300,-75.173500,Otego,geonames
-Peru,NY,44.578380,-73.526800,Peru,geonames
 Seneca Falls,NY,42.910620,-76.796620,Seneca Falls,geonames
 Ashland,OH,40.868670,-82.318220,Ashland,geonames
-Brookpark,OH,41.398380,-81.804580,Brook Park,geonames
 Bucyrus,OH,40.808390,-82.975460,Bucyrus,geonames
 Massillon,OH,40.796720,-81.521510,Massillon,geonames
 Rossford,OH,41.609770,-83.564380,Rossford,geonames
@@ -1822,15 +1694,12 @@ Hugo,OK,34.010660,-95.509680,Hugo,geonames
 Idabel,OK,33.895660,-94.826330,Idabel,geonames
 Oologah,OK,36.447040,-95.708320,Oologah,geonames
 Thackerville,OK,33.793440,-97.143070,Thackerville,geonames
-Union Point,GA,33.615680,-83.074600,Union Point,geonames
 Crescent,PA,40.556270,-80.228560,Township of Crescent,geonames
-East Berlin,PA,39.937600,-76.978590,East Berlin,geonames
 East Earl,PA,40.110100,-76.032720,East Earl,geonames
 Everett,PA,40.011470,-78.373350,Everett,geonames
 Fairless Hills,PA,40.179550,-74.855160,Fairless Hills,geonames
 Hershey,PA,40.285920,-76.650250,Hershey,geonames
 Mill Hall,PA,41.107290,-77.484430,Mill Hall,geonames
-Liberty,PA,40.325350,-79.856160,Liberty,geonames
 Nanty Glo,PA,40.472290,-78.833360,Nanty Glo,geonames
 Natrona Heights,PA,40.623400,-79.729770,Natrona Heights,geonames
 Stockertown,PA,40.753990,-75.262120,Stockertown,geonames
@@ -1849,7 +1718,6 @@ Bristol,TN,36.595110,-82.188740,Bristol,geonames
 Cumberland City,TN,36.393390,-87.636410,Cumberland City,geonames
 Fayetteville,TN,35.152030,-86.570550,Fayetteville,geonames
 Kingston,TN,35.880910,-84.508540,Kingston,geonames
-Smyrna,TN,35.982840,-86.518600,Smyrna,geonames
 Abilene,TX,32.448740,-99.733140,Abilene,geonames
 Chillicothe,TX,34.256470,-99.516760,Chillicothe,geonames
 Ennis,TX,32.329310,-96.625270,Ennis,geonames
@@ -1882,7 +1750,6 @@ West Salem,WI,43.899130,-91.081250,West Salem,geonames
 Windsor,WI,43.218330,-89.341510,Windsor,geonames
 Wittenberg,WI,44.827200,-89.169560,Wittenberg,geonames
 Chester,WV,40.613120,-80.562850,Chester,geonames
-West Union,WV,39.296470,-80.777050,West Union,geonames
 Evansville,WY,42.859970,-106.268360,Evansville,geonames
 Thermopolis,WY,43.646070,-108.212040,Thermopolis,geonames
 Marengo,OH,40.400890,-82.810730,Marengo,geonames
@@ -1890,10 +1757,8 @@ Blythe,GA,33.292640,-82.201510,Blythe,geonames
 Champaign,IL,40.116420,-88.243380,Champaign,geonames
 Haughton,LA,32.532650,-93.504060,Haughton,geonames
 La Porte,IN,41.607740,-86.713890,La Porte,geonames
-Clinton,NJ,40.636770,-74.909890,Clinton,geonames
 New Milford,PA,41.872580,-75.727130,New Milford,geonames
 Statesville,NC,35.782640,-80.887300,Statesville,geonames
-Litchfield,IL,39.175330,-89.654260,Litchfield,geonames
 Watertown,NY,43.974780,-75.910760,Watertown,geonames
 Albany,KY,36.690900,-85.134680,Albany,geonames
 Louisville,MS,33.123740,-89.055060,Louisville,geonames
@@ -1922,12 +1787,9 @@ Newton Lower Falls,MA,42.329260,-71.253670,Newton Lower Falls,geonames
 Poplar Bluff,MO,36.757000,-90.392890,Poplar Bluff,geonames
 Hartford,TN,35.816760,-83.143210,Hartford,geonames
 Kosciusko,MS,33.058000,-89.589560,Kosciusko,geonames
-Keysville,VA,37.040430,-78.483330,Keysville,geonames
 Stewartville,MN,43.855520,-92.488510,Stewartville,geonames
 Searchlight,NV,35.465270,-114.919700,Searchlight,geonames
-Pine Grove,PA,40.548420,-76.384680,Pine Grove,geonames
 Granite City,IL,38.701440,-90.148720,Granite City,geonames
-Greenwood,IN,39.613660,-86.106650,Greenwood,geonames
 Princeton,IL,41.368090,-89.464810,Princeton,geonames
 Williamsville,IL,39.954220,-89.548710,Williamsville,geonames
 Pensacola,FL,30.421310,-87.216910,Pensacola,geonames
@@ -1964,7 +1826,6 @@ Saint Albans,VT,44.810880,-73.083190,Saint Albans,geonames
 Ellenwood,GA,33.610110,-84.287980,Ellenwood,geonames
 Curtiss,WI,44.955250,-90.434580,Curtiss,geonames
 Waco,GA,33.702880,-85.183280,Waco,geonames
-Wildwood,GA,34.963410,-85.411070,Wildwood,geonames
 Millbury,MA,42.193980,-71.760070,Millbury,geonames
 Stanton,TN,35.462300,-89.402020,Stanton,geonames
 Menasha,WI,44.202210,-88.446500,Menasha,geonames
@@ -1978,7 +1839,6 @@ Milltown,MT,46.871310,-113.881770,Milltown,geonames
 Palmer,TX,32.431250,-96.667770,Palmer,geonames
 Kuttawa,KY,37.058940,-88.132530,Kuttawa,geonames
 Buffalo,WY,44.348310,-106.698940,Buffalo,geonames
-Mount Pleasant,TX,33.156790,-94.968270,Mount Pleasant,geonames
 Harrold,TX,34.080650,-99.032300,Harrold,geonames
 Vienna,GA,32.091560,-83.795450,Vienna,geonames
 Crawfordsville,IN,40.041150,-86.874450,Crawfordsville,geonames
@@ -1998,7 +1858,6 @@ Jonesboro,AR,35.842300,-90.704280,Jonesboro,geonames
 Tenaha,TX,31.943780,-94.244090,Tenaha,geonames
 Minden,LA,32.615430,-93.286840,Minden,geonames
 Bassett,VA,36.759300,-79.990320,Bassett,geonames
-Pinehurst,GA,32.196000,-83.762950,Pinehurst,geonames
 Kentwood,LA,30.938240,-90.508980,Kentwood,geonames
 Skippers,VA,36.611820,-77.546650,Skippers,geonames
 Fort Payne,AL,34.444250,-85.719690,Fort Payne,geonames
@@ -2020,7 +1879,6 @@ Syracuse,NY,43.048120,-76.147420,Syracuse,geonames
 Calexico,CA,32.678950,-115.498880,Calexico,geonames
 Tecumseh,KS,39.048060,-95.579150,Tecumseh,geonames
 Horse Cave,KY,37.179500,-85.906920,Horse Cave,geonames
-La Grange,IL,41.805030,-87.869230,La Grange,geonames
 Farmer City,IL,40.243370,-88.642570,Farmer City,geonames
 Milton,FL,30.632410,-87.039690,Milton,geonames
 Jennings,LA,30.222430,-92.657080,Jennings,geonames
@@ -2036,7 +1894,6 @@ Hamptonville,NC,36.098470,-80.760350,Hamptonville,geonames
 Geneseo,IL,41.448090,-90.154280,Geneseo,geonames
 Neola,IA,41.448880,-95.615560,Neola,geonames
 Marsing,ID,43.545440,-116.813200,Marsing,geonames
-South Hill,VA,36.726530,-78.128890,South Hill,geonames
 Townville,SC,34.563710,-82.898480,Townville,geonames
 Fair Play,SC,34.511210,-82.985430,Fair Play,geonames
 Jamestown,NY,42.097000,-79.235330,Jamestown,geonames
@@ -2047,7 +1904,6 @@ Moapa,NV,36.675800,-114.620820,Moapa,geonames
 Sangerfield,NY,42.913960,-75.379060,Sangerfield,geonames
 Twin City,GA,32.582940,-82.155120,Twin City,geonames
 S Coffeyville,OK,36.994520,-95.620260,South Coffeyville,geonames
-Marion,IN,40.558370,-85.659140,Marion,geonames
 Brandon,SD,43.594700,-96.571990,Brandon,geonames
 Bellows Falls,VT,43.133410,-72.443980,Bellows Falls,geonames
 Melrose,MN,45.674690,-94.807520,Melrose,geonames
@@ -2057,7 +1913,6 @@ Croydon,PA,40.087330,-74.903500,Croydon,geonames
 Richmond,ME,44.087300,-69.798930,Richmond,geonames
 Lake Odessa,MI,42.784760,-85.138340,Lake Odessa,geonames
 Park Hills,MO,37.854220,-90.518180,Park Hills,geonames
-Round Mountain,TX,30.431580,-98.344740,Round Mountain,geonames
 Brent,AL,32.937350,-87.164720,Brent,geonames
 Steele,MO,36.083960,-89.829250,Steele,geonames
 Merkel,TX,32.470680,-100.012870,Merkel,geonames
@@ -2078,7 +1933,6 @@ Atchison,KS,39.563050,-95.121640,Atchison,geonames
 Dearborn,MO,39.521940,-94.769960,Dearborn,geonames
 Brookings,SD,44.311360,-96.798390,Brookings,geonames
 Monmouth Junction,NJ,40.379000,-74.546540,Monmouth Junction,geonames
-Bryant,AR,34.595930,-92.489050,Bryant,geonames
 Roscoe,IL,42.413350,-89.009270,Roscoe,geonames
 El Dorado,KS,37.817240,-96.862250,El Dorado,geonames
 Conway,SC,33.836000,-79.047810,Conway,geonames
@@ -2090,11 +1944,9 @@ Delta,OH,41.573660,-84.005220,Delta,geonames
 Rockbridge,OH,39.579790,-82.522100,Rockbridge,geonames
 Alvada,OH,41.050330,-83.401870,Alvada,geonames
 Stroud,OK,35.748680,-96.658070,Stroud,geonames
-Evergreen,AL,31.433500,-86.956920,Evergreen,geonames
 Selma,AL,32.407360,-87.021100,Selma,geonames
 Winfield,AL,33.928990,-87.817250,Winfield,geonames
 Lonoke,AR,34.783980,-91.899860,Lonoke,geonames
-Sweetwater,TN,35.601460,-84.461040,Sweetwater,geonames
 Spencer,SD,43.727480,-97.593120,Spencer,geonames
 Bridgeville,DE,38.742610,-75.604370,Bridgeville,geonames
 Jasper,FL,30.518270,-82.948190,Jasper,geonames
@@ -2116,7 +1968,7 @@ Riviera,TX,27.298650,-97.815000,Riviera,geonames
 Wapakoneta,OH,40.567830,-84.193560,Wapakoneta,geonames
 Chandler,AZ,33.306160,-111.841250,Chandler,geonames
 Baxter,TN,36.153670,-85.643590,Baxter,geonames
-Cedar Grove,TN,35.644240,-86.626110,Cedar Grove,geonames
+Cedar Grove,TN,35.817010,-88.595610,Cedar Grove,hand
 Maquoketa,IA,42.068910,-90.665690,Maquoketa,geonames
 Mission,TX,26.215910,-98.325290,Mission,geonames
 Mortons Gap,KY,37.236710,-87.475280,Mortons Gap,geonames
@@ -2126,7 +1978,6 @@ Mifflinville,PA,41.032310,-76.307990,Mifflinville,geonames
 South Hutchinson,KS,38.028070,-97.940330,South Hutchinson,geonames
 Middlesboro,KY,36.608420,-83.716580,Middlesboro,geonames
 Bowie,TX,33.559000,-97.848650,Bowie,geonames
-Colonial Heights,VA,37.268040,-77.407260,Colonial Heights,geonames
 Fort Mill,SC,35.007370,-80.945080,Fort Mill,geonames
 Hanceville,AL,34.060650,-86.767500,Hanceville,geonames
 Warner,NH,43.280630,-71.816750,Warner,geonames
@@ -2142,7 +1993,6 @@ Brigham City,UT,41.510210,-112.015500,Brigham City,geonames
 Ormond Beach,FL,29.285810,-81.055890,Ormond Beach,geonames
 Providence Forge,VA,37.441810,-77.043580,Providence Forge,geonames
 East Syracuse,NY,43.065340,-76.078530,East Syracuse,geonames
-Brady,TX,31.135170,-99.335060,Brady,geonames
 Calvert City,KY,37.033390,-88.350040,Calvert City,geonames
 Columbia,TN,35.615070,-87.035280,Columbia,geonames
 Lakeland,FL,28.039470,-81.949800,Lakeland,geonames
@@ -2158,7 +2008,6 @@ Olympia,WA,47.044910,-122.901690,Olympia,geonames
 Hinton,OK,35.471440,-98.355620,Hinton,geonames
 Newton,IA,41.699710,-93.047980,Newton,geonames
 Hudson,CO,40.073590,-104.643020,Hudson,geonames
-Hartford,IL,38.833380,-90.095940,Hartford,geonames
 Portersville,PA,40.922840,-80.142280,Portersville,geonames
 Hogansville,GA,33.173180,-84.914940,Hogansville,geonames
 Swansboro,NC,34.687660,-77.119120,Swansboro,geonames
@@ -2306,14 +2155,12 @@ Zumbrota,MN,44.294130,-92.669080,Zumbrota,geonames
 Godley,TX,32.449030,-97.526690,Godley,geonames
 Sabetha,KS,39.902220,-95.800820,Sabetha,geonames
 Thermal,CA,33.640300,-116.139450,Thermal,geonames
-White Hall,AR,34.273990,-92.090980,White Hall,geonames
 Beloit,KS,39.456120,-98.106160,Beloit,geonames
 Cozad,NE,40.859730,-99.987340,Cozad,geonames
 Story City,IA,42.187210,-93.595770,Story City,geonames
 Cedar Rapids,IA,42.008330,-91.644070,Cedar Rapids,geonames
 Hesston,KS,38.138340,-97.431430,Hesston,geonames
 Mexia,TX,31.679890,-96.482200,Mexia,geonames
-Morehead,KY,37.271150,-87.176380,Morehead,geonames
 Timmonsville,SC,34.134880,-79.939790,Timmonsville,geonames
 Bowman,ND,46.183060,-103.394910,Bowman,geonames
 Arcadia,LA,32.549040,-92.920160,Arcadia,geonames
@@ -2323,7 +2170,6 @@ Clearwater,FL,27.965850,-82.800100,Clearwater,geonames
 Volga,SD,44.323580,-96.926450,Volga,geonames
 Gaylord,MN,44.553020,-94.220530,Gaylord,geonames
 Hartford,AL,31.102400,-85.696880,Hartford,geonames
-Poplar Grove,IL,42.368350,-88.822050,Poplar Grove,geonames
 Greenville,NC,35.612660,-77.366350,Greenville,geonames
 Vanceboro,NC,35.308500,-77.154120,Vanceboro,geonames
 Rocky Mount,NC,35.938210,-77.790530,Rocky Mount,geonames
@@ -2332,7 +2178,6 @@ Ord,NE,41.603340,-98.926200,Ord,geonames
 Kingfisher,OK,35.861430,-97.931720,Kingfisher,geonames
 Fabens,TX,31.502340,-106.158590,Fabens,geonames
 Brookhaven,MS,31.579060,-90.440650,Brookhaven,geonames
-Orange Grove,TX,27.956680,-97.936940,Orange Grove,geonames
 Haskell,TX,33.157600,-99.733700,Haskell,geonames
 La Villa,TX,26.298680,-97.928610,La Villa,geonames
 Brownsville,TX,25.901750,-97.497480,Brownsville,geonames
@@ -2340,13 +2185,11 @@ Hebbronville,TX,27.306880,-98.680320,Hebbronville,geonames
 Stokesdale,NC,36.237080,-79.979480,Stokesdale,geonames
 Vanceburg,KY,38.599240,-83.318800,Vanceburg,geonames
 Childress,TX,34.426450,-100.204000,Childress,geonames
-Mount Pleasant,MS,31.696550,-89.697300,Mount Pleasant,geonames
 Ninnekah,OK,34.947850,-97.923930,Ninnekah,geonames
 Montvale,VA,37.384580,-79.731150,Montvale,geonames
 Lewisport,KY,37.937000,-86.902210,Lewisport,geonames
 Lewiston Woodville,NC,36.122930,-77.176630,Lewiston Woodville,geonames
 Fort Morgan,CO,40.250260,-103.799950,Fort Morgan,geonames
-Wrightsville,PA,40.025650,-76.529970,Wrightsville,geonames
 Havana,IL,40.300040,-90.060950,Havana,geonames
 Corinne,UT,41.551040,-112.110230,Corinne,geonames
 Kingsport,TN,36.548430,-82.561820,Kingsport,geonames
@@ -2369,7 +2212,6 @@ Felton,DE,39.008450,-75.577980,Felton,geonames
 Stephenson,MI,45.415250,-87.607620,Stephenson,geonames
 Jemison,AL,32.959850,-86.746650,Jemison,geonames
 Black Rock,AR,36.108400,-91.097350,Black Rock,geonames
-Oakland,MS,34.055670,-89.916480,Oakland,geonames
 Opa Locka,FL,25.902320,-80.250330,Opa-locka,geonames
 Huntsville,TX,30.723530,-95.550780,Huntsville,geonames
 Vernal,UT,40.455520,-109.528750,Vernal,geonames
@@ -2423,7 +2265,6 @@ Mathews,LA,29.686320,-90.546750,Mathews,geonames
 Auburn,NH,43.004530,-71.348400,Auburn,geonames
 Adrian,MI,41.897550,-84.037170,Adrian,geonames
 Holly,MI,42.791970,-83.627730,Holly,geonames
-Grand Rapids,MI,42.963360,-85.668090,Grand Rapids,geonames
 Pine City,MN,45.826070,-92.968540,Pine City,geonames
 Grafton,OH,41.272550,-82.054590,Grafton,geonames
 Holland,OH,41.621720,-83.711600,Holland,geonames
@@ -2434,14 +2275,12 @@ Raton,NM,36.903360,-104.439150,Raton,geonames
 Rogersville,MO,37.117000,-93.055730,Rogersville,geonames
 Bellefonte,PA,40.913390,-77.778330,Bellefonte,geonames
 Philadelphia,PA,39.952380,-75.163620,Philadelphia,geonames
-Morrisville,PA,40.211500,-74.787940,Morrisville,geonames
 Shoemakersville,PA,40.500930,-75.969930,Shoemakersville,geonames
 Blossburg,PA,41.679520,-77.063860,Blossburg,geonames
 Fallon,NV,39.473530,-118.777370,Fallon,geonames
 Montezuma,NY,43.010060,-76.703280,Montezuma,geonames
 Reno,NV,39.529630,-119.813800,Reno,geonames
 Castle Creek,NY,42.227580,-75.918250,Castle Creek,geonames
-Houston,MS,33.898450,-88.999230,Houston,geonames
 Hazleton,PA,40.958420,-75.974650,Hazleton,geonames
 Dayton,TN,35.493960,-85.012450,Dayton,geonames
 Altoona,PA,40.518680,-78.394740,Altoona,geonames
@@ -2465,10 +2304,7 @@ Galesburg,IL,40.947820,-90.371240,Galesburg,geonames
 Medford,WI,45.138580,-90.340140,Medford,geonames
 Luverne,MN,43.654140,-96.212810,Luverne,geonames
 Johnson Creek,WI,43.076110,-88.774270,Johnson Creek,geonames
-Evergreen,NC,34.296000,-78.217780,Evergreen,geonames
-Liberty Hill,TX,30.664910,-97.922520,Liberty Hill,geonames
 Hastings,MN,44.743300,-92.852430,Hastings,geonames
-Moore,TX,29.055240,-99.010310,Moore,geonames
 Marion,TX,29.571340,-98.140290,Marion,geonames
 George,WA,47.079020,-119.855880,George,geonames
 Elkins,WV,38.925940,-79.846730,Elkins,geonames
@@ -2476,8 +2312,6 @@ Mc Donald,TN,35.113410,-84.982730,McDonald,geonames
 Merrillville,IN,41.482810,-87.332810,Merrillville,geonames
 Comfort,TX,29.967710,-98.905030,Comfort,geonames
 Joaquin,TX,31.965780,-94.054990,Joaquin,geonames
-Elizabeth City,NC,36.294600,-76.251050,Elizabeth City,geonames
-Fayetteville,PA,39.911200,-77.549990,Fayetteville,geonames
 Abbeville,SC,34.178170,-82.379010,Abbeville,geonames
 Russellville,KY,36.845320,-86.887220,Russellville,geonames
 Waco,NE,40.896960,-97.463380,Waco,geonames
@@ -2494,18 +2328,14 @@ Refugio,TX,28.305280,-97.275270,Refugio,geonames
 Santo,TX,32.603190,-98.215320,Santo,geonames
 Uvalde,TX,29.209680,-99.786170,Uvalde,geonames
 Roebling,NJ,40.115940,-74.786270,Roebling,geonames
-Rockport,IN,37.883110,-87.049440,Rockport,geonames
 Lime Springs,IA,43.448860,-92.280730,Lime Springs,geonames
 Cuthbert,GA,31.771270,-84.789370,Cuthbert,geonames
 Coopersville,MI,43.063910,-85.934770,Coopersville,geonames
 New Iberia,LA,30.003540,-91.818730,New Iberia,geonames
 Burlington,WI,42.678070,-88.276200,Burlington,geonames
 Jupiter,FL,26.934220,-80.094210,Jupiter,geonames
-Lamont,FL,30.377150,-83.812940,Lamont,geonames
 Pocatello,ID,42.871300,-112.445530,Pocatello,geonames
 Dubois,ID,44.176300,-112.230820,Dubois,geonames
-Ashland,PA,40.781750,-76.345780,Ashland,geonames
-Palmetto,GA,33.517890,-84.669650,Palmetto,geonames
 Gordon,GA,32.882090,-83.332380,Gordon,geonames
 Rosenhayn,NJ,39.478170,-75.131290,Rosenhayn,geonames
 Pekin,IL,40.567540,-89.640660,Pekin,geonames
@@ -2539,8 +2369,6 @@ Pulaski,NY,43.567010,-76.127700,Pulaski,geonames
 Horseheads,NY,42.167020,-76.820510,Horseheads,geonames
 Belle Rose,LA,30.050480,-91.041490,Belle Rose,geonames
 Beeville,TX,28.400950,-97.749740,Beeville,geonames
-Homestead,FL,25.468720,-80.477560,Homestead,geonames
-Frankfort,IL,41.495870,-87.848660,Frankfort,geonames
 Roosevelt,UT,40.299400,-109.988760,Roosevelt,geonames
 Unionville,MO,40.476960,-93.003260,Unionville,geonames
 Artesia,NM,32.842330,-104.403300,Artesia,geonames
@@ -2554,10 +2382,8 @@ Natalia,TX,29.189680,-98.862530,Natalia,geonames
 Lancaster,NY,42.900610,-78.670310,Lancaster,geonames
 Heron Lake,MN,43.794960,-95.320280,Heron Lake,geonames
 Seekonk,MA,41.808430,-71.337000,Seekonk,geonames
-Richlands,NC,34.899330,-77.546630,Richlands,geonames
 Pampa,TX,35.536160,-100.959870,Pampa,geonames
 Stringtown,OK,34.466760,-96.053330,Stringtown,geonames
-Saint Marys,GA,30.730510,-81.546490,St. Marys,geonames
 Lampasas,TX,31.063780,-98.181700,Lampasas,geonames
 Hewitt,TX,31.462390,-97.195840,Hewitt,geonames
 Vidalia,LA,31.565440,-91.425950,Vidalia,geonames
@@ -2584,7 +2410,6 @@ Fort Valley,GA,32.553760,-83.887410,Fort Valley,geonames
 Big Lake,TX,31.191540,-101.460390,Big Lake,geonames
 Chisago City,MN,45.373580,-92.889940,Chisago City,geonames
 Jefferson,WI,43.005560,-88.807330,Jefferson,geonames
-Rosedale,VA,36.959280,-81.931240,Rosedale,geonames
 Mountville,PA,40.039260,-76.430800,Mountville,geonames
 Burgaw,NC,34.552110,-77.926100,Burgaw,geonames
 Kane,PA,41.662840,-78.811140,Kane,geonames
@@ -2604,8 +2429,6 @@ Grand Blanc,MI,42.927530,-83.629950,Grand Blanc,geonames
 Burnet,TX,30.758240,-98.228360,Burnet,geonames
 Norfolk,VA,36.846810,-76.285220,Norfolk,geonames
 Ritzville,WA,47.127550,-118.379990,Ritzville,geonames
-Saint Marys,KS,39.194160,-96.071100,Saint Marys,geonames
-Clay Center,KS,37.519460,-96.771140,Clay Center,geonames
 Washington,KS,39.818060,-97.050860,Washington,geonames
 Darien,CT,41.078710,-73.469290,Darien,geonames
 Ticonderoga,NY,43.848670,-73.423450,Ticonderoga,geonames
@@ -2614,7 +2437,6 @@ Simpsonville,SC,34.737060,-82.254280,Simpsonville,geonames
 Hartsville,SC,34.374040,-80.073400,Hartsville,geonames
 Siler City,NC,35.723470,-79.462240,Siler City,geonames
 Society Hill,SC,34.512660,-79.850900,Society Hill,geonames
-Farmville,NC,35.595440,-77.585250,Farmville,geonames
 Wausau,WI,44.959140,-89.630120,Wausau,geonames
 Muskegon,MI,43.234180,-86.248390,Muskegon,geonames
 Alsip,IL,41.668920,-87.738660,Alsip,geonames
@@ -2622,7 +2444,6 @@ Mascoutah,IL,38.490330,-89.793150,Mascoutah,geonames
 Wikieup,AZ,34.703350,-113.611320,Wikieup,geonames
 Wittmann,AZ,33.776420,-112.528500,Wittmann,geonames
 Waldo,FL,29.789690,-82.167320,Waldo,geonames
-Fairfield,IL,42.219190,-88.061470,Fairfield,geonames
 Moody,AL,33.590940,-86.490820,Moody,geonames
 Rich Square,NC,36.274040,-77.284410,Rich Square,geonames
 Aberdeen,MD,39.509560,-76.164120,Aberdeen,geonames
@@ -2640,13 +2461,10 @@ Bernalillo,NM,35.300040,-106.551140,Bernalillo,geonames
 Leland,MS,33.405390,-90.897600,Leland,geonames
 Ada,OK,34.774530,-96.678340,Ada,geonames
 Houghton Lake,MI,44.314740,-84.764750,Houghton Lake,geonames
-Brookville,OH,39.836720,-84.411340,Brookville,geonames
 Cuero,TX,29.093870,-97.289160,Cuero,geonames
 Harrisburg,IL,37.738380,-88.540610,Harrisburg,geonames
 Llano,TX,30.759350,-98.675040,Llano,geonames
-Plainfield,IN,39.704210,-86.399440,Plainfield,geonames
 Searcy,AR,35.250640,-91.736250,Searcy,geonames
-Lawrenceville,PA,40.467570,-79.960610,Lawrenceville,geonames
 Killeen,TX,31.117120,-97.727800,Killeen,geonames
 Shattuck,OK,36.276140,-99.882760,Shattuck,geonames
 Cisco,TX,32.388190,-98.979230,Cisco,geonames
@@ -2668,17 +2486,14 @@ Tallahassee,FL,30.438260,-84.280730,Tallahassee,geonames
 Stacy,MN,45.398020,-92.987440,Stacy,geonames
 Tilden,TX,28.461940,-98.549180,Tilden,geonames
 Rifle,CO,39.534700,-107.783120,Rifle,geonames
-Campbell,NY,42.233130,-77.197470,Campbell,geonames
 Palmetto,FL,27.521430,-82.572320,Palmetto,geonames
 Odem,TX,27.950570,-97.582220,Odem,geonames
 Denver,NC,35.531250,-81.029800,Denver,geonames
 Chillicothe,OH,39.333120,-82.982400,Chillicothe,geonames
-Seymour,WI,44.514990,-88.330380,Seymour,geonames
 Big Bend,WI,42.881400,-88.206760,Big Bend,geonames
 Newport,NC,34.786550,-76.859110,Newport,geonames
 Wellington,CO,40.703870,-105.008590,Wellington,geonames
 Youngsville,NC,36.024870,-78.474440,Youngsville,geonames
-Greenwood,MS,33.516230,-90.179530,Greenwood,geonames
 Catarina,TX,28.345550,-99.613380,Catarina,geonames
 Pleasanton,TX,28.967190,-98.478630,Pleasanton,geonames
 Cleveland,TN,35.159520,-84.876610,Cleveland,geonames
@@ -2693,11 +2508,9 @@ Seattle,WA,47.606210,-122.332070,Seattle,geonames
 Bridgeview,IL,41.750030,-87.804220,Bridgeview,geonames
 Houlton,ME,46.126160,-67.840300,Houlton,geonames
 Pierceton,IN,41.200320,-85.705540,Pierceton,geonames
-Monroe,OH,39.440340,-84.362160,Monroe,geonames
 Stockdale,TX,29.236910,-97.960000,Stockdale,geonames
 Tunkhannock,PA,41.538690,-75.946590,Tunkhannock,geonames
 Pittsburgh,PA,40.440620,-79.995890,Pittsburgh,geonames
-Danville,IN,39.760600,-86.526390,Danville,geonames
 Hart,MI,43.698340,-86.363970,Hart,geonames
 Portland,TN,36.581710,-86.516380,Portland,geonames
 Baden,PA,40.635070,-80.228120,Baden,geonames
@@ -2710,7 +2523,6 @@ Bidwell,OH,38.918690,-82.299040,Bidwell,geonames
 Troy,OH,40.039500,-84.203280,Troy,geonames
 Athens,TN,35.442850,-84.592990,Athens,geonames
 Benton,KY,36.857280,-88.350310,Benton,geonames
-Mount Gilead,OH,40.549230,-82.827400,Mount Gilead,geonames
 Selby,SD,45.506380,-100.032070,Selby,geonames
 Blunt,SD,44.512200,-99.992070,Blunt,geonames
 Box Elder,SD,44.112490,-103.068230,Box Elder,geonames
@@ -2730,7 +2542,6 @@ Corpus Christi,TX,27.800580,-97.396380,Corpus Christi,geonames
 Guthrie,OK,35.878940,-97.425320,Guthrie,geonames
 Bevier,MO,39.746980,-92.564080,Bevier,geonames
 New Town,ND,47.980850,-102.490180,New Town,geonames
-Adams,WI,43.956080,-89.818180,Adams,geonames
 San Augustine,TX,31.529900,-94.106030,San Augustine,geonames
 Seaboard,NC,36.490150,-77.441360,Seaboard,geonames
 Bennettsville,SC,34.617380,-79.684780,Bennettsville,geonames
@@ -2762,12 +2573,9 @@ La Fayette,NY,42.892290,-76.105200,LaFayette,geonames
 Valliant,OK,34.002330,-95.093840,Valliant,geonames
 Sadieville,KY,38.389240,-84.537440,Sadieville,geonames
 Mattoon,IL,39.483090,-88.372830,Mattoon,geonames
-Mesquite,TX,32.766800,-96.599160,Mesquite,geonames
 Union City,OK,35.391720,-97.941440,Union City,geonames
 Bonita Springs,FL,26.339810,-81.778700,Bonita Springs,geonames
-Plainfield,IL,41.626970,-88.203950,Plainfield,geonames
 Des Plaines,IL,42.033360,-87.883400,Des Plaines,geonames
-Uniontown,PA,39.900080,-79.716430,Uniontown,geonames
 Berea,OH,41.366160,-81.854300,Berea,geonames
 Monroeville,PA,40.421180,-79.788100,Monroeville,geonames
 Texhoma,OK,36.505030,-101.782940,Texhoma,geonames
@@ -2775,7 +2583,6 @@ Ogilvie,MN,45.832180,-93.426340,Ogilvie,geonames
 Shelby,NE,41.192240,-97.425320,Shelby,geonames
 York Springs,PA,40.008980,-77.115540,York Springs,geonames
 Valley,NE,41.312780,-96.346140,Valley,geonames
-Lebanon,OH,39.435340,-84.202990,Lebanon,geonames
 Holcomb,KS,37.986140,-100.989330,Holcomb,geonames
 Converse,TX,29.518010,-98.316120,Converse,geonames
 Leola,PA,40.087870,-76.184950,Leola,geonames
@@ -2788,7 +2595,6 @@ Batavia,IL,41.850030,-88.312570,Batavia,geonames
 Lindsay,OK,34.834800,-97.602530,Lindsay,geonames
 Nowata,OK,36.700650,-95.638030,Nowata,geonames
 Ferrisburgh,VT,44.205610,-73.246230,Ferrisburgh,geonames
-Brownwood,TX,31.709320,-98.991160,Brownwood,geonames
 Maxwell,TX,29.881050,-97.793340,Maxwell,geonames
 Scott City,KS,38.482520,-100.907090,Scott City,geonames
 Roanoke,TX,33.004010,-97.225850,Roanoke,geonames
@@ -2806,14 +2612,12 @@ Superior,NE,40.020850,-98.070040,Superior,geonames
 Brookfield,MO,39.784470,-93.073530,Brookfield,geonames
 Gallatin,MO,39.914450,-93.962170,Gallatin,geonames
 Queen City,MO,40.409200,-92.567690,Queen City,geonames
-Meadowview,VA,36.760390,-81.862900,Meadowview,geonames
 Tolleson,AZ,33.450040,-112.259320,Tolleson,geonames
 Belleville,KS,39.824450,-97.632540,Belleville,geonames
 De Soto,IA,41.531660,-94.009670,De Soto,geonames
 Purdy,MO,36.817290,-93.920760,Purdy,geonames
 Quanah,TX,34.297850,-99.740370,Quanah,geonames
 Harrisonville,MO,38.653340,-94.348840,Harrisonville,geonames
-Hawthorne,FL,29.591910,-82.087320,Hawthorne,geonames
 Dyersburg,TN,36.034520,-89.385630,Dyersburg,geonames
 Carson City,NV,39.163800,-119.767400,Carson City,geonames
 Pewaukee,WI,43.080570,-88.261200,Pewaukee,geonames
@@ -2823,7 +2627,6 @@ Lake,MS,32.343200,-89.328680,Lake,geonames
 Manson,IA,42.529140,-94.534140,Manson,geonames
 Haltom City,TX,32.799570,-97.269180,Haltom City,geonames
 Sauk Rapids,MN,45.591910,-94.166100,Sauk Rapids,geonames
-White House,TN,36.470320,-86.651380,White House,geonames
 Watts,OK,36.109250,-94.570220,Watts,geonames
 Eads,CO,38.480560,-102.781860,Eads,geonames
 Sapulpa,OK,35.998700,-96.114170,Sapulpa,geonames
@@ -2851,7 +2654,6 @@ Knoxville,IL,40.908370,-90.284850,Knoxville,geonames
 Rich Hill,MO,38.096420,-94.361060,Rich Hill,geonames
 Greenup,IL,39.247820,-88.163370,Greenup,geonames
 Broken Arrow,OK,36.052600,-95.790820,Broken Arrow,geonames
-Madison,AL,34.699260,-86.748330,Madison,geonames
 Butler,WI,43.105840,-88.069530,Butler,geonames
 Moore Haven,FL,26.833120,-81.093120,Moore Haven,geonames
 Show Low,AZ,34.254210,-110.029830,Show Low,geonames
@@ -2902,7 +2704,6 @@ Ashland,WI,46.592440,-90.883800,Ashland,geonames
 Marietta,GA,33.952600,-84.549930,Marietta,geonames
 Newcastle,OK,35.247290,-97.599760,Newcastle,geonames
 Cumberland,WI,45.532180,-92.019350,Cumberland,geonames
-Salem,MO,37.645600,-91.535980,Salem,geonames
 Woodruff,WI,45.896340,-89.699040,Woodruff,geonames
 Black Earth,WI,43.137220,-89.746790,Black Earth,geonames
 Waukegan,IL,42.363630,-87.844790,Waukegan,geonames
@@ -2926,7 +2727,6 @@ Sheridan,WY,44.797190,-106.956180,Sheridan,geonames
 Paynesville,MN,45.380520,-94.711950,Paynesville,geonames
 Blakeslee,PA,41.092590,-75.592690,Blakeslee,geonames
 Saint Joseph,MN,45.564960,-94.318330,Saint Joseph,geonames
-Caldwell,TX,30.531320,-96.693030,Caldwell,geonames
 Elizabethtown,KY,37.693950,-85.859130,Elizabethtown,geonames
 Waupun,WI,43.633320,-88.729550,Waupun,geonames
 Benton,IL,37.996720,-88.920070,Benton,geonames
@@ -2982,7 +2782,6 @@ Wadsworth,OH,41.025610,-81.729850,Wadsworth,geonames
 Brawley,CA,32.978660,-115.530270,Brawley,geonames
 Greenville,ME,45.459490,-69.590610,Greenville,geonames
 Pierre,SD,44.368320,-100.350970,Pierre,geonames
-Covington,VA,37.793460,-79.993950,Covington,geonames
 Brodhead,WI,42.618340,-89.376230,Brodhead,geonames
 Sidney,OH,40.284220,-84.155500,Sidney,geonames
 Reidsville,NC,36.354860,-79.664470,Reidsville,geonames
@@ -3019,7 +2818,6 @@ New Hampton,NY,41.410930,-74.407100,New Hampton,geonames
 Brewerton,NY,43.238120,-76.140760,Brewerton,geonames
 Queensbury,NY,43.377290,-73.613170,Queensbury,geonames
 Westmorland,CA,33.037270,-115.621380,Westmorland,geonames
-Marietta,OK,33.937040,-97.116680,Marietta,geonames
 Monroeton,PA,41.712580,-76.474660,Monroeton,geonames
 Mercersburg,PA,39.827870,-77.903330,Mercersburg,geonames
 Chappell Hill,TX,30.142720,-96.256910,Chappell Hill,geonames
@@ -3031,7 +2829,6 @@ Endeavor,WI,43.715810,-89.466230,Endeavor,geonames
 Midwest,WY,43.411360,-106.280020,Midwest,geonames
 Copiague,NY,40.681490,-73.399840,Copiague,geonames
 Lovington,NM,32.944010,-103.348550,Lovington,geonames
-Plains,TX,33.188710,-102.827990,Plains,geonames
 Hamilton,MO,39.743620,-93.998270,Hamilton,geonames
 Hazen,AR,34.780930,-91.580970,Hazen,geonames
 Lake Village,AR,33.328730,-91.281780,Lake Village,geonames
@@ -3058,19 +2855,16 @@ Edon,OH,41.556440,-84.768850,Edon,geonames
 Saint Clair,MI,42.820870,-82.486020,Saint Clair,geonames
 Prairie Du Sac,WI,43.286930,-89.724010,Prairie du Sac,geonames
 Mc Kees Rocks,PA,40.465620,-80.065610,McKees Rocks,geonames
-Crest Hill,IL,41.554750,-88.098670,Crest Hill,geonames
 Eutaw,AL,32.840590,-87.887620,Eutaw,geonames
 Bettendorf,IA,41.524480,-90.515690,Bettendorf,geonames
 Willow Springs,MO,36.992280,-91.969870,Willow Springs,geonames
 Gunnison,UT,39.155240,-111.818260,Gunnison,geonames
-Elgin,SC,34.672930,-80.718960,Elgin,geonames
 Warrenton,GA,33.407080,-82.662080,Warrenton,geonames
 Mason City,IA,43.153570,-93.201040,Mason City,geonames
 Forest City,IA,43.262460,-93.637160,Forest City,geonames
 Anoka,MN,45.197740,-93.387180,Anoka,geonames
 Kendallville,IN,41.441440,-85.264980,Kendallville,geonames
 Thorp,WA,47.067900,-120.671180,Thorp,geonames
-Posen,IL,41.631700,-87.681440,Posen,geonames
 Lockbourne,OH,39.809230,-82.972400,Lockbourne,geonames
 Glencoe,MN,44.769130,-94.151640,Glencoe,geonames
 Douglassville,PA,40.257870,-75.726300,Douglassville,geonames
@@ -3087,7 +2881,6 @@ Barrington,NH,43.222860,-71.047010,Barrington,geonames
 Clearfield,UT,41.110780,-112.026050,Clearfield,geonames
 Tilton,IL,40.095310,-87.647520,Tilton,geonames
 Milan,MI,42.085320,-83.682440,Milan,geonames
-Springfield,VA,38.789280,-77.187200,Springfield,geonames
 New Carlisle,OH,39.936170,-84.025490,New Carlisle,geonames
 Creston,IA,41.058600,-94.361350,Creston,geonames
 Oronoco,MN,44.166080,-92.534910,Oronoco,geonames
@@ -3102,7 +2895,6 @@ Logan,NM,35.365330,-103.410790,Logan,geonames
 Paris,TN,36.302000,-88.326710,Paris,geonames
 Wetumpka,AL,32.543740,-86.211910,Wetumpka,geonames
 Morrisonville,IL,39.420050,-89.455650,Morrisonville,geonames
-West Point,GA,32.877910,-85.183270,West Point,geonames
 Center,MO,39.508100,-91.528770,Center,geonames
 Page,AZ,36.914720,-111.455830,Page,geonames
 Jonesburg,MO,38.853380,-91.305990,Jonesburg,geonames
@@ -3113,8 +2905,6 @@ Freeman,SD,43.352490,-97.437290,Freeman,geonames
 Fort Pierre,SD,44.353590,-100.373740,Fort Pierre,geonames
 Brighton,IL,39.039770,-90.140660,Brighton,geonames
 Ankeny,IA,41.729710,-93.605770,Ankeny,geonames
-Altamont,IL,39.061990,-88.748110,Altamont,geonames
-Geneva,IN,40.591990,-84.957190,Geneva,geonames
 Greene,IA,42.895810,-92.802420,Greene,geonames
 Randall,MN,46.091080,-94.503620,Randall,geonames
 Mountain Lake,MN,43.938850,-94.929710,Mountain Lake,geonames
@@ -3132,7 +2922,6 @@ Kieler,WI,42.581390,-90.602630,Kieler,geonames
 Tonica,IL,41.215870,-89.066750,Tonica,geonames
 Shannon,IL,42.154750,-89.739840,Shannon,geonames
 South Pekin,IL,40.494480,-89.651770,South Pekin,geonames
-Washington,IA,41.299180,-91.692940,Washington,geonames
 Sleepy Eye,MN,44.297180,-94.724150,Sleepy Eye,geonames
 Mulberry Grove,IL,38.925050,-89.268960,Mulberry Grove,geonames
 Seneca,KS,39.834160,-96.064170,Seneca,geonames
@@ -3145,11 +2934,9 @@ Gibbon,NE,40.748350,-98.844800,Gibbon,geonames
 Hope Mills,NC,34.970440,-78.945310,Hope Mills,geonames
 Neenah,WI,44.185820,-88.462610,Neenah,geonames
 Cambridge,NE,40.281950,-100.165690,Cambridge,geonames
-Carey,OH,40.952560,-83.382420,Carey,geonames
 Carrollton,TX,32.953730,-96.890280,Carrollton,geonames
 Madison,CT,41.279540,-72.598430,Madison,geonames
 Navasota,TX,30.387980,-96.087730,Navasota,geonames
-Liberty,TX,30.057990,-94.795480,Liberty,geonames
 Walpole,NH,43.079520,-72.425920,Walpole,geonames
 Malad City,ID,42.191590,-112.250800,Malad City,geonames
 Leesport,PA,40.447040,-75.966320,Leesport,geonames
@@ -3160,7 +2947,6 @@ Henrietta,TX,33.817320,-98.195320,Henrietta,geonames
 Waldorf,MD,38.624560,-76.939140,Waldorf,geonames
 Woodford,VA,38.113190,-77.408870,Woodford,geonames
 Broadway,VA,38.613170,-78.798910,Broadway,geonames
-Salem,VA,37.293470,-80.054760,Salem,geonames
 Lynchburg,VA,37.413750,-79.142250,Lynchburg,geonames
 Lorton,VA,38.704280,-77.227760,Lorton,geonames
 Fairfax,VA,38.846220,-77.306370,Fairfax,geonames
@@ -3191,8 +2977,6 @@ Apex,NC,35.732650,-78.850290,Apex,geonames
 Raleigh,NC,35.772100,-78.638610,Raleigh,geonames
 Warsaw,VA,37.958740,-76.758010,Warsaw,geonames
 Selma,NC,35.536550,-78.284440,Selma,geonames
-Chesterfield,VA,37.377090,-77.505820,Chesterfield,geonames
-Powhatan,VA,37.339870,-79.247800,Powhatan,geonames
 Rockville,VA,37.725980,-77.678320,Rockville,geonames
 Richmond,VA,37.553760,-77.460260,Richmond,geonames
 Gum Spring,VA,37.775700,-77.896660,Gum Spring,geonames
@@ -3246,7 +3030,6 @@ Ortonville,MN,45.304690,-96.444780,Ortonville,geonames
 Eagle,NE,40.816670,-96.430290,Eagle,geonames
 Perkins,OK,35.973940,-97.033640,Perkins,geonames
 Sheffield,IA,42.893300,-93.215200,Sheffield,geonames
-Mount Pleasant,MI,43.597810,-84.767510,Mount Pleasant,geonames
 Osceola,WI,45.320520,-92.704930,Osceola,geonames
 DUNDAS,MN,44.429410,-93.201880,Dundas,geonames
 Sussex,WI,43.133900,-88.222040,Sussex,geonames
@@ -3262,7 +3045,6 @@ Green River,WY,41.528580,-109.466250,Green River,geonames
 Bartlesville,OK,36.747310,-95.980820,Bartlesville,geonames
 Geary,OK,35.631160,-98.317290,Geary,geonames
 Thomas,OK,35.744220,-98.747580,Thomas,geonames
-Arnett,OK,36.135040,-99.774840,Arnett,geonames
 Hartford,CT,41.763710,-72.685090,Hartford,geonames
 Yerington,NV,38.985750,-119.162930,Yerington,geonames
 Tinley Park,IL,41.573370,-87.784490,Tinley Park,geonames
@@ -3285,10 +3067,8 @@ Devine,TX,29.139960,-98.905310,Devine,geonames
 Nelson,MO,38.994740,-93.032700,Nelson,geonames
 Seymour,MO,37.146440,-92.768780,Seymour,geonames
 Wahpeton,ND,46.265240,-96.605910,Wahpeton,geonames
-Irvington,AL,34.639810,-86.929170,Irvington,geonames
 Diamond,OH,41.098950,-81.022870,Diamond,geonames
 Roseville,MI,42.497260,-82.937140,Roseville,geonames
-Etna,OH,39.957290,-82.681830,Etna,geonames
 Richwood,WV,38.224840,-80.533140,Richwood,geonames
 Mosheim,TN,36.189540,-82.958490,Mosheim,geonames
 West Jordan,UT,40.609670,-111.939100,West Jordan,geonames
@@ -3296,9 +3076,7 @@ Dewey,AZ,34.530030,-112.241270,Dewey,geonames
 Bangs,TX,31.717100,-99.132550,Bangs,geonames
 Fort Atkinson,WI,42.928890,-88.837050,Fort Atkinson,geonames
 Yucca,AZ,34.872230,-114.149400,Yucca,geonames
-Holly Springs,MS,31.315730,-89.977860,Holly Springs,geonames
 Groveport,OH,39.878400,-82.883790,Groveport,geonames
-Salem,IL,38.626990,-88.945620,Salem,geonames
 Buckhannon,WV,38.993990,-80.232030,Buckhannon,geonames
 Corsicana,TX,32.095430,-96.468870,Corsicana,geonames
 Atlanta,IL,40.259480,-89.233420,Atlanta,geonames
@@ -3318,7 +3096,6 @@ Jordan,NY,43.065340,-76.472990,Jordan,geonames
 Stephenville,TX,32.220700,-98.202260,Stephenville,geonames
 Fennimore,WI,42.983600,-90.655400,Fennimore,geonames
 New Ulm,MN,44.312460,-94.460530,New Ulm,geonames
-Stewart,MN,44.724680,-94.485820,Stewart,geonames
 Dublin,TX,32.085140,-98.341990,Dublin,geonames
 Post,TX,33.191220,-101.379000,Post,geonames
 Clyde,TX,32.405960,-99.493690,Clyde,geonames
@@ -3328,7 +3105,6 @@ Melrose,NM,34.430350,-103.632460,Melrose,geonames
 Wall,TX,31.374050,-100.307590,Wall,geonames
 Brownsville,WI,43.616380,-88.490660,Brownsville,geonames
 Park Rapids,MN,46.922180,-95.058630,Park Rapids,geonames
-Labelle,FL,26.761730,-81.438410,LaBelle,geonames
 Hayward,WI,46.013010,-91.484620,Hayward,geonames
 Beaver Dam,WI,43.457770,-88.837330,Beaver Dam,geonames
 Ashley,IN,41.526200,-85.066780,Ashley,geonames
@@ -3350,7 +3126,6 @@ Sheldon,IA,43.181090,-95.856130,Sheldon,geonames
 Bellefontaine,OH,40.361160,-83.759660,Bellefontaine,geonames
 Winneconne,WI,44.110820,-88.712610,Winneconne,geonames
 Los Lunas,NM,34.806170,-106.733360,Los Lunas,geonames
-Morton,TX,33.725100,-102.759380,Morton,geonames
 Idalou,TX,33.666470,-101.682940,Idalou,geonames
 Crowell,TX,33.983970,-99.724820,Crowell,geonames
 Spur,TX,33.476480,-100.855690,Spur,geonames
@@ -3371,9 +3146,7 @@ Orrville,OH,40.843670,-81.764020,Orrville,geonames
 Antigo,WI,45.140250,-89.152340,Antigo,geonames
 Mount Horeb,WI,43.008610,-89.738460,Mount Horeb,geonames
 Holmen,WI,43.963300,-91.256250,Holmen,geonames
-Saint Johnsbury,VT,44.425260,-72.015120,St Johnsbury,geonames
 Frankfort,KY,38.200910,-84.873280,Frankfort,geonames
-Santa Teresa,NM,31.855940,-106.639160,Santa Teresa,geonames
 Ripley,NY,42.267000,-79.710600,Ripley,geonames
 Forrest City,AR,35.008150,-90.789830,Forrest City,geonames
 Ville Platte,LA,30.687970,-92.271520,Ville Platte,geonames
@@ -3407,14 +3180,12 @@ Pilot Mountain,NC,36.386530,-80.469500,Pilot Mountain,geonames
 Rincon,GA,32.296030,-81.235390,Rincon,geonames
 Smyer,TX,33.584260,-102.163230,Smyer,geonames
 Hannibal,OH,39.667300,-80.872040,Hannibal,geonames
-Bethlehem,GA,33.932060,-83.713780,Bethlehem,geonames
 Breckenridge,TX,32.755680,-98.902290,Breckenridge,geonames
 Robert Lee,TX,31.892370,-100.484820,Robert Lee,geonames
 Durango,CO,37.275280,-107.880070,Durango,geonames
 Saint Croix,IN,38.223950,-86.586370,Saint Croix,geonames
 Appleton,MN,45.196910,-96.019770,Appleton,geonames
 Genoa,NE,41.448620,-97.730610,Genoa,geonames
-Canyon,TX,34.980330,-101.918800,Canyon,geonames
 Savage,MN,44.779130,-93.336340,Savage,geonames
 Glen Rose,TX,32.234590,-97.755310,Glen Rose,geonames
 Shelby,MS,33.950940,-90.767880,Shelby,geonames
@@ -3426,12 +3197,10 @@ Lancaster,PA,40.037880,-76.305510,Lancaster,geonames
 Perry,IA,41.838600,-94.107180,Perry,geonames
 Darien,WI,42.601680,-88.707600,Darien,geonames
 Keenesburg,CO,40.108320,-104.519960,Keenesburg,geonames
-Rankin,TX,31.222650,-101.937910,Rankin,geonames
 Saint Peter,MN,44.323580,-93.958010,Saint Peter,geonames
 Acworth,GA,34.066350,-84.678370,Acworth,geonames
 Platteville,WI,42.734160,-90.478460,Platteville,geonames
 Harlem,GA,33.414580,-82.312620,Harlem,geonames
-Spring Hope,NC,35.945150,-78.111930,Spring Hope,geonames
 Bolivar,MO,37.614480,-93.410470,Bolivar,geonames
 Saint Croix Falls,WI,45.409960,-92.639650,Saint Croix Falls,geonames
 Carrollton,IL,39.302270,-90.407060,Carrollton,geonames
@@ -3469,9 +3238,7 @@ Hutto,TX,30.542700,-97.546670,Hutto,geonames
 Alpine,WY,43.163530,-111.018020,Alpine,geonames
 Payson,AZ,34.230870,-111.325140,Payson,geonames
 Normal,IL,40.514200,-88.990630,Normal,geonames
-Springtown,TX,32.965960,-97.683640,Springtown,geonames
 Castle Dale,UT,39.212190,-111.019610,Castle Dale,geonames
-Wylie,TX,33.015120,-96.538880,Wylie,geonames
 Martinsville,IN,39.427830,-86.428330,Martinsville,geonames
 Hopkinsville,KY,36.865610,-87.491170,Hopkinsville,geonames
 Moncks Corner,SC,33.196320,-80.014290,Moncks Corner,geonames
@@ -3481,7 +3248,6 @@ Shippenville,PA,41.250340,-79.459490,Shippenville,geonames
 Grandview,MO,38.885840,-94.533010,Grandview,geonames
 Logansport,IN,40.754480,-86.356670,Logansport,geonames
 Waconia,MN,44.850800,-93.786910,Waconia,geonames
-Eden,TX,31.216280,-99.845630,Eden,geonames
 Ivanhoe,MN,44.463300,-96.247260,Ivanhoe,geonames
 Shelby,OH,40.881450,-82.661840,Shelby,geonames
 Newcomerstown,OH,40.272290,-81.605950,Newcomerstown,geonames
@@ -3497,7 +3263,6 @@ Grand Ridge,FL,30.712910,-85.023280,Grand Ridge,geonames
 Bound Brook,NJ,40.568440,-74.538490,Bound Brook,geonames
 Williamsport,MD,39.600650,-77.820550,Williamsport,geonames
 Christiansburg,VA,37.129850,-80.408940,Christiansburg,geonames
-Sugar Grove,IL,41.761420,-88.443690,Sugar Grove,geonames
 Magna,UT,40.709110,-112.101610,Magna,geonames
 Correctionville,IA,42.474990,-95.785570,Correctionville,geonames
 Winter Garden,FL,28.565280,-81.586180,Winter Garden,geonames
@@ -3525,10 +3290,8 @@ Guntown,MS,34.443160,-88.659780,Guntown,geonames
 Castroville,TX,29.355790,-98.878640,Castroville,geonames
 Guyton,GA,32.336300,-81.391500,Guyton,geonames
 Graham,NC,36.069030,-79.400580,Graham,geonames
-Coldwater,MS,32.714860,-89.214230,Coldwater,geonames
 Ingleside,TX,27.877800,-97.211660,Ingleside,geonames
 Bluffton,IN,40.738660,-85.171640,Bluffton,geonames
-Troy,PA,40.915060,-78.216400,Troy,geonames
 SAMSON,AL,31.112950,-86.046050,Samson,geonames
 Columbia,KY,37.102840,-85.306350,Columbia,geonames
 Columbia,NC,35.917660,-76.252150,Columbia,geonames
@@ -3549,8 +3312,6 @@ Gilberts,IL,42.103360,-88.372860,Gilberts,geonames
 Parkman,OH,41.370610,-81.065100,Parkman,geonames
 Winfield,TX,33.167340,-95.111880,Winfield,geonames
 Phillipsburg,KS,39.756120,-99.323990,Phillipsburg,geonames
-Zebulon,GA,33.102350,-84.342700,Zebulon,geonames
-Hopewell,VA,37.304320,-77.287200,Hopewell,geonames
 Sour Lake,TX,30.140210,-94.411020,Sour Lake,geonames
 Soperton,GA,32.377120,-82.592360,Soperton,geonames
 Vidalia,GA,32.217690,-82.413460,Vidalia,geonames
@@ -3562,58 +3323,45 @@ Buckatunna,MS,31.539050,-88.528920,Buckatunna,geonames
 Hillsborough,NJ,40.506000,-74.674000,Hillsborough,geonames
 La Feria,TX,26.158960,-97.823890,La Feria,geonames
 Lawtey,FL,30.044130,-82.071770,Lawtey,geonames
-Whitney,TX,31.951820,-97.321400,Whitney,geonames
 Muldrow,OK,35.406200,-94.598830,Muldrow,geonames
 Cave City,AR,35.941740,-91.548470,Cave City,geonames
-Middletown,OH,39.515060,-84.398280,Middletown,geonames
 Leland,NC,34.256280,-78.044710,Leland,geonames
 Bridgeport,CT,41.179230,-73.189450,Bridgeport,geonames
 Allen,OK,34.878980,-96.412510,Allen,geonames
-Riverdale,IL,41.633370,-87.633100,Riverdale,geonames
 Lowellville,OH,41.035340,-80.536460,Lowellville,geonames
 Saint Charles,MO,38.783940,-90.481230,Saint Charles,geonames
 Hazelwood,MO,38.771440,-90.370950,Hazelwood,geonames
 Grenada,MS,33.769000,-89.808420,Grenada,geonames
-Franklin,TX,31.026020,-96.485240,Franklin,geonames
 Princeton,NC,35.465990,-78.160550,Princeton,geonames
 Worland,WY,44.016900,-107.955370,Worland,geonames
 Eastaboga,AL,33.605940,-86.021360,Eastaboga,geonames
 International Falls,MN,48.601050,-93.410980,International Falls,geonames
 Moorefield,WV,39.062330,-78.969470,Moorefield,geonames
-Oxford,MS,34.366500,-89.519250,Oxford,geonames
 Wright,WY,43.751240,-105.492010,Wright,geonames
-HICKORY HILLS,IL,41.725590,-87.825060,Hickory Hills,geonames
 Galatia,IL,37.840600,-88.609220,Galatia,geonames
 Cape Charles,VA,37.270080,-76.016490,Cape Charles,geonames
 Hunt Valley,MD,39.499830,-76.641080,Hunt Valley,geonames
-Nottingham,MD,39.199270,-76.637190,Nottingham,geonames
 Warren,ME,44.120360,-69.240050,Warren,geonames
-Windsor,NC,35.998490,-76.946060,Windsor,geonames
 Shannon,MS,34.116220,-88.711720,Shannon,geonames
 Columbus,GA,32.460980,-84.987710,Columbus,geonames
 Pulaski,TN,35.199800,-87.030840,Pulaski,geonames
 Elgin,IL,42.037250,-88.281190,Elgin,geonames
-Santa Anna,TX,31.742090,-99.321730,Santa Anna,geonames
 Yorkshire,NY,42.530060,-78.472800,Yorkshire,geonames
 Maxton,NC,34.735160,-79.348930,Maxton,geonames
 Clarence,IA,41.888910,-91.056540,Clarence,geonames
-Edgewood,MD,39.418720,-76.294400,Edgewood,geonames
 Bronx,NY,40.849850,-73.866410,The Bronx,geonames
 Cusseta,GA,32.305430,-84.772700,Cusseta,geonames
 Hennessey,OK,36.109200,-97.898670,Hennessey,geonames
 Mc Alpin,FL,30.139120,-82.951800,McAlpin,geonames
-Lake Butler,FL,28.501670,-81.540910,Lake Butler,geonames
 Nederland,TX,29.974380,-93.992400,Nederland,geonames
 Taylorsville,GA,34.086210,-84.987440,Taylorsville,geonames
 Pennington,AL,32.207090,-88.056130,Pennington,geonames
-Hudson,FL,28.364450,-82.693430,Hudson,geonames
 Crystal Lake,IL,42.241130,-88.316200,Crystal Lake,geonames
 Mchenry,IL,42.333350,-88.266750,McHenry,geonames
 Tupelo,OK,34.604810,-96.424170,Tupelo,geonames
 Asherton,TX,28.441930,-99.760330,Asherton,geonames
 Blackshear,GA,31.306050,-82.242070,Blackshear,geonames
 Hondo,TX,29.347460,-99.141420,Hondo,geonames
-Bloomfield,IN,39.026990,-86.937510,Bloomfield,geonames
 Wapato,WA,46.447630,-120.420340,Wapato,geonames
 Toppenish,WA,46.377350,-120.308670,Toppenish,geonames
 Oakdale,LA,30.816030,-92.660420,Oakdale,geonames
@@ -3634,17 +3382,13 @@ Winnabow,NC,34.149340,-78.093600,Winnabow,geonames
 Bladenboro,NC,34.538780,-78.787520,Bladenboro,geonames
 Callahan,FL,30.562180,-81.830660,Callahan,geonames
 Cherry Valley,IL,42.234740,-88.948990,Cherry Valley,geonames
-Tar Heel,NC,34.733220,-78.790020,Tar Heel,geonames
 Lineville,AL,33.310670,-85.754410,Lineville,geonames
-Clifton,TX,31.782380,-97.576690,Clifton,geonames
-Carthage,MS,32.732640,-89.536180,Carthage,geonames
 Itasca,IL,41.975030,-88.007290,Itasca,geonames
 Moab,UT,38.573320,-109.549840,Moab,geonames
 Bellwood,IL,41.881420,-87.883120,Bellwood,geonames
 Emmitsburg,MD,39.704540,-77.326930,Emmitsburg,geonames
 Coudersport,PA,41.774790,-78.020560,Coudersport,geonames
 New Stanton,PA,40.219240,-79.609480,New Stanton,geonames
-Hickory,NC,35.733190,-81.341200,Hickory,geonames
 Morrison,TN,35.602850,-85.919710,Morrison,geonames
 Springerville,AZ,34.133550,-109.288340,Springerville,geonames
 Harlingen,TX,26.190630,-97.696100,Harlingen,geonames
@@ -3654,7 +3398,6 @@ Austin,IN,38.758390,-85.808030,Austin,geonames
 Mercedes,TX,26.149800,-97.913610,Mercedes,geonames
 Washington,UT,37.130540,-113.508290,Washington,geonames
 Greeley,CO,40.423310,-104.709130,Greeley,geonames
-Lytle,TX,29.233290,-98.796410,Lytle,geonames
 Bowie,AZ,32.326470,-109.487010,Bowie,geonames
 Plano,IL,41.662810,-88.537020,Plano,geonames
 Madison,IN,38.735890,-85.379960,Madison,geonames
@@ -3666,16 +3409,13 @@ King City,MO,40.051380,-94.524120,King City,geonames
 Glasgow,MO,39.227250,-92.846580,Glasgow,geonames
 California,MO,38.627530,-92.566580,California,geonames
 Aurora,MO,36.970890,-93.717980,Aurora,geonames
-Centerville,IA,42.092760,-93.935510,Centerville,geonames
 Milan,MO,40.202240,-93.125210,Milan,geonames
-Clinton,MO,38.368630,-93.778270,Clinton,geonames
 Qulin,MO,36.595890,-90.247320,Qulin,geonames
 Louisiana,MO,39.448940,-91.051530,Louisiana,geonames
 Tarkio,MO,40.440280,-95.377760,Tarkio,geonames
 New Underwood,SD,44.093320,-102.836280,New Underwood,geonames
 Geneva,NE,40.526950,-97.595880,Geneva,geonames
 American Falls,ID,42.786020,-112.854440,American Falls,geonames
-Baker,FL,30.166040,-85.685760,Baker,geonames
 Goldthwaite,TX,31.449890,-98.570880,Goldthwaite,geonames
 Bloomingdale,GA,32.132420,-81.299000,Bloomingdale,geonames
 Creola,AL,30.891850,-88.039720,Creola,geonames
@@ -3718,7 +3458,6 @@ East Lyme,CT,41.355550,-72.231590,Town of East Lyme,geonames
 Fountain Inn,SC,34.689010,-82.195670,Fountain Inn,geonames
 Addison,IL,41.931700,-87.988960,Addison,geonames
 Ash Fork,AZ,35.225010,-112.484070,Ash Fork,geonames
-Crete,NE,40.627780,-96.961420,Crete,geonames
 West Haven,CT,41.270650,-72.947050,West Haven,geonames
 Jefferson City,MO,38.576700,-92.173520,Jefferson City,geonames
 Peotone,IL,41.332260,-87.785320,Peotone,geonames
@@ -3747,12 +3486,9 @@ Crane,TX,31.397360,-102.350140,Crane,geonames
 Purvis,MS,31.143240,-89.409790,Purvis,geonames
 Yukon,OK,35.506720,-97.762540,Yukon,geonames
 Vance,AL,33.174280,-87.233610,Vance,geonames
-Cleveland,MS,33.744000,-90.724820,Cleveland,geonames
 Helena,MT,46.592710,-112.036110,Helena,geonames
-Mason,TX,30.748790,-99.230610,Mason,geonames
 Spring Lake,NC,35.167940,-78.972810,Spring Lake,geonames
 Marble Falls,TX,30.578410,-98.275070,Marble Falls,geonames
-Gastonia,NC,35.262080,-81.187300,Gastonia,geonames
 Ellsworth,KS,38.730560,-98.228110,Ellsworth,geonames
 Willoughby,OH,41.639770,-81.406500,Willoughby,geonames
 Darlington,SC,34.299880,-79.876170,Darlington,geonames
@@ -3788,17 +3524,14 @@ Sierra Vista,AZ,31.554540,-110.303690,Sierra Vista,geonames
 Grovetown,GA,33.450420,-82.198180,Grovetown,geonames
 Liberty,ME,44.389240,-69.302820,Liberty,geonames
 Flora Vista,NM,36.794450,-108.080350,Flora Vista,geonames
-Rome,NY,43.212850,-75.455730,Rome,geonames
 Andover,MN,45.233300,-93.291340,Andover,geonames
 Lexington,NC,35.824030,-80.253380,Lexington,geonames
-Emerson,GA,34.127040,-84.755490,Emerson,geonames
 Hankinson,ND,46.069680,-96.901750,Hankinson,geonames
 University Park,IL,41.442980,-87.683600,University Park,geonames
 Kremmling,CO,40.058870,-106.388920,Kremmling,geonames
 Coachella,CA,33.680300,-116.173890,Coachella,geonames
 Milford,IA,43.324690,-95.150000,Milford,geonames
 North Liberty,IA,41.749180,-91.597950,North Liberty,geonames
-Flat Rock,NC,35.271230,-82.441510,Flat Rock,geonames
 Lockport,IL,41.589480,-88.057840,Lockport,geonames
 Taylor,MI,42.240870,-83.269650,Taylor,geonames
 Harrisburg,SD,43.431370,-96.697270,Harrisburg,geonames
@@ -3807,3 +3540,270 @@ Milford,TX,32.124600,-96.945280,Milford,geonames
 Hartland,WI,43.105010,-88.342040,Hartland,geonames
 Mondovi,WI,44.567740,-91.670990,Mondovi,geonames
 Kiowa,OK,34.720650,-95.899160,Kiowa,geonames
+Highland,IN,41.553650,-87.451980,Highland,geonames
+Mount Vernon,KY,37.352860,-84.340490,Mount Vernon,geonames+photon
+Sunbury,OH,40.242560,-82.859070,Sunbury,geonames+photon
+Cottondale,AL,33.189560,-87.451670,Cottondale,photon
+Geneva,OH,41.805050,-80.948150,Geneva,geonames+photon
+Holladay,TN,35.870620,-88.145870,Holladay,geonames+photon
+Pelham,AL,33.285670,-86.809990,Pelham,geonames+photon
+Cedar Creek,TX,30.087160,-97.500830,Cedar Creek,geonames+photon
+Georgetown,KY,38.209800,-84.558830,Georgetown,geonames+photon
+Corinth,MS,34.934250,-88.522270,Corinth,geonames+photon
+Wilson,NC,35.721270,-77.915540,Wilson,geonames+photon
+Fairfield,NJ,40.883710,-74.305980,Fairfield,geonames+photon
+Palmyra,NJ,40.007060,-75.028230,Palmyra,geonames+photon
+Lima,OH,40.742550,-84.105230,Lima,geonames+photon
+Mechanicsburg,PA,40.214260,-77.008590,Mechanicsburg,geonames+photon
+Panhandle,TX,35.345600,-101.380440,Panhandle,geonames+photon
+Jackson,OH,39.052020,-82.636550,Jackson,geonames+photon
+Rock Hill,SC,34.924870,-81.025080,Rock Hill,geonames+photon
+Franklin,OH,39.558950,-84.304110,Franklin,geonames+photon
+Monroe,LA,32.509310,-92.119300,Monroe,geonames+photon
+Knoxville,AL,32.992350,-87.790570,Knoxville,photon
+Live Oak,FL,30.294950,-82.984020,Live Oak,geonames+photon
+Oak Grove,KY,36.665050,-87.442790,Oak Grove,geonames+photon
+Summerville,SC,33.018500,-80.175650,Summerville,geonames+photon
+Milton,PA,41.012030,-76.847740,Milton,geonames+photon
+Newport,AR,35.604800,-91.281800,Newport,geonames+photon
+Lebanon,TN,36.208110,-86.291100,Lebanon,geonames+photon
+Garland,TX,32.912620,-96.638880,Garland,geonames+photon
+Midway,GA,31.805770,-81.430660,Midway,geonames+photon
+Thomasville,GA,30.836580,-83.978780,Thomasville,geonames+photon
+Pleasant View,TN,36.394220,-87.036670,Pleasant View,geonames+photon
+Bethany,MO,40.268330,-94.028290,Bethany,geonames+photon
+Rogers,MN,45.188850,-93.553010,Rogers,geonames+photon
+Greenwood,LA,32.442930,-93.972960,Greenwood,geonames+photon
+Wildwood,FL,28.865420,-82.040580,Wildwood,geonames+photon
+Lexington,VA,37.784020,-79.442820,Lexington,geonames+photon
+Lincoln,AL,33.613160,-86.118310,Lincoln,geonames+photon
+Three Forks,MT,45.892430,-111.552190,Three Forks,geonames+photon
+Wilson,WI,44.953580,-92.173520,Wilson,geonames+photon
+Petersburg,VA,37.227930,-77.401930,Petersburg,geonames+photon
+Denton,TX,33.214840,-97.133070,Denton,geonames+photon
+Fredericksburg,VA,38.303180,-77.460540,Fredericksburg,geonames+photon
+Richland,MS,32.239040,-90.158420,Richland,geonames+photon
+Park City,MT,45.632720,-108.917930,Park City,geonames+photon
+Gainesville,TX,33.625940,-97.133350,Gainesville,geonames+photon
+Mocksville,NC,35.894030,-80.561450,Mocksville,geonames+photon
+Kutztown,PA,40.517320,-75.777420,Kutztown,geonames+photon
+Chesapeake,VA,36.819040,-76.274940,Chesapeake,geonames+photon
+Snyder,TX,32.717890,-100.917620,Snyder,geonames+photon
+Antioch,TN,36.060060,-86.672220,Antioch,photon
+Denmark,TN,35.532850,-89.003950,Denmark,photon
+Bloomsburg,PA,41.003700,-76.454950,Bloomsburg,geonames+photon
+Clearfield,PA,41.027280,-78.439190,Clearfield,geonames+photon
+Myerstown,PA,40.374540,-76.302730,Myerstown,geonames+photon
+London,OH,39.886450,-83.448250,London,geonames+photon
+Eaton,OH,39.743940,-84.636620,Eaton,geonames+photon
+Nichols,NY,42.021740,-76.366880,Nichols,geonames+photon
+Oak Grove,MO,39.005010,-94.129390,Oak Grove,geonames+photon
+Belmont,OH,40.029240,-81.038990,Belmont,geonames+photon
+Monroeville,OH,41.244220,-82.696290,Monroeville,geonames+photon
+Marion,IL,37.730610,-88.933130,Marion,geonames+photon
+Forest Park,GA,33.622050,-84.369090,Forest Park,geonames+photon
+Ridgeway,VA,36.576800,-79.858370,Ridgeway,geonames+photon
+Chesterton,IN,41.610590,-87.064200,Chesterton,geonames+photon
+Palm Bay,FL,28.034460,-80.588660,Palm Bay,geonames+photon
+Anthony,TX,31.999270,-106.605550,Anthony,geonames+photon
+Mount Vernon,TX,33.188730,-95.221330,Mount Vernon,geonames+photon
+Sunnyside,WA,46.323740,-120.008650,Sunnyside,geonames+photon
+Dalton,GA,34.769800,-84.970220,Dalton,geonames+photon
+Pearl,MS,32.274590,-90.132030,Pearl,geonames+photon
+Buffalo,TX,31.463790,-96.058020,Buffalo,geonames+photon
+Plainfield,PA,40.203140,-77.289980,Plainfield,geonames+photon
+Middletown,PA,40.199810,-76.731080,Middletown,geonames
+Newburg,PA,40.137310,-77.554710,Newburg,geonames+photon
+Pleasant Hill,NC,36.532100,-77.535530,Pleasant Hill,geonames
+Midway,FL,30.495480,-84.454350,Midway,geonames+photon
+Palestine,AR,34.972320,-90.902620,Palestine,geonames+photon
+Enterprise,AL,31.315170,-85.855220,Enterprise,geonames+photon
+Mount Vernon,AL,31.085180,-88.013330,Mount Vernon,geonames+photon
+Georgetown,SC,33.376830,-79.294500,Georgetown,geonames+photon
+Bryan,TX,30.674360,-96.369960,Bryan,geonames+photon
+Plainview,TX,34.184790,-101.706840,Plainview,geonames+photon
+Shamrock,TX,35.214220,-100.249010,Shamrock,geonames+photon
+Georgetown,IN,38.294510,-85.975520,Georgetown,geonames+photon
+Goshen,IN,41.582270,-85.834440,Goshen,geonames+photon
+Ludlow,MA,42.160090,-72.475920,Ludlow,geonames+photon
+Canton,MI,42.308650,-83.482160,Canton,geonames
+Burton,MI,42.999470,-83.616340,Burton,geonames+photon
+Walnut,MS,34.946200,-88.899780,Walnut,geonames+photon
+Wiggins,MS,30.858240,-89.135330,Wiggins,geonames+photon
+Clinton,NC,34.997950,-78.323330,Clinton,geonames+photon
+Union Grove,NC,36.024580,-80.866180,Union Grove,geonames
+Red Creek,NY,43.247290,-76.723560,Red Creek,geonames+photon
+Genoa,OH,41.518110,-83.359090,Genoa,geonames+photon
+Mantua,OH,41.283940,-81.223990,Mantua,geonames+photon
+Bethel,PA,40.474540,-76.291340,Bethel,geonames
+Greenwood,SC,34.195400,-82.161790,Greenwood,geonames+photon
+Centerville,TX,31.257960,-95.978290,Centerville,geonames+photon
+Franklin,VA,36.677650,-76.922460,Franklin,geonames+photon
+Jonestown,PA,40.413700,-76.478300,Jonestown,geonames+photon
+Hastings,FL,29.718020,-81.508130,Hastings,geonames+photon
+Hazlehurst,GA,31.869630,-82.594300,Hazlehurst,geonames+photon
+Cut Off,LA,29.542720,-90.338140,Cut Off,geonames+photon
+Charleston,TN,35.287300,-84.758270,Charleston,geonames+photon
+Fairview,TN,35.982010,-87.121400,Fairview,geonames+photon
+Clear Brook,VA,39.256490,-78.096110,Clear Brook,geonames+photon
+Jamestown,SC,33.286000,-79.692570,Jamestown,geonames+photon
+Lee,FL,30.419960,-83.301130,Lee,geonames+photon
+Blairs,VA,36.679860,-79.373080,Blairs,geonames+photon
+Liberty,MO,39.246110,-94.419120,Liberty,geonames+photon
+Sulphur Springs,TX,33.138450,-95.601070,Sulphur Springs,geonames+photon
+Jefferson,GA,34.117050,-83.572390,Jefferson,geonames+photon
+Middlebury,IN,41.675330,-85.706100,Middlebury,geonames+photon
+Broussard,LA,30.147150,-91.961230,Broussard,geonames+photon
+Springhill,LA,33.005970,-93.466840,Springhill,geonames+photon
+Prairie Hill,TX,31.655170,-96.788880,Prairie Hill,geonames+photon
+Mountain Top,PA,41.169530,-75.877420,Mountain Top,geonames
+Buena Vista,GA,32.319040,-84.517140,Buena Vista,geonames+photon
+Riverside,IA,41.479740,-91.581280,Riverside,geonames+photon
+Waterloo,IN,41.431990,-85.019970,Waterloo,geonames+photon
+Riverview,MI,42.174210,-83.179370,Riverview,geonames+photon
+Wyoming,MI,42.913360,-85.705310,Wyoming,geonames+photon
+Bethel,NC,35.807100,-77.378860,Bethel,geonames+photon
+Edison,NJ,40.518720,-74.412100,Edison,geonames+photon
+Pennsauken,NJ,39.956220,-75.057950,Pennsauken,geonames+photon
+Lemitar,NM,34.159790,-106.910310,Lemitar,geonames+photon
+Peru,NY,44.578380,-73.526800,Peru,geonames+photon
+Brookpark,OH,41.398380,-81.804580,Brook Park,geonames
+Union Point,GA,33.615680,-83.074600,Union Point,geonames+photon
+East Berlin,PA,39.937600,-76.978590,East Berlin,geonames+photon
+Liberty,PA,40.325350,-79.856160,Liberty,geonames+photon
+Smyrna,TN,35.982840,-86.518600,Smyrna,geonames+photon
+West Union,WV,39.296470,-80.777050,West Union,geonames+photon
+Clinton,NJ,40.636770,-74.909890,Clinton,geonames+photon
+Litchfield,IL,39.175330,-89.654260,Litchfield,geonames+photon
+Keysville,VA,37.040430,-78.483330,Keysville,geonames+photon
+Pine Grove,PA,40.548420,-76.384680,Pine Grove,geonames+photon
+Greenwood,IN,39.613660,-86.106650,Greenwood,geonames+photon
+Wildwood,GA,34.963410,-85.411070,Wildwood,geonames+photon
+Mount Pleasant,TX,33.156790,-94.968270,Mount Pleasant,geonames+photon
+Pinehurst,GA,32.196000,-83.762950,Pinehurst,geonames+photon
+La Grange,IL,41.805030,-87.869230,La Grange,geonames
+South Hill,VA,36.726530,-78.128890,South Hill,geonames+photon
+Marion,IN,40.558370,-85.659140,Marion,geonames+photon
+Round Mountain,TX,30.431580,-98.344740,Round Mountain,geonames+photon
+Bryant,AR,34.595930,-92.489050,Bryant,geonames+photon
+Evergreen,AL,31.433500,-86.956920,Evergreen,geonames+photon
+Sweetwater,TN,35.601460,-84.461040,Sweetwater,geonames+photon
+Colonial Heights,VA,37.268040,-77.407260,Colonial Heights,geonames+photon
+Brady,TX,31.135170,-99.335060,Brady,geonames+photon
+Hartford,IL,38.833380,-90.095940,Hartford,geonames+photon
+White Hall,AR,34.273990,-92.090980,White Hall,geonames+photon
+Morehead,KY,38.183970,-83.432680,Morehead,geonames+photon
+Poplar Grove,IL,42.368350,-88.822050,Poplar Grove,geonames+photon
+Orange Grove,TX,27.956680,-97.936940,Orange Grove,geonames+photon
+Mount Pleasant,MS,34.955930,-89.515910,Mount Pleasant,photon
+Wrightsville,PA,40.025650,-76.529970,Wrightsville,geonames+photon
+Oakland,MS,34.055670,-89.916480,Oakland,geonames+photon
+Grand Rapids,MI,42.963360,-85.668090,Grand Rapids,geonames+photon
+Morrisville,PA,40.211500,-74.787940,Morrisville,geonames+photon
+Houston,MS,33.898450,-88.999230,Houston,geonames+photon
+Evergreen,NC,34.296000,-78.217780,Evergreen,geonames+photon
+Liberty Hill,TX,30.664910,-97.922520,Liberty Hill,geonames+photon
+Moore,TX,29.055240,-99.010310,Moore,geonames
+Elizabeth City,NC,36.294600,-76.251050,Elizabeth City,geonames+photon
+Fayetteville,PA,39.911200,-77.549990,Fayetteville,geonames+photon
+Rockport,IN,37.883110,-87.049440,Rockport,geonames+photon
+Lamont,FL,30.377150,-83.812940,Lamont,geonames+photon
+Ashland,PA,40.781750,-76.345780,Ashland,geonames
+Palmetto,GA,33.517890,-84.669650,Palmetto,geonames+photon
+Homestead,FL,25.468720,-80.477560,Homestead,geonames+photon
+Frankfort,IL,41.495870,-87.848660,Frankfort,geonames+photon
+Richlands,NC,34.899330,-77.546630,Richlands,geonames+photon
+Saint Marys,GA,30.730510,-81.546490,St. Marys,geonames+photon
+Rosedale,VA,36.959280,-81.931240,Rosedale,geonames+photon
+Saint Marys,KS,39.194160,-96.071100,Saint Marys,geonames+photon
+Clay Center,KS,39.376940,-97.124740,Clay Center,geonames+photon
+Farmville,NC,35.595440,-77.585250,Farmville,geonames+photon
+Fairfield,IL,38.378940,-88.359770,Fairfield,geonames+photon
+Brookville,OH,39.836720,-84.411340,Brookville,geonames+photon
+Plainfield,IN,39.704210,-86.399440,Plainfield,geonames+photon
+Lawrenceville,PA,41.997570,-77.126080,Lawrenceville,geonames+photon
+Campbell,NY,42.233130,-77.197470,Campbell,geonames+photon
+Seymour,WI,44.514990,-88.330380,Seymour,geonames+photon
+Greenwood,MS,33.516230,-90.179530,Greenwood,geonames+photon
+Monroe,OH,39.440340,-84.362160,Monroe,geonames+photon
+Danville,IN,39.760600,-86.526390,Danville,geonames+photon
+Mount Gilead,OH,40.549230,-82.827400,Mount Gilead,geonames+photon
+Adams,WI,43.956080,-89.818180,Adams,geonames+photon
+Mesquite,TX,32.766800,-96.599160,Mesquite,geonames+photon
+Plainfield,IL,41.626970,-88.203950,Plainfield,geonames+photon
+Uniontown,PA,39.900080,-79.716430,Uniontown,geonames+photon
+Lebanon,OH,39.435340,-84.202990,Lebanon,geonames+photon
+Brownwood,TX,31.709320,-98.991160,Brownwood,geonames+photon
+Meadowview,VA,36.760390,-81.862900,Meadowview,geonames+photon
+Hawthorne,FL,29.591910,-82.087320,Hawthorne,geonames+photon
+White House,TN,36.470320,-86.651380,White House,geonames+photon
+Madison,AL,34.699260,-86.748330,Madison,geonames+photon
+Salem,MO,37.645600,-91.535980,Salem,geonames+photon
+Caldwell,TX,30.531320,-96.693030,Caldwell,geonames+photon
+Covington,VA,37.793460,-79.993950,Covington,geonames+photon
+Marietta,OK,33.937040,-97.116680,Marietta,geonames+photon
+Plains,TX,33.188710,-102.827990,Plains,geonames+photon
+Crest Hill,IL,41.554750,-88.098670,Crest Hill,geonames+photon
+Elgin,SC,34.170980,-80.794250,Elgin,geonames+photon
+Posen,IL,41.631700,-87.681440,Posen,geonames+photon
+Springfield,VA,38.789280,-77.187200,Springfield,geonames+photon
+West Point,GA,32.877910,-85.183270,West Point,geonames+photon
+Altamont,IL,39.061990,-88.748110,Altamont,geonames+photon
+Geneva,IN,40.591990,-84.957190,Geneva,geonames+photon
+Washington,IA,41.299180,-91.692940,Washington,geonames+photon
+Carey,OH,40.952560,-83.382420,Carey,geonames+photon
+Liberty,TX,30.057990,-94.795480,Liberty,geonames+photon
+Salem,VA,37.293470,-80.054760,Salem,geonames+photon
+Chesterfield,VA,37.377090,-77.505820,Chesterfield,geonames+photon
+Powhatan,VA,37.542090,-77.918890,Powhatan,geonames+photon
+Mount Pleasant,MI,43.597810,-84.767510,Mount Pleasant,geonames+photon
+Arnett,OK,36.135040,-99.774840,Arnett,geonames+photon
+Irvington,AL,30.506860,-88.233890,Irvington,photon
+Etna,OH,39.957290,-82.681830,Etna,geonames+photon
+Holly Springs,MS,34.767600,-89.448690,Holly Springs,geonames+photon
+Salem,IL,38.626990,-88.945620,Salem,geonames+photon
+Stewart,MN,44.724680,-94.485820,Stewart,geonames+photon
+Labelle,FL,26.761730,-81.438410,LaBelle,geonames+photon
+Morton,TX,33.725100,-102.759380,Morton,geonames+photon
+Saint Johnsbury,VT,44.419220,-72.015090,Saint Johnsbury,photon
+Santa Teresa,NM,31.855940,-106.639160,Santa Teresa,geonames+photon
+Bethlehem,GA,33.932060,-83.713780,Bethlehem,geonames+photon
+Canyon,TX,34.980330,-101.918800,Canyon,geonames+photon
+Rankin,TX,31.222650,-101.937910,Rankin,geonames+photon
+Spring Hope,NC,35.945150,-78.111930,Spring Hope,geonames+photon
+Springtown,TX,32.965960,-97.683640,Springtown,geonames+photon
+Wylie,TX,33.015120,-96.538880,Wylie,geonames+photon
+Eden,TX,31.216280,-99.845630,Eden,geonames+photon
+Sugar Grove,IL,41.761420,-88.443690,Sugar Grove,geonames+photon
+Coldwater,MS,34.691770,-89.977310,Coldwater,geonames+photon
+Troy,PA,41.785910,-76.788010,Troy,geonames+photon
+Zebulon,GA,33.102350,-84.342700,Zebulon,geonames+photon
+Hopewell,VA,37.304320,-77.287200,Hopewell,geonames+photon
+Whitney,TX,31.951820,-97.321400,Whitney,geonames+photon
+Middletown,OH,39.515060,-84.398280,Middletown,geonames+photon
+Riverdale,IL,41.633370,-87.633100,Riverdale,geonames+photon
+Franklin,TX,31.026020,-96.485240,Franklin,geonames+photon
+Oxford,MS,34.366500,-89.519250,Oxford,geonames+photon
+HICKORY HILLS,IL,41.725590,-87.825060,Hickory Hills,geonames+photon
+Nottingham,MD,39.199270,-76.637190,Nottingham,geonames+photon
+Windsor,NC,35.998490,-76.946060,Windsor,geonames+photon
+Santa Anna,TX,31.742090,-99.321730,Santa Anna,geonames+photon
+Edgewood,MD,39.418720,-76.294400,Edgewood,geonames+photon
+Lake Butler,FL,30.022740,-82.339560,Lake Butler,geonames+photon
+Hudson,FL,28.364450,-82.693430,Hudson,geonames+photon
+Bloomfield,IN,39.026990,-86.937510,Bloomfield,geonames+photon
+Tar Heel,NC,34.733220,-78.790020,Tar Heel,geonames+photon
+Clifton,TX,31.782380,-97.576690,Clifton,geonames+photon
+Carthage,MS,32.732640,-89.536180,Carthage,geonames+photon
+Hickory,NC,35.733190,-81.341200,Hickory,geonames+photon
+Lytle,TX,29.233290,-98.796410,Lytle,geonames+photon
+Centerville,IA,40.734180,-92.874090,Centerville,geonames+photon
+Clinton,MO,38.368630,-93.778270,Clinton,geonames+photon
+Baker,FL,30.797130,-86.681340,Baker,photon
+Crete,NE,40.627780,-96.961420,Crete,geonames+photon
+Cleveland,MS,33.744000,-90.724820,Cleveland,geonames+photon
+Mason,TX,30.748790,-99.230610,Mason,geonames+photon
+Gastonia,NC,35.262080,-81.187300,Gastonia,geonames+photon
+Rome,NY,43.212850,-75.455730,Rome,geonames+photon
+Emerson,GA,34.127040,-84.755490,Emerson,geonames+photon
+Flat Rock,NC,35.271230,-82.441510,Flat Rock,geonames+photon

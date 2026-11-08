@@ -38,6 +38,16 @@ DUMP = "\n".join(
         dump_line(15, "Dallas", "", 32.7767, -96.7970, "PPLA2", "TX", 1300000),
         dump_line(16, "Franklin", "", 31.0260, -96.4850, "PPL", "TX", 1600),
         dump_line(17, "El Paso", "Franklin,Magoffinsville", 31.7587, -106.4869, "PPLA2", "TX", 678000),
+        # A hamlet with a bigger census figure than the incorporated city of the same name.
+        dump_line(18, "Oak Grove", "", 37.0, -85.0, "PPL", "KY", 7989),
+        dump_line(19, "Oak Grove", "", 36.6648, -87.4428, "PPL", "KY", 7444),
+        dump_line(20, "City of Oak Grove", "", 36.665, -87.44, "ADMD", "KY", 7444, feature_class="A"),
+        # The same, against a county seat.
+        dump_line(21, "Morehead", "", 38.0, -84.0, "PPL", "KY", 7622),
+        dump_line(22, "Morehead", "", 38.1839, -83.4327, "PPLA2", "KY", 7045),
+        # Nothing to choose between these two offline.
+        dump_line(23, "Antioch", "", 35.5, -86.5, "PPL", "TN", 0),
+        dump_line(24, "Antioch", "", 36.0600, -86.6722, "PPL", "TN", 0),
     ]
 )
 
@@ -45,6 +55,7 @@ CITIES = [
     ("Mc Calla", "AL"), ("Saint Louis", "MO"), ("Springfield", "IL"), ("Springfield", "MO"),
     ("Mount Pleasant", "MI"), ("A Mountain", "AZ"), ("S Coffeyville", "OK"), ("Crescent", "PA"),
     ("Willow Beach", "AZ"), ("Pueblo Of Acoma", "NM"), ("Corinth", "ME"), ("Franklin", "TX"),
+    ("Oak Grove", "KY"), ("Morehead", "KY"), ("Antioch", "TN"),
 ]
 
 
@@ -89,6 +100,19 @@ class GazetteerTests(SimpleTestCase):
 
     def test_a_towns_own_name_beats_a_bigger_places_alternate_name(self):
         self.assertEqual(self.gazetteer.find("Franklin", "TX"), (31.0260, -96.4850, "Franklin"))
+        self.assertEqual([m.namesake for m in self.gazetteer.candidates("Franklin", "TX")], [True, False])
+
+    def test_incorporated_town_beats_a_bigger_hamlet_of_the_same_name(self):
+        self.assertEqual(self.gazetteer.find("Oak Grove", "KY")[:2], (36.6648, -87.4428))
+
+    def test_county_seat_beats_a_bigger_hamlet_of_the_same_name(self):
+        self.assertEqual(self.gazetteer.find("Morehead", "KY")[:2], (38.1839, -83.4327))
+
+    def test_namesakes_nothing_tells_apart_are_both_offered_in_dump_order(self):
+        matches = self.gazetteer.candidates("Antioch", "TN")
+        self.assertEqual([(m.lat, m.lon) for m in matches], [(35.5, -86.5), (36.06, -86.6722)])
+        self.assertTrue(all(m.namesake for m in matches))
+        self.assertEqual(matches[0].rank[:-1], matches[1].rank[:-1])
 
     def test_town_beats_section_of_town_regardless_of_population(self):
         self.assertEqual(self.gazetteer.find("Springfield", "IL")[:2], (39.7817, -89.6501))
@@ -114,4 +138,4 @@ class GazetteerTests(SimpleTestCase):
 
     def test_only_indexes_the_cities_asked_for(self):
         self.assertIsNone(self.gazetteer.find("Dallas", "TX"))
-        self.assertNotIn(("dallas", "TX"), self.gazetteer.exact)
+        self.assertNotIn(("dallas", "TX"), self.gazetteer.matches[normalize_name])

@@ -229,15 +229,26 @@ in the GeoNames US gazetteer, an 80 MB download fetched on first use and not
 committed, and would ask Photon only about names GeoNames does not know. It
 knew all 3,808 once the file's spellings were folded in: "S Coffeyville" for
 South Coffeyville, "Pueblo Of Acoma" for Acoma Pueblo, and New England towns
-that GeoNames files as administrative areas ("Town of Corinth"). A place's
-own name is matched before names other places are merely also known by,
-which matters more than it sounds: El Paso lists "Franklin" among its old
-names, and the first version of the matcher put the Franklin, TX truck stop
-592 miles from home, with forty other towns astray by twenty miles or more.
-A test now checks every station against the city table below. The command
-is resumable and skips what is already cached, so it only needs to run again
-if the price file gains new cities; anything neither source knows is loaded
-without coordinates and ignored by the planner.
+that GeoNames files as administrative areas ("Town of Corinth"). Two rules
+matter more than they sound. A place's own name is matched before names
+other places are merely also known by: El Paso lists "Franklin" among its
+old names, and the first version of the matcher put the Franklin, TX truck
+stop 592 miles from home. And where a state has several populated places by
+one name (270 of the 3,808), a county seat or an incorporated town is taken
+before a hamlet whatever the census figures say, because GeoNames carries
+census tracts and hamlets with bigger populations than the towns they are
+named after; Oak Grove, KY and its five stations at I-24 exit 86 sat sixty
+miles away until this rule. Those 270 were then checked against Photon: it
+agreed with the ranking on 248, settled 8 ties between places nothing else
+told apart, and pointed elsewhere for 10, which were checked by hand against
+the stations' highway exits and left where the gazetteer put them. Photon
+was wrong about three hamlet ties on a first pass, so
+`data/city_overrides.csv` settles those by hand, with the exits as the
+reason, and wins over everything. The city table below takes station towns
+from the coordinates file, so the two agree by construction and a test says
+so. The command is resumable and skips what is already cached, so it only
+needs to run again if the price file gains new cities; anything neither
+source knows is loaded without coordinates and ignored by the planner.
 
 The 7,531 US rows in the price file collapse to 6,626 stations; where a
 station appears more than once its prices are averaged. Canadian stations are
@@ -251,8 +262,8 @@ people, plus every town in the price file whatever its size, 16,781 rows in
 all. `python manage.py extract_cities` rebuilds it from the same dump. Names
 are folded the way the gazetteer folds them, so `St. Louis` and `Saint
 Louis`, `Ft Worth` and `Fort Worth` all land, and where a state has several
-places of one name the most populous answers, which is what someone typing
-it means. A bare name (`Flagstaff`), an address, or a hamlet below the
+places of one name a county seat or an incorporated town answers before a
+hamlet, then the most populous, which is what someone typing it means. A bare name (`Flagstaff`), an address, or a hamlet below the
 threshold that sells no fuel goes to Photon as before. Both tables are
 derived from GeoNames data, published under CC BY 4.0.
 
@@ -319,7 +330,7 @@ the image and waits for its health check.
 ## Layout
 
     Dockerfile, docker-entrypoint.sh
-    data/                     price file, station city coordinates, US city table and outline
+    data/                     price file, station city coordinates and hand overrides, US city table and outline
     fuelroute/                settings and the URL root
     planner/
       stations.py             reading the data files

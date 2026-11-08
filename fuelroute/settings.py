@@ -130,6 +130,7 @@ REST_FRAMEWORK = {
 
 FUEL_PRICES_CSV = DATA_DIR / "fuel-prices.csv"
 CITY_COORDINATES_CSV = DATA_DIR / "city_coordinates.csv"
+CITY_OVERRIDES_CSV = DATA_DIR / "city_overrides.csv"
 US_CITIES_CSV = DATA_DIR / "us_cities.csv"
 US_OUTLINE_JSON = DATA_DIR / "us_outline.json"
 # Downloaded by geocode_cities and extract_outline on first use; not committed.

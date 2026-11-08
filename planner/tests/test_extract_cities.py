@@ -30,6 +30,10 @@ ROWS = [
     row("New York City", "NY", "P", "PPL", 8804190, 40.71427, -74.00597),
     row("Española", "NM", "P", "PPL", 10000, 36.0, -106.0, ascii_name="Espanola"),
     row("Elsewhere", "ZZ", "P", "PPL", 50000, 10.0, 10.0),
+    # A hamlet with a bigger census figure than the incorporated city of the same name.
+    row("Oak Grove", "TX", "P", "PPL", 8000, 31.0, -99.0),
+    row("Oak Grove", "TX", "P", "PPL", 7000, 32.0, -98.0),
+    row("City of Oak Grove", "TX", "A", "ADMD", 7000, 32.01, -98.01),
 ]
 
 STATIONS = [SimpleNamespace(city="Big Cabin", state="OK"), SimpleNamespace(city="Corinth", state="ME")]
@@ -44,7 +48,9 @@ class ExtractCitiesTests(SimpleTestCase):
         with zipfile.ZipFile(self.tmp / "US.zip", "w") as archive:
             archive.writestr("US.txt", dump.getvalue())
         (self.tmp / "city_coordinates.csv").write_text(
-            "city,state,lat,lon,label,source\nCorinth,ME,44.98048,-69.01075,Town of Corinth,geonames\n"
+            "city,state,lat,lon,label,source\n"
+            "Corinth,ME,44.98048,-69.01075,Town of Corinth,geonames\n"
+            "Big Cabin,OK,36.53787,-95.22136,Big Cabin,geonames+photon\n"
         )
 
     def cleanup(self):
@@ -67,13 +73,25 @@ class ExtractCitiesTests(SimpleTestCase):
             sorted(self.extract()),
             [
                 ("Big Cabin", "OK"), ("Bigtown", "TX"), ("Corinth", "ME"), ("Espanola", "NM"),
-                ("New York", "NY"), ("New York City", "NY"), ("Twin", "TX"),
+                ("New York", "NY"), ("New York City", "NY"), ("Oak Grove", "TX"), ("Twin", "TX"),
             ],
         )
 
     def test_the_most_populous_of_a_name_wins(self):
         twin = self.extract()[("Twin", "TX")]
         self.assertEqual((twin["lat"], twin["lon"], twin["population"]), ("30.50000", "-98.50000", "3000"))
+
+    def test_an_incorporated_town_beats_a_bigger_hamlet_of_the_same_name(self):
+        oak_grove = self.extract()[("Oak Grove", "TX")]
+        self.assertEqual(
+            (oak_grove["lat"], oak_grove["lon"], oak_grove["population"]), ("32.00000", "-98.00000", "7000")
+        )
+
+    def test_a_town_with_stations_takes_the_point_the_stations_use(self):
+        big_cabin = self.extract()[("Big Cabin", "OK")]
+        self.assertEqual(
+            (big_cabin["lat"], big_cabin["lon"], big_cabin["population"]), ("36.53787", "-95.22136", "262")
+        )
 
     def test_towns_geonames_files_elsewhere_come_from_the_coordinates_file(self):
         corinth = self.extract()[("Corinth", "ME")]
