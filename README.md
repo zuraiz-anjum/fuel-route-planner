@@ -56,7 +56,8 @@ before listening on port 8000, so there is nothing to keep between runs. It
 accepts any `Host` header on the assumption that a proxy in front of it
 checks that; set `DJANGO_ALLOWED_HOSTS` to pin it. Without a
 `DJANGO_SECRET_KEY` a fresh one is generated at each start, which only
-matters for staying logged in to the admin across restarts. The container's
+matters for staying logged in to the admin across restarts; a management
+command run through `docker exec` needs the key passed to it. The container's
 `HEALTHCHECK` polls `/healthz/`. With `DJANGO_DEBUG=0` the cookies are
 marked secure and `X-Forwarded-Proto` is trusted, on the assumption of a
 TLS-terminating proxy in front; redirecting to HTTPS and HSTS belong to that
@@ -243,8 +244,10 @@ agreed with the ranking on 248, settled 8 ties between places nothing else
 told apart, pointed 3 times at a dot on the map beside a town of thousands
 (the town was kept), had no answer for 1, and pointed elsewhere for 7,
 which were checked by hand against the stations' highway exits and left
-where the gazetteer put them. Photon was wrong about three hamlet ties on a
-first pass, so
+where the gazetteer put them (one of them, Ashland, PA, has a station at a
+junction in a county with no Ashland at all, so the price file's own label
+stands for want of anything better). Photon was wrong about three hamlet
+ties on a first pass, so
 `data/city_overrides.csv` settles those by hand, with the exits as the
 reason, and wins over everything. The city table below takes station towns
 from the coordinates file, so the two agree by construction and a test says
