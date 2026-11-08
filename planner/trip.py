@@ -3,9 +3,10 @@ Putting a trip together: resolve the two places, fetch the route, find the
 stations within reach of it and choose where to buy fuel.
 
 Besides geocoding the end points, the route is the only thing fetched per
-request, so a trip costs at most three external calls. "City, ST" and
-coordinates are resolved locally, so for most requests it is one call, and
-none once the route is cached.
+request, so a trip costs at most three lookups: two geocodes, each retried
+once at most, and the route. "City, ST" and coordinates are resolved
+locally, so for most requests it is one call, and none once the route is
+cached.
 """
 
 import json
@@ -273,8 +274,8 @@ def plan_trip(start_query, finish_query, start_fuel_gallons=0.0, stop_cost=None)
         previous_mile = candidate.mile
 
     # Totals are sums of the figures shown, so the arithmetic checks to the cent.
-    total_gallons = round(sum(stop["gallons"] for stop in stops), 2)
-    total_cost = round(sum(stop["cost"] for stop in stops), 2)
+    total_gallons = round(sum((stop["gallons"] for stop in stops), 0.0), 2)
+    total_cost = round(sum((stop["cost"] for stop in stops), 0.0), 2)
 
     return {
         "start": describe(start, start_query),

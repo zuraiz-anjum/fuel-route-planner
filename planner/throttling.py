@@ -1,8 +1,6 @@
-import logging
-
 from rest_framework.throttling import AnonRateThrottle
 
-log = logging.getLogger(__name__)
+from .caching import complain
 
 
 class AnonThrottle(AnonRateThrottle):
@@ -12,5 +10,5 @@ class AnonThrottle(AnonRateThrottle):
         try:
             return super().allow_request(request, view)
         except Exception:
-            log.warning("cache unavailable; not throttling", exc_info=True)
+            complain()
             return True

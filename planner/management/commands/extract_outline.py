@@ -45,7 +45,7 @@ class Command(BaseCommand):
         with settings.US_OUTLINE_JSON.open("w", encoding="utf-8", newline="\n") as fh:
             json.dump(geometry, fh, separators=(",", ":"))
             fh.write("\n")
-        points = sum(len(polygon[0]) for polygon in geometry["coordinates"])
+        points = sum(len(ring) for polygon in geometry["coordinates"] for ring in polygon)
         self.stdout.write(self.style.SUCCESS(
             f"{len(geometry['coordinates'])} polygons, {points} points written to {settings.US_OUTLINE_JSON.name}"
         ))

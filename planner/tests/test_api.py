@@ -10,7 +10,7 @@ from django.test import TestCase, override_settings
 from django.urls import reverse
 from rest_framework.throttling import AnonRateThrottle
 
-from planner import trip
+from planner import caching, trip
 from planner.geo import haversine_miles
 from planner.models import Station
 from planner.osrm import NoRouteError, RouteResult, RoutingError
@@ -195,11 +195,14 @@ class RouteApiTests(TestCase):
                     "LOCATION": str(not_a_directory),
                 }
             }
+            caching._complained = False
             with override_settings(CACHES=broken), self.assertLogs("planner", "WARNING") as logs:
                 self.assertEqual(self.plan().status_code, 200)
                 self.assertEqual(self.plan().status_code, 200)
         self.assertEqual(self.fetch_route.call_count, 2)
-        self.assertTrue(any("cache unavailable" in line for line in logs.output))
+        # Said once, with the traceback, not on every read and write.
+        self.assertEqual(len(logs.output), 1)
+        self.assertIn("cache unavailable", logs.output[0])
 
     def test_a_town_the_outline_misses_still_resolves_by_name(self):
         # Point Roberts is a US exclave south of Vancouver that the coarse outline leaves out.

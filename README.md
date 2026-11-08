@@ -291,7 +291,8 @@ built in one place, with nothing in it a serializer would check.
 
 The in-memory station table is rebuilt whenever a row in the database
 changes, so `load_stations` can be rerun under a running server. The cache
-is per machine; use Redis or memcached when running several workers.
+is a directory of files, shared by the workers on one machine; several
+machines need Redis or memcached.
 Typed-in coordinates are checked against the country's outline from Natural
 Earth (`data/us_outline.json`, public domain, built by `extract_outline`),
 pushed out by about ten miles so that harbours, beaches and border towns
@@ -340,6 +341,7 @@ the image and waits for its health check.
       geo.py                  mileage along the route, corridor matching, simplification
       optimizer.py            choosing the stops
       trip.py                 puts a request together
+      caching.py, throttling.py  a broken cache is not a broken API
       serializers.py, views.py  the HTTP layer
       management/commands/    extract_cities, extract_outline, geocode_cities, load_stations
       templates/planner/      the map page
