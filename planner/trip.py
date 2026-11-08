@@ -8,13 +8,17 @@ coordinates are resolved locally, so for most requests it is one call, and
 none once the route is cached.
 """
 
+import json
 import re
 import threading
 from dataclasses import dataclass
+from functools import lru_cache
 
 import numpy as np
 from django.conf import settings
 from django.db.models import Count, Max
+from shapely.geometry import Point, shape
+from shapely.prepared import prep
 
 from .caching import cache_get, cache_set
 from .cities import find_city
@@ -27,15 +31,6 @@ from .photon import Place, geocode_place
 ROUTE_CACHE_SECONDS = 24 * 3600
 
 COORDINATES = re.compile(r"^\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*$")
-
-# Rough boxes around the lower 48, Alaska and Hawaii. Geocoded places are
-# already restricted to the US; this is a sanity check on coordinates typed
-# in directly, not a border.
-US_BOXES = [
-    (24.3, 49.5, -125.0, -66.9),
-    (51.0, 71.6, -180.0, -129.0),
-    (18.8, 22.4, -160.4, -154.7),
-]
 
 # About fifty metres: invisible on a map of a whole route, but it takes a
 # cross-country polyline from tens of thousands of points down to a few thousand.
@@ -118,8 +113,16 @@ def station_arrays():
     return _stations[1]
 
 
+@lru_cache(maxsize=1)
+def us_outline():
+    """The country's shape, pushed out by about ten miles (see extract_outline)."""
+    with settings.US_OUTLINE_JSON.open(encoding="utf-8") as fh:
+        return prep(shape(json.load(fh)))
+
+
 def in_united_states(lat, lon):
-    return any(south <= lat <= north and west <= lon <= east for south, north, west, east in US_BOXES)
+    """Geocoded places are already restricted to the US; this is for coordinates typed in."""
+    return us_outline().contains(Point(lon, lat))
 
 
 def resolve_place(query):

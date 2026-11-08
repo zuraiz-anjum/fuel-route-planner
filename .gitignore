@@ -10,9 +10,10 @@ db.sqlite3
 /staticfiles/
 /.cache/
 
-# GeoNames dump fetched by geocode_cities
+# Source data fetched by geocode_cities and extract_outline
 data/geonames-US.zip
 data/geonames-US.part
+data/ne_50m_admin_0_countries.geojson
 
 # Local configuration
 .env

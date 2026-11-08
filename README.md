@@ -268,9 +268,12 @@ built in one place, with nothing in it a serializer would check.
 
 The in-memory station table is rebuilt whenever a row in the database
 changes, so `load_stations` can be rerun under a running server. The cache
-is per machine; use Redis or memcached when running several workers. The
-check that typed-in coordinates lie in the US is a bounding box around the
-lower 48, Alaska and Hawaii, a sanity check rather than a border.
+is per machine; use Redis or memcached when running several workers.
+Typed-in coordinates are checked against the country's outline from Natural
+Earth (`data/us_outline.json`, public domain, built by `extract_outline`),
+pushed out by about ten miles so that harbours, beaches and border towns
+pass. It catches a typo or a trip from Toronto; a point just across the
+line in Windsor or Tijuana gets through, which is fine for a sanity check.
 
 ## Configuration
 
@@ -303,7 +306,7 @@ the image and waits for its health check.
 ## Layout
 
     Dockerfile, docker-entrypoint.sh
-    data/                     price file, station city coordinates, US city table
+    data/                     price file, station city coordinates, US city table and outline
     fuelroute/                settings and the URL root
     planner/
       stations.py             reading the data files
@@ -314,7 +317,7 @@ the image and waits for its health check.
       optimizer.py            choosing the stops
       trip.py                 puts a request together
       serializers.py, views.py  the HTTP layer
-      management/commands/    extract_cities, geocode_cities, load_stations
+      management/commands/    extract_cities, extract_outline, geocode_cities, load_stations
       templates/planner/      the map page
       tests/
     postman/                  a collection of the requests above

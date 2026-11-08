@@ -119,8 +119,10 @@ REST_FRAMEWORK = {
 FUEL_PRICES_CSV = DATA_DIR / "fuel-prices.csv"
 CITY_COORDINATES_CSV = DATA_DIR / "city_coordinates.csv"
 US_CITIES_CSV = DATA_DIR / "us_cities.csv"
-# Downloaded by geocode_cities on first use; not committed.
+US_OUTLINE_JSON = DATA_DIR / "us_outline.json"
+# Downloaded by geocode_cities and extract_outline on first use; not committed.
 GEONAMES_ZIP = DATA_DIR / "geonames-US.zip"
+NATURAL_EARTH_COUNTRIES = DATA_DIR / "ne_50m_admin_0_countries.geojson"
 
 OSRM_BASE_URL = os.environ.get("OSRM_BASE_URL", "https://router.project-osrm.org")
 PHOTON_BASE_URL = os.environ.get("PHOTON_BASE_URL", "https://photon.komoot.io")
