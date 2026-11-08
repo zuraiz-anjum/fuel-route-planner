@@ -20,7 +20,10 @@ as is. Fuel prices come from the OPIS price file in `data/`.
     python manage.py load_stations
     python manage.py runserver
 
-(`python3` where `python` is still Python 2.)
+Python 3.12 or newer, on Windows, macOS or Linux (`python3` where `python`
+is still Python 2); an internet connection for the routing server; nothing
+else, and no keys. The first request for a new pair of places waits on the
+routing server, a second or two; repeats come from the cache.
 
 Then ask for a trip:
 
