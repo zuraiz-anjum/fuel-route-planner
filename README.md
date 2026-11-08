@@ -211,10 +211,13 @@ driver is willing to use and keep the rest.
 
 A cold request makes one external call for cities and coordinates and
 three otherwise (two geocodes and the route; a geocode answered 429 or 503
-is retried once), and takes about two seconds, nearly all of it waiting for
-OSRM. Repeating it takes tens of milliseconds for a short trip and a few
-hundred coast to coast, which is the corridor match over 6,600 stations plus
-the optimiser. The cache is a directory of files under `.cache/`, so it
+is retried once), and takes one to two seconds, nearly all of it waiting for
+OSRM: about a second to open a TLS connection to the public server when it
+has sat idle, then the routing itself. The geometry comes back as an encoded
+polyline, a third the size of GeoJSON, and is decoded in numpy in about ten
+milliseconds. Repeating a request takes tens of milliseconds for a short
+trip and a few hundred coast to coast, which is the corridor match over
+6,600 stations plus the optimiser. The cache is a directory of files under `.cache/`, so it
 survives the development server restarting; two identical requests
 arriving together share one fetch.
 
@@ -328,7 +331,7 @@ default stop cost live at the bottom of `fuelroute/settings.py`.
 
     python manage.py test
 
-A hundred and fifty-three tests cover the price file reader and loader, the
+A hundred and fifty-seven tests cover the price file reader and loader, the
 GeoNames matching, the city table and its extraction, the outline, route
 geometry, the optimiser (including the comparison with the greedy algorithm
 on random routes), both external clients with canned responses, the
