@@ -70,11 +70,15 @@ def plan_fuel_stops(candidates, total_miles, *, departure=None, range_miles=500.
     visits = []
     if departure is not None:
         visits.append((0, 0.0, departure, 0, 0.0))
-    for candidate in sorted((c for c in candidates if 0 <= c.mile <= total_miles), key=lambda c: c.mile):
+    finish = math.ceil(total_miles * STEPS_PER_MILE)
+    for candidate in sorted((c for c in candidates if c.mile >= 0), key=lambda c: c.mile):
         position = round(candidate.mile * STEPS_PER_MILE)
+        if position >= finish:
+            # A station at the finish is no use; the plan would buy a few drops there.
+            break
         detour = round(candidate.off_route_miles * STEPS_PER_MILE)
         visits.append((position, candidate.mile, candidate, detour, stop_cost))
-    visits.append((math.ceil(total_miles * STEPS_PER_MILE), total_miles, None, 0, 0.0))
+    visits.append((finish, total_miles, None, 0, 0.0))
 
     steps = []
     here, here_mile = 0, 0.0

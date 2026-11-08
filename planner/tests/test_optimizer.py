@@ -127,6 +127,13 @@ class PlanFuelStopsTests(SimpleTestCase):
         self.assertEqual([p.candidate.ref for p in plan.purchases], ["origin"])
         self.assertAlmostEqual(plan.total_cost, 105.0)
 
+    def test_a_station_at_the_finish_is_not_a_stop(self):
+        departure = Candidate(0.0, 3.00)
+        stations = [Candidate(299.98, 1.00, ref="at the finish"), Candidate(300.0, 1.00, ref="past it")]
+        plan = plan_fuel_stops(stations, 300.0, departure=departure)
+        self.assertEqual([p.candidate.ref for p in plan.purchases], [None])
+        self.assertAlmostEqual(plan.total_cost, 90.0)
+
     def test_cheaper_of_two_stations_at_same_mile_is_used(self):
         departure = Candidate(0.0, 3.50)
         stations = [Candidate(100.0, 3.20, ref="dear"), Candidate(100.0, 2.80, ref="cheap")]
