@@ -107,6 +107,21 @@
       }
     },
     {
+      "name": "Place suggestions",
+      "request": {
+        "method": "GET",
+        "description": "What the map page offers as you type: US cities from the local table, the biggest first. Nothing external is called.",
+        "url": {
+          "raw": "{{base_url}}/api/places/?q=dal",
+          "host": ["{{base_url}}"],
+          "path": ["api", "places", ""],
+          "query": [
+            {"key": "q", "value": "dal"}
+          ]
+        }
+      }
+    },
+    {
       "name": "Health",
       "request": {
         "method": "GET",

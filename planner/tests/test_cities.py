@@ -1,8 +1,8 @@
 from django.test import SimpleTestCase
 
-from planner.cities import find_city, readings
+from planner.cities import city_table, find_city, readings, suggest
 from planner.geo import haversine_miles
-from planner.states import state_code
+from planner.states import STATE_NAMES, state_code
 from planner.stations import read_city_coordinates, read_stations
 
 
@@ -86,3 +86,64 @@ class FindCityTests(SimpleTestCase):
     def test_unknown_places_and_bare_names_are_left_to_the_geocoder(self):
         for query in ("Nowhere, TX", "Dallas", "Paris, France", "Dallas, Ontario", "100 Main St, Dallas, TX"):
             self.assertIsNone(find_city(query), query)
+
+
+class SuggestTests(SimpleTestCase):
+    """What the map page offers as you type, against the committed table."""
+
+    def labels(self, query, **options):
+        return [place.label for place in suggest(query, **options)]
+
+    def test_a_prefix_lists_the_biggest_cities_first_with_an_exact_name_ahead(self):
+        offered = self.labels("dal")
+        self.assertEqual(offered[0], "Dallas, TX")
+        self.assertIn("Daly City, CA", offered)
+        self.assertEqual(len(offered), 8)
+        # Dallastown and Dallas Center come after every plain Dallas, however small.
+        self.assertEqual(self.labels("dallas")[:5], ["Dallas, TX", "Dallas, OR", "Dallas, GA", "Dallas, NC", "Dallas, PA"])
+
+    def test_a_comma_narrows_to_the_states_typed_so_far(self):
+        self.assertEqual(self.labels("dallas, t"), ["Dallas, TX"])
+        self.assertEqual(self.labels("dallas, tex"), ["Dallas, TX"])
+        self.assertEqual(self.labels("dallas, zz"), [])
+        self.assertEqual(self.labels("dallas,")[0], "Dallas, TX")
+        self.assertIn("Springfield, MA", self.labels("springfield, m"))
+        self.assertIn("Springfield, MO", self.labels("springfield, m"))
+        self.assertNotIn("Springfield, IL", self.labels("springfield, m"))
+
+    def test_a_whole_state_without_a_comma_narrows_too(self):
+        self.assertEqual(self.labels("dallas tx"), ["Dallas, TX"])
+        self.assertEqual(self.labels("dallas texas"), ["Dallas, TX"])
+        self.assertEqual(self.labels("kansas city kansas"), ["Kansas City, KS"])
+
+    def test_short_and_long_spellings_meet(self):
+        self.assertEqual(self.labels("saint lou")[0], "St. Louis, MO")
+        self.assertEqual(self.labels("st. l")[0], "St. Louis, MO")
+        self.assertEqual(self.labels("ft wor"), ["Fort Worth, TX"])
+        self.assertEqual(self.labels("mt vernon, wa"), ["Mount Vernon, WA"])
+
+    def test_one_spot_is_offered_once(self):
+        # The table carries "New York City" as a second name for New York.
+        offered = self.labels("new york")
+        self.assertEqual(offered[0], "New York, NY")
+        self.assertNotIn("New York City, NY", offered)
+
+    def test_nothing_for_nothing(self):
+        for query in ("", "   ", ",", "xqzv"):
+            self.assertEqual(self.labels(query), [], repr(query))
+
+    def test_the_limit_holds_and_every_label_names_a_state(self):
+        offered = self.labels("s", limit=3)
+        self.assertEqual(len(offered), 3)
+        for label in self.labels("d"):
+            self.assertIn(label[-2:], STATE_NAMES, label)
+            self.assertEqual(label[-4:-2], ", ", label)
+
+    def test_every_city_in_the_table_resolves_to_itself_by_its_label(self):
+        # The label is what the box ends up holding, so it has to come back
+        # to the same spot the list promised.
+        exact, _ = city_table()
+        for city in exact.values():
+            place = find_city(f"{city.name}, {city.state}")
+            self.assertIsNotNone(place, city)
+            self.assertEqual((place.lat, place.lon), (city.lat, city.lon), city)

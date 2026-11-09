@@ -20,3 +20,9 @@ class TripRequest(serializers.Serializer):
         if value > tank:
             raise serializers.ValidationError(f"the tank holds {tank:g} gallons")
         return value
+
+
+class PlacesQuery(serializers.Serializer):
+    """The query string of GET /api/places/."""
+
+    q = serializers.CharField(required=False, allow_blank=True, default="", max_length=100)

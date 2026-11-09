@@ -141,13 +141,15 @@ CACHES = {
 
 # The API is Django REST Framework. Anonymous clients get sixty requests a
 # minute, which is plenty for a person and stops one script from spending
-# the public OSRM server's goodwill; errors keep this project's {"error": ...}
-# shape rather than the framework's {"detail": ...}. The throttle keys on the
-# client address, which behind a proxy is the last entry of X-Forwarded-For
-# the proxy wrote, hence NUM_PROXIES; with none, the header is ignored.
+# the public OSRM server's goodwill; the place suggestions behind the map
+# page's boxes are answered from memory and get ten a second. Errors keep
+# this project's {"error": ...} shape rather than the framework's
+# {"detail": ...}. The throttle keys on the client address, which behind a
+# proxy is the last entry of X-Forwarded-For the proxy wrote, hence
+# NUM_PROXIES; with none, the header is ignored.
 REST_FRAMEWORK = {
     "DEFAULT_THROTTLE_CLASSES": ["planner.throttling.AnonThrottle"],
-    "DEFAULT_THROTTLE_RATES": {"anon": "60/min"},
+    "DEFAULT_THROTTLE_RATES": {"anon": "60/min", "places": "600/min"},
     "NUM_PROXIES": int(os.environ.get("NUM_PROXIES", "0")),
     "EXCEPTION_HANDLER": "planner.views.api_exception",
 }

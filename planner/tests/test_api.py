@@ -16,6 +16,7 @@ from planner.geo import haversine_miles
 from planner.models import Station
 from planner.osrm import NoRouteError, RouteResult, RoutingError
 from planner.photon import GeocodeError, Place
+from planner.throttling import PlacesThrottle
 from planner.trip import load_leg
 
 # A straight route due east along the 35th parallel, a little over 1,100 miles.
@@ -289,6 +290,14 @@ class RouteApiTests(TestCase):
         self.assertIn("throttled", response.json()["error"])
         self.assertEqual(self.client.get(reverse("health")).status_code, 200)
 
+    def test_place_suggestions_are_counted_apart_from_plans(self):
+        self.seed_stations()
+        places = reverse("places-api")
+        with mock.patch.object(PlacesThrottle, "THROTTLE_RATES", {"places": "2/min"}):
+            codes = [self.client.get(places, {"q": "dal"}).status_code for _ in range(3)]
+        self.assertEqual(codes, [200, 200, 429])
+        self.assertEqual(self.plan().status_code, 200)
+
     def test_blank_optional_parameters_are_the_same_as_absent_ones(self):
         self.seed_stations()
         response = self.plan(start_fuel="", stop_cost="")
@@ -372,3 +381,30 @@ class HealthTests(TestCase):
         response = self.client.get(reverse("health"))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json(), {"status": "ok", "stations": 2, "located": 1})
+
+
+@override_settings(CACHES=LOCAL_CACHE)
+class PlacesApiTests(TestCase):
+    def setUp(self):
+        cache.clear()
+
+    def test_cities_come_from_the_table_with_nothing_external(self):
+        with mock.patch("planner.photon._session.get") as get:
+            response = self.client.get(reverse("places-api"), {"q": "dal"})
+        self.assertEqual(response.status_code, 200)
+        places = response.json()["places"]
+        self.assertEqual(len(places), 8)
+        self.assertEqual(places[0]["label"], "Dallas, TX")
+        self.assertAlmostEqual(places[0]["lat"], 32.783, places=2)
+        self.assertAlmostEqual(places[0]["lon"], -96.807, places=2)
+        get.assert_not_called()
+
+    def test_nothing_asked_nothing_offered(self):
+        self.assertEqual(self.client.get(reverse("places-api")).json(), {"places": []})
+        self.assertEqual(self.client.get(reverse("places-api"), {"q": "   "}).json(), {"places": []})
+
+    def test_an_overlong_query_is_refused(self):
+        response = self.client.get(reverse("places-api"), {"q": "x" * 101})
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json()["error"], "invalid parameters")
+        self.assertIn("q", response.json()["details"])

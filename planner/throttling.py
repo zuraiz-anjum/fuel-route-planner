@@ -12,3 +12,9 @@ class AnonThrottle(AnonRateThrottle):
         except Exception:
             complain()
             return True
+
+
+class PlacesThrottle(AnonThrottle):
+    """Typing in the map page's boxes asks several times a second, so its own, higher rate."""
+
+    scope = "places"

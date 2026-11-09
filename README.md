@@ -29,7 +29,8 @@ Then ask for a trip:
 
     curl "http://127.0.0.1:8000/api/route/?start=Dallas,%20TX&finish=Los%20Angeles,%20CA"
 
-or open <http://127.0.0.1:8000/map/> to see the same answer drawn on a map.
+or open <http://127.0.0.1:8000/map/> to see the same answer drawn on a map,
+where the two place boxes offer US cities as you type.
 The API URL itself, opened in a browser, shows the browsable API. A few more
 to try:
 
@@ -153,6 +154,17 @@ Errors come back as `{"error": "..."}`:
 | 429 | More than 60 requests in a minute from one address. |
 | 502 | OSRM or Photon failed or timed out. |
 | 503 | No stations loaded yet; run `load_stations`. |
+
+`GET /api/places/?q=dal`
+
+What the map page's boxes offer as you type: up to eight US cities whose
+names begin with `q`, the most populous first and an exact name ahead of a
+longer one, as `{"places": [{"label": "Dallas, TX", "lat": 32.78, "lon":
+-96.81}, ...]}`. `dallas, t` keeps the states beginning with T; `dallas tx`
+and `dallas, texas` keep Texas. The list is the city table under "Place
+names" below, so it calls nothing external, holds only US places, and a
+label picked from it resolves to exactly that spot. One address may ask 600
+times a minute.
 
 ## What a plan means
 
@@ -346,8 +358,9 @@ default stop cost live at the bottom of `fuelroute/settings.py`.
 
     python manage.py test
 
-A hundred and fifty-seven tests cover the price file reader and loader, the
-GeoNames matching, the city table and its extraction, the outline, route
+A hundred and seventy tests cover the price file reader and loader, the
+GeoNames matching, the city table, its extraction and what it offers as you
+type, the outline, route
 geometry, the optimiser (including the comparison with the greedy algorithm
 on random routes), both external clients with canned responses, the
 geocoding command, and the API with the external services mocked. They run in a few seconds,

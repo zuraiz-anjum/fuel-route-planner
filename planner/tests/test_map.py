@@ -10,3 +10,9 @@ class MapPageTests(SimpleTestCase):
         response = self.client.get(reverse("map"))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, reverse("route-api"))
+
+    def test_the_place_boxes_offer_cities_from_the_api(self):
+        response = self.client.get(reverse("map"))
+        self.assertContains(response, reverse("places-api"))
+        self.assertContains(response, 'role="listbox"', count=2)
+        self.assertContains(response, 'role="combobox"', count=2)

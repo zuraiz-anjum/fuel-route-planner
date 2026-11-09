@@ -6,11 +6,13 @@ from django.views.decorators.http import require_GET
 from rest_framework.response import Response
 from rest_framework.views import APIView, exception_handler
 
+from .cities import suggest
 from .models import Station
 from .optimizer import NoFeasiblePlan
 from .osrm import NoRouteError, RoutingError
 from .photon import GeocodeError
-from .serializers import TripRequest
+from .serializers import PlacesQuery, TripRequest
+from .throttling import PlacesThrottle
 from .trip import NoStationNearStart, SamePlace, StationsNotLoaded, UnknownPlace, plan_trip
 
 
@@ -51,6 +53,23 @@ class RouteView(APIView):
         shown = {name: request.query_params[name] for name in params.fields if request.query_params.get(name)}
         trip["map_url"] = request.build_absolute_uri(reverse("map")) + "?" + urlencode(shown)
         return Response(trip)
+
+
+class PlacesView(APIView):
+    """GET /api/places/?q=dal: US cities to offer for a partly typed place.
+
+    Answered from the city table, so nothing external is touched and the
+    list is American by construction.
+    """
+
+    throttle_classes = [PlacesThrottle]
+
+    def get(self, request):
+        params = PlacesQuery(data=request.query_params)
+        if not params.is_valid():
+            return Response({"error": "invalid parameters", "details": params.errors}, status=400)
+        places = suggest(params.validated_data["q"])
+        return Response({"places": [{"label": place.label, "lat": place.lat, "lon": place.lon} for place in places]})
 
 
 class HealthView(APIView):

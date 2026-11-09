@@ -7,5 +7,6 @@ urlpatterns = [
     path("", RedirectView.as_view(pattern_name="map"), name="home"),
     path("map/", views.map_page, name="map"),
     path("api/route/", views.RouteView.as_view(), name="route-api"),
+    path("api/places/", views.PlacesView.as_view(), name="places-api"),
     path("healthz/", views.HealthView.as_view(), name="health"),
 ]
