@@ -35,14 +35,17 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - run: docker build -t fuel-route-planner .
-      # With a deployment host named, as production would; the probe below
-      # and the container's own health check ask as 127.0.0.1.
-      - run: docker run --detach --name planner --publish 8000:8000 --env DJANGO_ALLOWED_HOSTS=example.com fuel-route-planner
-      - name: Wait for the health check
+      # Configured as production would be, with a host named and the
+      # redirect to HTTPS on; the container's own health check, which asks
+      # as 127.0.0.1 over plain HTTP, has to pass regardless.
+      - run: docker run --detach --name planner --publish 8000:8000 --env DJANGO_ALLOWED_HOSTS=example.com --env DJANGO_SECURE_SSL_REDIRECT=1 fuel-route-planner
+      - name: Wait for the container's own health check
         run: |
-          for i in $(seq 1 30); do
-            if curl --fail --silent http://127.0.0.1:8000/healthz/; then exit 0; fi
-            sleep 2
+          for i in $(seq 1 40); do
+            status=$(docker inspect --format '{{.State.Health.Status}}' planner)
+            if [ "$status" = "healthy" ]; then exit 0; fi
+            sleep 3
           done
+          echo "health status: $status"
           docker logs planner
           exit 1

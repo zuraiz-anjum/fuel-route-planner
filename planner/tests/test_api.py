@@ -7,7 +7,7 @@ from unittest import mock
 
 import numpy as np
 from django.core.cache import cache
-from django.test import TestCase, override_settings
+from django.test import Client, TestCase, override_settings
 from django.urls import reverse
 from rest_framework.throttling import AnonRateThrottle
 
@@ -18,6 +18,8 @@ from planner.osrm import NoRouteError, RouteResult, RoutingError
 from planner.photon import GeocodeError, Place
 from planner.throttling import PlacesThrottle
 from planner.trip import load_leg
+
+from .test_settings import A_KEY, settings_under
 
 # A straight route due east along the 35th parallel, a little over 1,100 miles.
 START = Place(lat=35.0, lon=-100.0, label="Start, Texas")
@@ -417,6 +419,15 @@ class HealthTests(TestCase):
         response = self.client.get(reverse("health"))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json(), {"status": "ok", "stations": 2, "located": 1})
+
+    def test_the_health_check_is_exempt_from_the_redirect_to_https(self):
+        # The container's own probe asks over plain HTTP and cannot follow a redirect.
+        station(1, 35.0, -100.0, "3.000")
+        production = settings_under(DJANGO_DEBUG="0", DJANGO_SECRET_KEY=A_KEY)
+        with override_settings(SECURE_SSL_REDIRECT=True, SECURE_REDIRECT_EXEMPT=production.SECURE_REDIRECT_EXEMPT):
+            client = Client()  # the middleware reads these settings when it is built
+            self.assertEqual(client.get(reverse("health")).status_code, 200)
+            self.assertEqual(client.get(reverse("route-api")).status_code, 301)
 
 
 @override_settings(CACHES=LOCAL_CACHE)

@@ -68,7 +68,9 @@ assumption of a TLS-terminating proxy in front. Redirecting to HTTPS and HSTS
 are normally that proxy's job too; `DJANGO_SECURE_SSL_REDIRECT=1` and
 `DJANGO_SECURE_HSTS_SECONDS=31536000` take them on where it leaves them to
 the application, at which point `manage.py check --deploy` passes without a
-word. Django's warnings and errors go to the container's log whatever
+word; the health check is exempt from the redirect, so the container stays
+healthy either way, and CI runs the image configured like that and waits
+for Docker to call it healthy. Django's warnings and errors go to the container's log whatever
 `DEBUG` is, rather than to the e-mail Django would otherwise address to
 nobody.
 
@@ -248,8 +250,8 @@ the corridor match over 6,600 stations plus the optimiser, up to a few
 hundred milliseconds coast to coast. The cache is a directory of files under
 `.cache/`, so it survives the development server restarting; two identical
 requests arriving together share one fetch. It holds up to five thousand
-entries, and every key carries a version number from `planner/trip.py`, to
-be raised when what is cached changes shape, since the files outlive the
+entries, and every key carries a version number from `planner/caching.py`,
+to be raised when what is cached changes shape, since the files outlive the
 code that wrote them.
 
 ## Station coordinates
@@ -373,7 +375,7 @@ default stop cost live at the bottom of `fuelroute/settings.py`.
 
     python manage.py test
 
-A hundred and eighty-two tests cover the price file reader and loader, the
+A hundred and eighty-three tests cover the price file reader and loader, the
 GeoNames matching, the city table, its extraction and what it offers as you
 type, the outline, route
 geometry, the optimiser (including the comparison with the greedy algorithm

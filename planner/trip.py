@@ -22,7 +22,7 @@ from django.db.models import Count, Max
 from shapely.geometry import Point, shape
 from shapely.prepared import prep
 
-from .caching import cache_get, cache_set
+from .caching import CACHE_VERSION, cache_get, cache_set
 from .cities import find_city
 from .geo import Route, haversine_miles, simplify
 from .models import Station
@@ -31,11 +31,6 @@ from .osrm import fetch_route
 from .photon import Place, geocode_place
 
 ROUTE_CACHE_SECONDS = 24 * 3600
-
-# Part of every cache key. Cached files outlive a restart, so a change to
-# what is stored, the pickled Leg, the plan dict or the optimiser's answer,
-# would otherwise serve yesterday's plans for a day; raise this with it.
-CACHE_VERSION = 1
 
 COORDINATES = re.compile(r"^\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*$")
 
@@ -105,7 +100,7 @@ _stations = (None, None)
 
 
 def station_arrays():
-    """The station table as arrays, rebuilt whenever a row changes."""
+    """The station table as arrays, rebuilt when the row count or the latest save changes."""
     global _stations
     version = tuple(Station.objects.aggregate(rows=Count("id"), changed=Max("updated_at")).values())
     if _stations[0] != version:

@@ -36,6 +36,9 @@ if not DEBUG:
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     SECURE_SSL_REDIRECT = os.environ.get("DJANGO_SECURE_SSL_REDIRECT", "0") == "1"
+    # The container's own health check asks over plain HTTP and cannot
+    # follow a redirect to HTTPS, so that one path is left alone.
+    SECURE_REDIRECT_EXEMPT = [r"^healthz/$"]
     SECURE_HSTS_SECONDS = int(os.environ.get("DJANGO_SECURE_HSTS_SECONDS", "0"))
     # The browsers' preload list wants a year with subdomains included, and
     # a shorter header is still worth sending, so the flags follow the seconds.

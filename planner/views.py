@@ -98,7 +98,7 @@ def api_or_page(message, status, page):
     """Django's own error pages are HTML; under /api/ the answer keeps the API's shape."""
 
     def handler(request, exception=None):
-        if request.path.startswith("/api/"):
+        if request.path_info.startswith("/api/"):
             return JsonResponse({"error": message}, status=status)
         # Django hands the 400 and 404 handlers the exception; the 500 handler gets none.
         return page(request) if exception is None else page(request, exception)

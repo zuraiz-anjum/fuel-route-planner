@@ -15,7 +15,7 @@ from dataclasses import dataclass
 import requests
 from django.conf import settings
 
-from .caching import cache_get, cache_set
+from .caching import CACHE_VERSION, cache_get, cache_set
 from .states import STATE_NAMES
 
 # Places do not move, and the public server is not always there when you need it.
@@ -92,7 +92,7 @@ def _label(properties):
 def geocode_place(query):
     """Resolve free text to a Place inside the US, or None if nothing matched."""
     normalized = " ".join(query.split()).casefold()
-    key = "geocode:" + hashlib.sha1(normalized.encode()).hexdigest()
+    key = "geocode:%d:%s" % (CACHE_VERSION, hashlib.sha1(normalized.encode()).hexdigest())
     found, place = cache_get(key, (False, None))
     if not found:
         hits = _search(query)

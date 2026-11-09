@@ -29,9 +29,9 @@
   dt { color: #666; }
   dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
   ol { padding-left: 20px; margin: 0; }
-  li { margin-bottom: 10px; }
-  li .where { font-weight: 600; }
-  li .detail { color: #555; }
+  #stops li { margin-bottom: 10px; }
+  #stops .where { font-weight: 600; }
+  #stops .detail { color: #555; }
   .stop { width: 16px; height: 16px; box-sizing: border-box; border-radius: 50%; background: #ff922b; border: 2px solid #d9480f; cursor: pointer; }
   #map .notice { margin: 0; padding: 16px; color: #666; }
   .maplibregl-popup-content { font: 13px/1.4 system-ui, sans-serif; padding: 10px 14px; }
@@ -190,9 +190,17 @@
     function follow() {
       if (list.hidden) return;
       var box = input.getBoundingClientRect();
+      var frame = aside.getBoundingClientRect();
+      if (box.bottom < frame.top || box.top > frame.bottom) {
+        close();  // the box has scrolled out of the sidebar; nothing to hang the list from
+        return;
+      }
       list.style.left = box.left + "px";
       list.style.top = box.bottom + "px";
       list.style.width = box.width + "px";
+      // No taller than the room under the box, so the last entries are never
+      // off the bottom of a short viewport; the list scrolls instead.
+      list.style.maxHeight = Math.max(100, Math.min(320, window.innerHeight - box.bottom - 8)) + "px";
     }
 
     function highlight(index) {

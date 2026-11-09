@@ -53,6 +53,8 @@ class ProductionDefaultTests(SimpleTestCase):
         self.assertTrue(strict.SECURE_HSTS_INCLUDE_SUBDOMAINS)
         self.assertTrue(strict.SECURE_HSTS_PRELOAD)
         self.assertTrue(strict.SECURE_SSL_REDIRECT)
+        # The container's health check asks over plain HTTP.
+        self.assertEqual(strict.SECURE_REDIRECT_EXEMPT, [r"^healthz/$"])
         behind_a_proxy = settings_under(DJANGO_DEBUG="0", DJANGO_SECRET_KEY=A_KEY)
         self.assertEqual(behind_a_proxy.SECURE_HSTS_SECONDS, 0)
         self.assertFalse(behind_a_proxy.SECURE_HSTS_PRELOAD)
