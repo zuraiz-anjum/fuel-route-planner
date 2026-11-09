@@ -224,7 +224,10 @@ driver is willing to use and keep the rest.
 3. Every located station is matched against a one-mile sampling of the route
    with numpy; those within 10 miles become candidates, each at its mile
    marker and with its distance from the road.
-4. The optimiser picks the stops.
+4. The optimiser picks the stops, and the finished plan is cached for a day
+   under everything it was computed from: the two places, the fuel figures,
+   the vehicle and corridor settings, and the station table's row count and
+   latest change, so reloading the stations retires every plan.
 
 A cold request makes one external call for cities and coordinates and
 three otherwise (two geocodes and the route; a geocode answered 429 or 503
@@ -232,11 +235,12 @@ is retried once), and takes one to two seconds, nearly all of it waiting for
 OSRM: about a second to open a TLS connection to the public server when it
 has sat idle, then the routing itself. The geometry comes back as an encoded
 polyline, a third the size of GeoJSON, and is decoded in numpy in about ten
-milliseconds. Repeating a request takes tens of milliseconds for a short
-trip and a few hundred coast to coast, which is the corridor match over
-6,600 stations plus the optimiser. The cache is a directory of files under `.cache/`, so it
-survives the development server restarting; two identical requests
-arriving together share one fetch.
+milliseconds. Repeating a request is a cache read, a few tens of
+milliseconds; the same route with other fuel figures skips OSRM and costs
+the corridor match over 6,600 stations plus the optimiser, a hundred
+milliseconds or two coast to coast. The cache is a directory of files under
+`.cache/`, so it survives the development server restarting; two identical
+requests arriving together share one fetch.
 
 ## Station coordinates
 
@@ -358,7 +362,7 @@ default stop cost live at the bottom of `fuelroute/settings.py`.
 
     python manage.py test
 
-A hundred and seventy tests cover the price file reader and loader, the
+A hundred and seventy-three tests cover the price file reader and loader, the
 GeoNames matching, the city table, its extraction and what it offers as you
 type, the outline, route
 geometry, the optimiser (including the comparison with the greedy algorithm

@@ -9,6 +9,7 @@ locally, so for most requests it is one call, and none once the route is
 cached.
 """
 
+import hashlib
 import json
 import re
 import threading
@@ -80,6 +81,7 @@ class StationArrays:
     lats: np.ndarray
     lons: np.ndarray
     prices: np.ndarray
+    version: tuple  # row count and latest change: what a plan was computed from
 
     def __len__(self):
         return len(self.ids)
@@ -109,6 +111,7 @@ def station_arrays():
             lats=np.array(lats, dtype=float),
             lons=np.array(lons, dtype=float),
             prices=np.array(prices, dtype=float),
+            version=version,
         )
         _stations = (version, arrays)
     return _stations[1]
@@ -225,6 +228,22 @@ def plan_trip(start_query, finish_query, start_fuel_gallons=0.0, stop_cost=None)
     finish = resolve_place(finish_query)
     if haversine_miles(start.lat, start.lon, finish.lat, finish.lon) < SAME_PLACE_MILES:
         raise SamePlace()
+
+    # The finished plan is cached as well, under everything it was computed
+    # from: the two places, the fuel figures, the vehicle and corridor
+    # settings, and the station table as loaded. A repeat is then a cache
+    # read, with only the spelling asked for put back.
+    computed_from = (
+        start, finish, start_fuel_gallons, stop_cost, stations.version,
+        range_miles, mpg, settings.ROUTE_CORRIDOR_MILES, settings.DEPARTURE_RADIUS_MILES,
+    )
+    key = "plan:" + hashlib.sha1(repr(computed_from).encode()).hexdigest()
+    cached = cache_get(key)
+    if cached is not None:
+        cached["start"]["query"] = start_query
+        cached["finish"]["query"] = finish_query
+        return cached
+
     leg = load_leg(start, finish)
     route = leg.route
 
@@ -278,7 +297,7 @@ def plan_trip(start_query, finish_query, start_fuel_gallons=0.0, stop_cost=None)
     total_gallons = round(sum((stop["gallons"] for stop in stops), 0.0), 2)
     total_cost = round(sum((stop["cost"] for stop in stops), 0.0), 2)
 
-    return {
+    result = {
         "start": describe(start, start_query),
         "finish": describe(finish, finish_query),
         "route": {
@@ -306,6 +325,8 @@ def plan_trip(start_query, finish_query, start_fuel_gallons=0.0, stop_cost=None)
             "en_route_stops": sum(1 for stop in stops if stop["kind"] == "en_route"),
         },
     }
+    cache_set(key, result, ROUTE_CACHE_SECONDS)
+    return result
 
 
 def describe(place, query):

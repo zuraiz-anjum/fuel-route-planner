@@ -126,6 +126,37 @@ class RouteApiTests(TestCase):
         self.assertEqual(trip["vehicle"]["start_fuel_gallons"], 50)
         self.assertAlmostEqual(trip["summary"]["fuel_purchased_gallons"], 63.3, delta=0.3)
 
+    def test_a_repeated_plan_is_a_cache_read(self):
+        self.seed_stations()
+        with mock.patch("planner.trip.plan_fuel_stops", wraps=trip.plan_fuel_stops) as solve:
+            first = self.plan(stop_cost=0).json()
+            second = self.plan(stop_cost=0).json()
+            self.assertEqual(solve.call_count, 1)
+            self.assertEqual(first, second)
+            # Other fuel figures are another plan.
+            self.plan(stop_cost=0, start_fuel=10)
+            self.assertEqual(solve.call_count, 2)
+        self.assertEqual(self.fetch_route.call_count, 1)
+
+    def test_a_cached_plan_echoes_the_spelling_it_was_asked_with(self):
+        self.seed_stations()
+        self.assertEqual(self.plan().json()["start"]["query"], "Start, TX")
+        with mock.patch.dict(PLACES, {"start tx": START}):
+            repeat = self.plan(start="start tx").json()
+        self.assertEqual(repeat["start"]["query"], "start tx")
+        self.assertEqual(repeat["start"]["label"], START.label)
+        self.assertEqual(self.fetch_route.call_count, 1)
+
+    def test_a_price_change_outdates_the_cached_plan(self):
+        self.seed_stations()
+        before = self.plan(stop_cost=0).json()
+        cheapest = Station.objects.get(opis_id=3)
+        cheapest.price = "9.000"
+        cheapest.save()
+        after = self.plan(stop_cost=0).json()
+        self.assertGreater(after["summary"]["total_fuel_cost"], before["summary"]["total_fuel_cost"])
+        self.assertEqual(self.fetch_route.call_count, 1)
+
     def test_departure_is_the_cheapest_station_near_the_start(self):
         self.seed_stations()
         station(6, 35.05, -100.1, "3.100", name="Across town but cheaper")
