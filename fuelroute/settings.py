@@ -1,8 +1,9 @@
 """
 Django settings for the fuel route planner.
 
-Anything that differs between machines is read from the environment with a
-development default, so a fresh checkout runs with no configuration at all.
+Anything that differs between machines is read from the environment. The
+defaults are production's, except that manage.py turns debugging on, so a
+fresh checkout still runs with no configuration at all.
 """
 
 import os
@@ -13,19 +14,29 @@ from django.core.exceptions import ImproperlyConfigured
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data"
 
-DEBUG = os.environ.get("DJANGO_DEBUG", "1") == "1"
+# Off unless asked for, so that a server importing this module unconfigured
+# is a production server. manage.py asks for it, being the development
+# command line.
+DEBUG = os.environ.get("DJANGO_DEBUG", "0") == "1"
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "")
 if not SECRET_KEY:
     if not DEBUG:
-        raise ImproperlyConfigured("set DJANGO_SECRET_KEY when running with DJANGO_DEBUG=0")
+        raise ImproperlyConfigured("set DJANGO_SECRET_KEY, or DJANGO_DEBUG=1 for development")
     SECRET_KEY = "dev-only-key"
 ALLOWED_HOSTS = [h for h in os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(",") if h]
 if not DEBUG:
     # Deployed behind a proxy that terminates TLS, sets X-Forwarded-Proto and
-    # strips it from clients. Redirecting to HTTPS and HSTS are the proxy's job.
+    # strips it from clients. Redirecting to HTTPS and HSTS are normally that
+    # proxy's job as well; where it leaves them to the application, these two
+    # take them on, and `manage.py check --deploy` then passes without a word.
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
+    SECURE_SSL_REDIRECT = os.environ.get("DJANGO_SECURE_SSL_REDIRECT", "0") == "1"
+    SECURE_HSTS_SECONDS = int(os.environ.get("DJANGO_SECURE_HSTS_SECONDS", "0"))
+    # The browsers' preload list wants a year with subdomains included, and
+    # a shorter header is still worth sending, so the flags follow the seconds.
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = SECURE_HSTS_PRELOAD = SECURE_HSTS_SECONDS > 0
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -101,6 +112,21 @@ STORAGES = {
 }
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Gunicorn's output is the container's log, so Django's warnings and the
+# planner's go to the console whatever DEBUG is. Django's own default mails
+# them to ADMINS once DEBUG is off, which here is nobody, and a 500 would
+# leave no trace.
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {"plain": {"format": "%(levelname)s %(name)s: %(message)s"}},
+    "handlers": {"console": {"class": "logging.StreamHandler", "formatter": "plain"}},
+    "loggers": {
+        "django": {"handlers": ["console"], "level": "INFO"},
+        "planner": {"handlers": ["console"], "level": "INFO"},
+    },
+}
 
 # Geocoding results and routes are cached so that repeating a request does not
 # go back to the external services. Files survive restarts, which matters with

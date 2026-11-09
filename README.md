@@ -56,15 +56,20 @@ before, without calling anything external.
 The image runs gunicorn with `DJANGO_DEBUG=0`, serves its own static files
 through WhiteNoise, and on every start migrates and loads the stations
 before listening on port 8000, so there is nothing to keep between runs. It
-accepts any `Host` header on the assumption that a proxy in front of it
-checks that; set `DJANGO_ALLOWED_HOSTS` to pin it. Without a
-`DJANGO_SECRET_KEY` a fresh one is generated at each start, which only
-matters for staying logged in to the admin across restarts; a management
-command run through `docker exec` needs the key passed to it. The container's
-`HEALTHCHECK` polls `/healthz/`. With `DJANGO_DEBUG=0` the cookies are
-marked secure and `X-Forwarded-Proto` is trusted, on the assumption of a
-TLS-terminating proxy in front; redirecting to HTTPS and HSTS belong to that
-proxy, and `manage.py check --deploy` lists exactly those two.
+answers to `localhost` and `127.0.0.1` until `DJANGO_ALLOWED_HOSTS` names
+the deployment's host; any other `Host` header gets a 400 and a line in the
+log. Without a `DJANGO_SECRET_KEY` a fresh one is generated at each start,
+which only matters for staying logged in to the admin across restarts; a
+management command run through `docker exec` needs the key passed to it. The
+container's `HEALTHCHECK` polls `/healthz/`. With `DJANGO_DEBUG=0` the
+cookies are marked secure and `X-Forwarded-Proto` is trusted, on the
+assumption of a TLS-terminating proxy in front. Redirecting to HTTPS and HSTS
+are normally that proxy's job too; `DJANGO_SECURE_SSL_REDIRECT=1` and
+`DJANGO_SECURE_HSTS_SECONDS=31536000` take them on where it leaves them to
+the application, at which point `manage.py check --deploy` passes without a
+word. Django's warnings and errors go to the container's log whatever
+`DEBUG` is, rather than to the e-mail Django would otherwise address to
+nobody.
 
 ## The API
 
@@ -312,13 +317,19 @@ line in Windsor or Tijuana gets through, which is fine for a sanity check.
 
 ## Configuration
 
-Everything has a development default. Override with environment variables:
+Everything has a default, and the defaults are production's: a server that
+imports `fuelroute.wsgi` with nothing set refuses to start until it is given
+a secret key. `manage.py`, the development command line, is the one
+exception and turns debugging on unless told otherwise. Override with
+environment variables:
 
 | Variable | Default |
 |----------|---------|
-| `DJANGO_DEBUG` | `1`; set `0` in production, which then requires a secret key |
+| `DJANGO_DEBUG` | `0`, which requires a secret key; `1` under `manage.py` |
 | `DJANGO_SECRET_KEY` | a fixed development key while `DJANGO_DEBUG=1` |
-| `DJANGO_ALLOWED_HOSTS` | `localhost,127.0.0.1`; `*` in the image |
+| `DJANGO_ALLOWED_HOSTS` | `localhost,127.0.0.1`; name the deployment's host, or every other `Host` header is a 400 |
+| `DJANGO_SECURE_SSL_REDIRECT` | `0`; `1` sends plain HTTP to HTTPS when the proxy in front does not (with `DJANGO_DEBUG=0`) |
+| `DJANGO_SECURE_HSTS_SECONDS` | `0`; `31536000` sends `Strict-Transport-Security` for a year, subdomains and preload included (with `DJANGO_DEBUG=0`) |
 | `NUM_PROXIES` | `0`; the number of proxies in front, so the throttle counts by the real client address |
 | `OSRM_BASE_URL` | `https://router.project-osrm.org` |
 | `PHOTON_BASE_URL` | `https://photon.komoot.io` |

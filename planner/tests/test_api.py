@@ -1,3 +1,4 @@
+import logging
 import tempfile
 import threading
 import time
@@ -28,6 +29,16 @@ PLACES = {
 }
 
 LOCAL_CACHE = {"default": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache"}}
+
+
+# The bad requests and failing services these tests arrange on purpose are
+# not worth a log line each in the test output.
+def setUpModule():
+    logging.getLogger("django.request").setLevel(logging.CRITICAL)
+
+
+def tearDownModule():
+    logging.getLogger("django.request").setLevel(logging.NOTSET)
 
 
 def straight_route(points=None, distance_miles=None):
