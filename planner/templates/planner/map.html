@@ -4,8 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Fuel route planner</title>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<!-- No icon to fetch, so no 404 in the log for every visit. -->
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css"
+      integrity="sha384-uTttxo/aOKbdE5RlD/SPzSDoDmNvGlUYPjONi2MN/b7c9HPSvW07OIuyP7uL6jxK" crossorigin="">
 <style>
   html, body { height: 100%; margin: 0; font: 14px/1.4 system-ui, sans-serif; color: #222; }
   body { display: flex; }
@@ -26,6 +28,9 @@
   li { margin-bottom: 10px; }
   li .where { font-weight: 600; }
   li .detail { color: #555; }
+  .stop { width: 16px; height: 16px; box-sizing: border-box; border-radius: 50%; background: #ff922b; border: 2px solid #d9480f; cursor: pointer; }
+  #map .notice { margin: 0; padding: 16px; color: #666; }
+  .maplibregl-popup-content { font: 13px/1.4 system-ui, sans-serif; padding: 10px 14px; }
   @media (max-width: 720px) {
     body { flex-direction: column; }
     aside { width: auto; border-right: 0; border-bottom: 1px solid #ddd; max-height: 50%; }
@@ -52,17 +57,30 @@
 </aside>
 <div id="map"></div>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js"
+        integrity="sha384-5+cfbwT0iiub6VsQAdn6yz16nr6sDiQoHx6tm4O8OVYXHYOxcffFmCJBL0dgdvGp" crossorigin=""></script>
 <script>
 (function () {
   var apiUrl = "{% url 'route-api' %}";
-  var map = L.map("map").setView([39.5, -98.35], 4);
-  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 19,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  }).addTo(map);
-  var drawn = L.layerGroup().addTo(map);
+
+  // OpenFreeMap's tiles need no key, and unlike the OpenStreetMap
+  // Foundation's own they are served to browsers that send no Referer.
+  var map = null;
+  var mapReady = null;
+  try {
+    map = new maplibregl.Map({
+      container: "map",
+      style: "https://tiles.openfreemap.org/styles/liberty",
+      center: [-98.35, 39.5],
+      zoom: 3.3
+    });
+    map.addControl(new maplibregl.NavigationControl({ showCompass: false }));
+    mapReady = new Promise(function (resolve) { map.on("load", resolve); });
+  } catch (err) {
+    // No WebGL. The plan is still read out beside the empty map.
+    document.getElementById("map").appendChild(
+      el("p", "This browser cannot draw the map; the plan still appears beside it.", "notice"));
+  }
 
   var form = document.getElementById("trip");
   var params = new URLSearchParams(location.search);
@@ -93,22 +111,7 @@
   }
 
   function render(trip) {
-    drawn.clearLayers();
-    var line = trip.route.geometry.coordinates.map(function (c) { return [c[1], c[0]]; });
-    var path = L.polyline(line, { color: "#1f5fbf", weight: 4 }).addTo(drawn);
-    L.marker([trip.start.lat, trip.start.lon]).addTo(drawn).bindPopup("Start: " + escapeHtml(trip.start.label));
-    L.marker([trip.finish.lat, trip.finish.lon]).addTo(drawn).bindPopup("Finish: " + escapeHtml(trip.finish.label));
-    trip.stops.forEach(function (stop) {
-      var s = stop.station;
-      L.circleMarker([s.lat, s.lon], { radius: 8, color: "#d9480f", fillColor: "#ff922b", fillOpacity: 0.9 })
-        .addTo(drawn)
-        .bindPopup(
-          "<b>" + escapeHtml(s.name) + "</b><br>" + escapeHtml(s.city + ", " + s.state) +
-          "<br>$" + s.price_per_gallon.toFixed(3) + "/gal &middot; " + stop.gallons.toFixed(1) +
-          " gal &middot; $" + stop.cost.toFixed(2)
-        );
-    });
-    map.fitBounds(path.getBounds(), { padding: [30, 30] });
+    if (mapReady) mapReady.then(function () { draw(trip); });
 
     var summary = document.getElementById("summary");
     summary.replaceChildren();
@@ -143,6 +146,51 @@
       list.appendChild(item);
     });
     document.getElementById("result").hidden = false;
+  }
+
+  // The form submits by navigating, so a page draws one trip; there is
+  // nothing to clear first.
+  function draw(trip) {
+    var coordinates = trip.route.geometry.coordinates;
+    map.addSource("route", { type: "geojson", data: { type: "Feature", geometry: trip.route.geometry } });
+    map.addLayer({
+      id: "route",
+      type: "line",
+      source: "route",
+      layout: { "line-join": "round", "line-cap": "round" },
+      paint: { "line-color": "#1f5fbf", "line-width": 4 }
+    }, firstLabelLayer());
+
+    new maplibregl.Marker().setLngLat([trip.start.lon, trip.start.lat])
+      .setPopup(new maplibregl.Popup().setText("Start: " + trip.start.label)).addTo(map);
+    new maplibregl.Marker().setLngLat([trip.finish.lon, trip.finish.lat])
+      .setPopup(new maplibregl.Popup().setText("Finish: " + trip.finish.label)).addTo(map);
+    trip.stops.forEach(function (stop) {
+      var s = stop.station;
+      var dot = document.createElement("div");
+      dot.className = "stop";
+      dot.title = s.name;
+      new maplibregl.Marker({ element: dot }).setLngLat([s.lon, s.lat])
+        .setPopup(new maplibregl.Popup({ offset: 12 }).setHTML(
+          "<b>" + escapeHtml(s.name) + "</b><br>" + escapeHtml(s.city + ", " + s.state) +
+          "<br>$" + s.price_per_gallon.toFixed(3) + "/gal &middot; " + stop.gallons.toFixed(1) +
+          " gal &middot; $" + stop.cost.toFixed(2)
+        ))
+        .addTo(map);
+    });
+
+    var bounds = coordinates.reduce(function (box, point) { return box.extend(point); },
+      new maplibregl.LngLatBounds(coordinates[0], coordinates[0]));
+    map.fitBounds(bounds, { padding: 40, duration: 0 });
+  }
+
+  // Put the route under the place names, which are the style's symbol layers.
+  function firstLabelLayer() {
+    var layers = map.getStyle().layers;
+    for (var i = 0; i < layers.length; i++) {
+      if (layers[i].type === "symbol") return layers[i].id;
+    }
+    return undefined;
   }
 
   function el(tag, text, className) {

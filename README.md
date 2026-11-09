@@ -288,7 +288,11 @@ derived from GeoNames data, published under CC BY 4.0.
 OSRM and Photon were chosen because they need no account, so the project
 runs from a clean clone. Both are public servers with fair-use policies;
 point `OSRM_BASE_URL` and `PHOTON_BASE_URL` at your own instances for
-anything beyond a demo. Nominatim was the first choice for geocoding and was
+anything beyond a demo. The map page draws on OpenFreeMap's vector tiles
+for the same reason, and for one more: the OpenStreetMap Foundation's own
+tile server answers a browser that sends no `Referer` header with an
+"Access blocked" tile, and privacy settings strip that header, so a page
+built on it can come up as a grid of refusals. Nominatim was the first choice for geocoding and was
 dropped when its public server throttled the one-off bulk job and its
 one-request-per-second limit turned out to be the slowest part of a cold
 request. The bulk job then moved offline altogether, which is where it should
