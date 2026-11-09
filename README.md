@@ -347,8 +347,10 @@ GeoNames matching, the city table and its extraction, the outline, route
 geometry, the optimiser (including the comparison with the greedy algorithm
 on random routes), both external clients with canned responses, the
 geocoding command, and the API with the external services mocked. They run in a few seconds,
-need no network, and run on GitHub Actions for every push, which also builds
-the image and waits for its health check.
+need no network, and run on GitHub Actions for every push, which also checks
+the pinned dependencies against the vulnerability databases with `pip-audit`,
+builds the image and waits for its health check. Dependabot proposes newer
+releases of the dependencies, the actions and the base image weekly.
 
 ## Layout
 
