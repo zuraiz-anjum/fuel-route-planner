@@ -14,13 +14,13 @@
   aside { width: 380px; flex: none; overflow-y: auto; padding: 16px; box-sizing: border-box; border-right: 1px solid #ddd; }
   #map { flex: 1; min-height: 300px; }
   h1 { font-size: 18px; margin: 0 0 12px; }
-  .field { position: relative; margin-bottom: 8px; }
+  .field { margin-bottom: 8px; }
   .field label { display: block; }
   form input { width: 100%; box-sizing: border-box; padding: 6px; border: 1px solid #bbb; border-radius: 3px; font: inherit; }
   form .row { display: flex; gap: 8px; }
   form .row .field { flex: 1; }
   form button { padding: 7px 14px; }
-  .places { position: absolute; left: 0; right: 0; top: 100%; z-index: 2; margin: 0; padding: 4px 0; list-style: none; max-height: 240px; overflow-y: auto; background: #fff; border: 1px solid #bbb; border-radius: 0 0 3px 3px; box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1); }
+  .places { position: fixed; z-index: 10; box-sizing: border-box; margin: 0; padding: 4px 0; list-style: none; max-height: 320px; overflow-y: auto; background: #fff; border: 1px solid #bbb; border-top: 0; border-radius: 0 0 3px 3px; box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1); }
   .places li { padding: 6px 8px; cursor: pointer; }
   .places li:hover, .places li[aria-selected="true"] { background: #e8f0fb; }
   #status { margin: 12px 0; color: #666; }
@@ -106,6 +106,7 @@
   }
 
   var form = document.getElementById("trip");
+  var aside = document.querySelector("aside");
   var params = new URLSearchParams(location.search);
   Array.prototype.forEach.call(form.elements, function (field) {
     // The API takes the last value of a repeated parameter; so does the form.
@@ -134,7 +135,8 @@
       if (list.hidden) return;
       if (event.key === "ArrowDown" || event.key === "ArrowUp") {
         event.preventDefault();
-        highlight(active + (event.key === "ArrowDown" ? 1 : -1));
+        var step = event.key === "ArrowDown" ? 1 : -1;
+        highlight(active < 0 ? (step > 0 ? 0 : offered.length - 1) : active + step);
       } else if (event.key === "Enter" && active >= 0) {
         event.preventDefault();
         pick(offered[active]);
@@ -143,12 +145,18 @@
       }
     });
     input.addEventListener("blur", close);
-    list.addEventListener("pointerdown", function (event) {
+    // Pressing anywhere on the list keeps the focus in the box, so scrolling
+    // it or grabbing its scrollbar does not close it. Only a click picks,
+    // and a finger that drags produces none.
+    list.addEventListener("pointerdown", function (event) { event.preventDefault(); });
+    list.addEventListener("click", function (event) {
       var item = event.target.closest("li");
-      if (!item) return;
-      event.preventDefault();  // keeps the focus in the box, so no blur before the pick
-      pick(offered[Number(item.dataset.index)]);
+      if (item) pick(offered[Number(item.dataset.index)]);
     });
+    // The list is fixed to the viewport rather than laid inside the sidebar,
+    // which scrolls and would clip it on a phone; it follows the box instead.
+    aside.addEventListener("scroll", follow);
+    window.addEventListener("resize", follow);
 
     function ask() {
       var text = input.value.trim();
@@ -176,6 +184,15 @@
       list.hidden = places.length === 0;
       input.setAttribute("aria-expanded", String(!list.hidden));
       input.removeAttribute("aria-activedescendant");
+      follow();
+    }
+
+    function follow() {
+      if (list.hidden) return;
+      var box = input.getBoundingClientRect();
+      list.style.left = box.left + "px";
+      list.style.top = box.bottom + "px";
+      list.style.width = box.width + "px";
     }
 
     function highlight(index) {
