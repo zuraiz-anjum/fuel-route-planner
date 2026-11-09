@@ -382,7 +382,7 @@ class RouteFetchTests(TestCase):
             outcomes = together(3, load_leg, START, FINISH)
         self.assertEqual(fetch.call_count, 1)
         self.assertEqual([kind for kind, _ in outcomes], ["ok"] * 3)
-        self.assertIsNotNone(cache.get(f"route:{trip.CACHE_VERSION}:35.00000,-100.00000:35.00000,-80.00000"))
+        self.assertIsNotNone(cache.get(f"route:{caching.CACHE_VERSION}:35.00000,-100.00000:35.00000,-80.00000"))
 
     def test_waiters_get_the_answer_even_when_the_cache_cannot_keep_it(self):
         with (
@@ -428,6 +428,8 @@ class HealthTests(TestCase):
             client = Client()  # the middleware reads these settings when it is built
             self.assertEqual(client.get(reverse("health")).status_code, 200)
             self.assertEqual(client.get(reverse("route-api")).status_code, 301)
+            # Mounted under a prefix as well: the redirect is matched on the full path.
+            self.assertEqual(client.get(reverse("health"), SCRIPT_NAME="/planner").status_code, 200)
 
 
 @override_settings(CACHES=LOCAL_CACHE)
@@ -469,6 +471,11 @@ class ErrorPagesTests(TestCase):
         response = self.client.get("/nothing/")
         self.assertEqual(response.status_code, 404)
         self.assertIn("text/html", response["Content-Type"])
+
+    def test_a_mount_under_a_prefix_keeps_the_shape(self):
+        response = self.client.get("/api/nothing/", SCRIPT_NAME="/planner")
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.json(), {"error": "not found"})
 
     def test_a_host_the_settings_refuse_is_json_under_the_api(self):
         response = self.client.get(reverse("places-api"), {"q": "dal"}, HTTP_HOST="evil.example")

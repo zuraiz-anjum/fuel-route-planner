@@ -157,6 +157,10 @@
     // which scrolls and would clip it on a phone; it follows the box instead.
     aside.addEventListener("scroll", follow);
     window.addEventListener("resize", follow);
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", follow);
+      window.visualViewport.addEventListener("scroll", follow);
+    }
 
     function ask() {
       var text = input.value.trim();
@@ -199,8 +203,12 @@
       list.style.top = box.bottom + "px";
       list.style.width = box.width + "px";
       // No taller than the room under the box, so the last entries are never
-      // off the bottom of a short viewport; the list scrolls instead.
-      list.style.maxHeight = Math.max(100, Math.min(320, window.innerHeight - box.bottom - 8)) + "px";
+      // off the bottom of a short viewport; the list scrolls instead. A
+      // phone's keyboard shrinks only the visual viewport, so that is the
+      // one measured where the browser has it.
+      var seen = window.visualViewport;
+      var bottom = seen ? seen.offsetTop + seen.height : window.innerHeight;
+      list.style.maxHeight = Math.max(100, Math.min(320, bottom - box.bottom - 8)) + "px";
     }
 
     function highlight(index) {

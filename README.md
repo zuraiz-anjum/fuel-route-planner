@@ -375,7 +375,7 @@ default stop cost live at the bottom of `fuelroute/settings.py`.
 
     python manage.py test
 
-A hundred and eighty-three tests cover the price file reader and loader, the
+A hundred and eighty-four tests cover the price file reader and loader, the
 GeoNames matching, the city table, its extraction and what it offers as you
 type, the outline, route
 geometry, the optimiser (including the comparison with the greedy algorithm
