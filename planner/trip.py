@@ -32,6 +32,11 @@ from .photon import Place, geocode_place
 
 ROUTE_CACHE_SECONDS = 24 * 3600
 
+# Part of every cache key. Cached files outlive a restart, so a change to
+# what is stored, the pickled Leg, the plan dict or the optimiser's answer,
+# would otherwise serve yesterday's plans for a day; raise this with it.
+CACHE_VERSION = 1
+
 COORDINATES = re.compile(r"^\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*$")
 
 # About fifty metres: invisible on a map of a whole route, but it takes a
@@ -158,7 +163,7 @@ _flights_guard = threading.Lock()
 
 def load_leg(start, finish):
     """The route between two places, cached so that repeats cost nothing."""
-    key = "route:%.5f,%.5f:%.5f,%.5f" % (start.lat, start.lon, finish.lat, finish.lon)
+    key = "route:%d:%.5f,%.5f:%.5f,%.5f" % (CACHE_VERSION, start.lat, start.lon, finish.lat, finish.lon)
     leg = cache_get(key)
     if leg is not None:
         return leg
@@ -237,7 +242,7 @@ def plan_trip(start_query, finish_query, start_fuel_gallons=0.0, stop_cost=None)
         start, finish, start_fuel_gallons, stop_cost, stations.version,
         range_miles, mpg, settings.ROUTE_CORRIDOR_MILES, settings.DEPARTURE_RADIUS_MILES,
     )
-    key = "plan:" + hashlib.sha1(repr(computed_from).encode()).hexdigest()
+    key = "plan:%d:%s" % (CACHE_VERSION, hashlib.sha1(repr(computed_from).encode()).hexdigest())
     cached = cache_get(key)
     if cached is not None:
         cached["start"]["query"] = start_query

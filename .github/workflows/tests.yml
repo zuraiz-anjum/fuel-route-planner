@@ -35,7 +35,9 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - run: docker build -t fuel-route-planner .
-      - run: docker run --detach --name planner --publish 8000:8000 fuel-route-planner
+      # With a deployment host named, as production would; the probe below
+      # and the container's own health check ask as 127.0.0.1.
+      - run: docker run --detach --name planner --publish 8000:8000 --env DJANGO_ALLOWED_HOSTS=example.com fuel-route-planner
       - name: Wait for the health check
         run: |
           for i in $(seq 1 30); do

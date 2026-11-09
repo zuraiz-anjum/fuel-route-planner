@@ -11,6 +11,10 @@ class MapPageTests(SimpleTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, reverse("route-api"))
 
+    def test_head_is_answered_too(self):
+        # Load balancers and link checkers ask that way.
+        self.assertEqual(self.client.head(reverse("map")).status_code, 200)
+
     def test_the_place_boxes_offer_cities_from_the_api(self):
         response = self.client.get(reverse("map"))
         self.assertContains(response, reverse("places-api"))

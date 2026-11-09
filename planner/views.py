@@ -1,8 +1,10 @@
 from urllib.parse import urlencode
 
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
-from django.views.decorators.http import require_GET
+from django.views import defaults
+from django.views.decorators.http import require_safe
 from rest_framework.response import Response
 from rest_framework.views import APIView, exception_handler
 
@@ -87,6 +89,23 @@ class HealthView(APIView):
         return Response(body, status=200 if located else 503)
 
 
-@require_GET
+@require_safe
 def map_page(request):
     return render(request, "planner/map.html")
+
+
+def api_or_page(message, status, page):
+    """Django's own error pages are HTML; under /api/ the answer keeps the API's shape."""
+
+    def handler(request, exception=None):
+        if request.path.startswith("/api/"):
+            return JsonResponse({"error": message}, status=status)
+        # Django hands the 400 and 404 handlers the exception; the 500 handler gets none.
+        return page(request) if exception is None else page(request, exception)
+
+    return handler
+
+
+bad_request = api_or_page("bad request", 400, defaults.bad_request)
+not_found = api_or_page("not found", 404, defaults.page_not_found)
+server_error = api_or_page("internal server error", 500, defaults.server_error)

@@ -57,9 +57,9 @@ before, without calling anything external.
 The image runs gunicorn with `DJANGO_DEBUG=0`, serves its own static files
 through WhiteNoise, and on every start migrates and loads the stations
 before listening on port 8000, so there is nothing to keep between runs. It
-answers to `localhost` and `127.0.0.1` until `DJANGO_ALLOWED_HOSTS` names
-the deployment's host; any other `Host` header gets a 400 and a line in the
-log. Without a `DJANGO_SECRET_KEY` a fresh one is generated at each start,
+always answers to `localhost` and `127.0.0.1`, which is how its own health
+check asks, and to the deployment's host once `DJANGO_ALLOWED_HOSTS` names
+it; any other `Host` header gets a 400 and a line in the log. Without a `DJANGO_SECRET_KEY` a fresh one is generated at each start,
 which only matters for staying logged in to the admin across restarts; a
 management command run through `docker exec` needs the key passed to it. The
 container's `HEALTHCHECK` polls `/healthz/`. With `DJANGO_DEBUG=0` the
@@ -150,10 +150,17 @@ Errors come back as `{"error": "..."}`:
 | Status | When |
 |--------|------|
 | 400 | Missing or invalid parameters; `details` says which. |
+| 404 | No such path under `/api/`. |
 | 422 | A place could not be found in the US, start and finish are within two miles of each other, no road connects the two, no station is within 100 miles of the start to fill up at, or some stretch is longer than the range with no station in it. |
 | 429 | More than 60 requests in a minute from one address. |
 | 502 | OSRM or Photon failed or timed out. |
 | 503 | No stations loaded yet; run `load_stations`. |
+
+With debugging off the shape holds under `/api/` even where Django would
+otherwise send a page: a path that does not exist is a 404, a `Host` header
+the settings refuse is a 400 and an unexpected failure is a 500, all as
+`{"error": ...}`. Elsewhere, on the map page say, they are the usual HTML
+pages, and under `manage.py runserver` Django's debug pages take over.
 
 `GET /api/places/?q=dal`
 
@@ -235,12 +242,15 @@ is retried once), and takes one to two seconds, nearly all of it waiting for
 OSRM: about a second to open a TLS connection to the public server when it
 has sat idle, then the routing itself. The geometry comes back as an encoded
 polyline, a third the size of GeoJSON, and is decoded in numpy in about ten
-milliseconds. Repeating a request is a cache read, a few tens of
+milliseconds. Repeating a request is a cache read, under a hundred
 milliseconds; the same route with other fuel figures skips OSRM and costs
-the corridor match over 6,600 stations plus the optimiser, a hundred
-milliseconds or two coast to coast. The cache is a directory of files under
+the corridor match over 6,600 stations plus the optimiser, up to a few
+hundred milliseconds coast to coast. The cache is a directory of files under
 `.cache/`, so it survives the development server restarting; two identical
-requests arriving together share one fetch.
+requests arriving together share one fetch. It holds up to five thousand
+entries, and every key carries a version number from `planner/trip.py`, to
+be raised when what is cached changes shape, since the files outlive the
+code that wrote them.
 
 ## Station coordinates
 
@@ -325,8 +335,9 @@ anonymous clients are held to 60 requests a minute so that one script cannot
 spend the public OSRM server's goodwill. The response stays a plain dict,
 built in one place, with nothing in it a serializer would check.
 
-The in-memory station table is rebuilt whenever a row in the database
-changes, so `load_stations` can be rerun under a running server. The cache
+The in-memory station table is keyed on the row count and the latest save,
+so it is rebuilt after `load_stations` or an admin edit under a running
+server; a bulk `update()` that bypasses `save()` would go unnoticed. The cache
 is a directory of files, shared by the workers on one machine; several
 machines need Redis or memcached.
 Typed-in coordinates are checked against the country's outline from Natural
@@ -347,7 +358,7 @@ environment variables:
 |----------|---------|
 | `DJANGO_DEBUG` | `0`, which requires a secret key; `1` under `manage.py` |
 | `DJANGO_SECRET_KEY` | a fixed development key while `DJANGO_DEBUG=1` |
-| `DJANGO_ALLOWED_HOSTS` | `localhost,127.0.0.1`; name the deployment's host, or every other `Host` header is a 400 |
+| `DJANGO_ALLOWED_HOSTS` | empty; name the deployment's host. `localhost` and `127.0.0.1` are always accepted, which is how the container's health check asks; any other `Host` header is a 400 |
 | `DJANGO_SECURE_SSL_REDIRECT` | `0`; `1` sends plain HTTP to HTTPS when the proxy in front does not (with `DJANGO_DEBUG=0`) |
 | `DJANGO_SECURE_HSTS_SECONDS` | `0`; `31536000` sends `Strict-Transport-Security` for a year, subdomains and preload included (with `DJANGO_DEBUG=0`) |
 | `NUM_PROXIES` | `0`; the number of proxies in front, so the throttle counts by the real client address |
@@ -362,7 +373,7 @@ default stop cost live at the bottom of `fuelroute/settings.py`.
 
     python manage.py test
 
-A hundred and seventy-three tests cover the price file reader and loader, the
+A hundred and eighty-two tests cover the price file reader and loader, the
 GeoNames matching, the city table, its extraction and what it offers as you
 type, the outline, route
 geometry, the optimiser (including the comparison with the greedy algorithm

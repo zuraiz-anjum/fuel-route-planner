@@ -23,7 +23,10 @@ if not SECRET_KEY:
     if not DEBUG:
         raise ImproperlyConfigured("set DJANGO_SECRET_KEY, or DJANGO_DEBUG=1 for development")
     SECRET_KEY = "dev-only-key"
-ALLOWED_HOSTS = [h for h in os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(",") if h]
+ALLOWED_HOSTS = [h for h in os.environ.get("DJANGO_ALLOWED_HOSTS", "").split(",") if h]
+# The loopback names are always accepted: the container's health check asks
+# as 127.0.0.1 whatever the deployment's host is, and nothing is lost by it.
+ALLOWED_HOSTS += [h for h in ("localhost", "127.0.0.1", "[::1]") if h not in ALLOWED_HOSTS]
 if not DEBUG:
     # Deployed behind a proxy that terminates TLS, sets X-Forwarded-Proto and
     # strips it from clients. Redirecting to HTTPS and HSTS are normally that
@@ -128,14 +131,18 @@ LOGGING = {
     },
 }
 
-# Geocoding results and routes are cached so that repeating a request does not
-# go back to the external services. Files survive restarts, which matters with
-# runserver reloading on every edit; swap in Redis or memcached for a real
-# deployment with several workers.
+# Geocoding results, routes and finished plans are cached so that repeating
+# a request does not go back to the external services. Files survive
+# restarts, which matters with runserver reloading on every edit; swap in
+# Redis or memcached for a real deployment with several workers. The
+# throttle counters live here too, and the default ceiling of three hundred
+# entries would cull a random third of everything under modest traffic,
+# throttle windows included.
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
         "LOCATION": BASE_DIR / ".cache",
+        "OPTIONS": {"MAX_ENTRIES": 5000},
     }
 }
 

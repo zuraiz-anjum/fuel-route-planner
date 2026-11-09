@@ -34,12 +34,17 @@ LOCAL_CACHE = {"default": {"BACKEND": "django.core.cache.backends.locmem.LocMemC
 
 # The bad requests and failing services these tests arrange on purpose are
 # not worth a log line each in the test output.
+QUIET = ("django.request", "django.security.DisallowedHost")
+
+
 def setUpModule():
-    logging.getLogger("django.request").setLevel(logging.CRITICAL)
+    for name in QUIET:
+        logging.getLogger(name).setLevel(logging.CRITICAL)
 
 
 def tearDownModule():
-    logging.getLogger("django.request").setLevel(logging.NOTSET)
+    for name in QUIET:
+        logging.getLogger(name).setLevel(logging.NOTSET)
 
 
 def straight_route(points=None, distance_miles=None):
@@ -375,7 +380,7 @@ class RouteFetchTests(TestCase):
             outcomes = together(3, load_leg, START, FINISH)
         self.assertEqual(fetch.call_count, 1)
         self.assertEqual([kind for kind, _ in outcomes], ["ok"] * 3)
-        self.assertIsNotNone(cache.get("route:35.00000,-100.00000:35.00000,-80.00000"))
+        self.assertIsNotNone(cache.get(f"route:{trip.CACHE_VERSION}:35.00000,-100.00000:35.00000,-80.00000"))
 
     def test_waiters_get_the_answer_even_when_the_cache_cannot_keep_it(self):
         with (
@@ -439,3 +444,29 @@ class PlacesApiTests(TestCase):
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json()["error"], "invalid parameters")
         self.assertIn("q", response.json()["details"])
+
+
+class ErrorPagesTests(TestCase):
+    """Under /api/ even Django's own error pages keep the API's shape."""
+
+    def test_an_unknown_api_path_is_json(self):
+        response = self.client.get("/api/nothing/")
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.json(), {"error": "not found"})
+
+    def test_an_unknown_page_is_still_a_page(self):
+        response = self.client.get("/nothing/")
+        self.assertEqual(response.status_code, 404)
+        self.assertIn("text/html", response["Content-Type"])
+
+    def test_a_host_the_settings_refuse_is_json_under_the_api(self):
+        response = self.client.get(reverse("places-api"), {"q": "dal"}, HTTP_HOST="evil.example")
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json(), {"error": "bad request"})
+
+    def test_an_unexpected_failure_under_the_api_is_json(self):
+        self.client.raise_request_exception = False
+        with mock.patch("planner.views.plan_trip", side_effect=RuntimeError("boom")):
+            response = self.client.get(reverse("route-api"), {"start": "Start, TX", "finish": "Finish, GA"})
+        self.assertEqual(response.status_code, 500)
+        self.assertEqual(response.json(), {"error": "internal server error"})
